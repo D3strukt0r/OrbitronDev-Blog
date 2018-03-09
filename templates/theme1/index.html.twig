@@ -1,0 +1,182 @@
+{% extends 'theme1/layout.html.twig' %}
+
+{% set service_page_links %}
+    {% for text,link in current_blog.links %}
+        <li class="nav-item"><a href="{{ link }}" class="nav-link">{{ text }}</a></li>
+    {% endfor %}
+{% endset %}
+{% set service = {
+    'page_name': current_blog.name,
+    'page_logo_link': '/' ~ current_blog.url,
+    'page_author': current_blog.owner.username,
+    'page_description': current_blog.description,
+    'page_keywords': current_blog.keywords|join(','),
+    'page_links': service_page_links,
+    'page_google_webdev': current_blog.googleWebDeveloper,
+    'page_ga_id': current_blog.googleAnalyticsId,
+    'page_logo_url': ''
+} %}
+
+{% block title %}{{ 'service_index.title'|trans }} | {{ service.page_name }}{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <h1 class="mt-4 mb-4 pb-2 border-bottom">{{ current_blog.name }}</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% if posts|length == 0 %}
+                    <hr />
+                    <div class="alert alert-danger" role="alert">
+                        {{ 'service_index.no_posts'|trans }}
+                    </div>
+                {% else %}
+                    {% for post in posts %}
+                        <div class="card card-info">
+                            <div class="card-body">
+                                <div class="col-xs-12">
+                                    <h2><a href="{{ path('blog_post', {'blog': current_blog.url, 'post': post.id}) }}">{{ post.title }}</a></h2>
+                                    <p class="lead">{{ 'service_index.by'|trans }} <a href="{{ path('user', {'username': post.author.username}) }}">{{ post.author.username }}</a></p>
+                                    <p><span class="fa fa-clock-o"></span> {{ 'service_index.posted_on'|trans }} <b>{{ post.publishedOn|date('F j, Y') }} {{ 'service_index.at'|trans }} {{ post.publishedOn|date('H:i') }}</b></p>
+                                    <hr />
+                                    <img class="img-fluid rounded" src="//placehold.it/900x300" alt="" />
+                                    <hr />
+                                    <p>{{ post.description }}</p>
+                                    <a class="btn btn-primary" href="{{ path('blog_post', {'blog': current_blog.url, 'post': post.id}) }}">{{ 'service_index.read_more'|trans }} <span class="fa fa-chevron-right"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if pagination.pages_count > 1 %}
+                    <ul class="pagination" style="float: right; margin: 0;">
+
+                        {# Previous Page #}
+                        {% if pagination.current_page > 1 %}
+                            <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': pagination.previous_page, 'show': pagination.item_limit}) }}" aria-label="{{ 'service_index.pagination.previous'|trans }}"><span aria-hidden="true">&laquo;</span></a></li>
+                        {% else %}
+                            <li class="disabled"><a aria-label="{{ 'service_index.pagination.previous'|trans }}"><span aria-hidden="true">&laquo;</span> <span class="sr-only">(current)</span></a></li>
+                        {% endif %}
+
+                        {# Pager #}
+                        {% if pagination.pages_count < (7 + (pagination.adjacents * 2)) %}{# not enough pages to bother breaking it up #}
+                            {% set page_counter = 1 %}
+                            {% for i in page_counter..pagination.pages_count %}
+                                {% if page_counter == pagination.current_page %}
+                                    <li class="active"><a>{{ page_counter }} <span class="sr-only">(current)</span></a></li>
+                                {% else %}
+                                    <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': page_counter, 'show': pagination.item_limit}) }}">{{ page_counter }}</a></li>
+                                {% endif %}
+                                {% set page_counter = page_counter + 1 %}
+                            {% endfor %}
+                        {% elseif pagination.pages_count >= (7 + (pagination.adjacents * 2)) %}{# enough pages to hide some #}
+
+                            {# close to beginning; only hide later pages #}
+                            {% if pagination.current_page < (1 + (pagination.adjacents * 3)) %}
+                                {% set page_counter = 1 %}
+                                {% for i in page_counter..(4 +(pagination.adjacents * 2)) %}
+                                    {% if page_counter == pagination.current_page %}
+                                        <li class="active"><a>{{ page_counter }} <span class="sr-only">(current)</span></a></li>
+                                    {% else %}
+                                        <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': page_counter, 'show': pagination.item_limit}) }}">{{ page_counter }}</a></li>
+                                    {% endif %}
+                                    {% set page_counter = page_counter + 1 %}
+                                {% endfor %}
+
+                                <li class="disabled"><a>...</a></li>
+                                <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': pagination.last_page_m1, 'show': pagination.item_limit}) }}">{{ pagination.last_page_m1 }}</a></li>
+                                <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': pagination.pages_count, 'show': pagination.item_limit}) }}">{{ pagination.pages_count }}</a></li>
+
+                                {# in middle; hide some front and some back #}
+                            {% elseif (pagination.pages_count - (pagination.adjacents * 2)) > pagination.current_page and pagination.current_page > (pagination.adjacents * 3) %}
+                                <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': 1, 'show': pagination.item_limit}) }}">1</a></li>
+                                <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': 2, 'show': pagination.item_limit}) }}">2</a></li>
+                                <li class="disabled"><a>...</a></li>
+
+                                {% set page_counter = pagination.current_page - pagination.adjacents %}
+                                {% for i in page_counter..(pagination.current_page + pagination.adjacents) %}
+                                    {% if page_counter == pagination.current_page %}
+                                        <li class="active"><a>{{ page_counter }} <span class="sr-only">(current)</span></a></li>
+                                    {% else %}
+                                        <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': page_counter, 'show': pagination.item_limit}) }}">{{ page_counter }}</a></li>
+                                    {% endif %}
+                                    {% set page_counter = page_counter + 1 %}
+                                {% endfor %}
+
+                                <li class="disabled"><a>...</a></li>
+                                <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': pagination.last_page_m1, 'show': pagination.item_limit}) }}">{{ pagination.last_page_m1 }}</a></li>
+                                <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': pagination.pages_count, 'show': pagination.item_limit}) }}">{{ pagination.pages_count }}</a></li>
+
+                                {# close to end; only hide early pages #}
+                            {% else %}
+                                <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': 1, 'show': pagination.item_limit}) }}">1</a></li>
+                                <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': 2, 'show': pagination.item_limit}) }}">2</a></li>
+                                <li class="disabled"><a>...</a></li>
+
+                                {% set page_counter = pagination.pages_count - (1 + (pagination.adjacents * 3)) %}
+                                {% for i in page_counter..pagination.pages_count %}
+                                    {% if page_counter == pagination.current_page %}
+                                        <li class="active"><a>{{ page_counter }} <span class="sr-only">(current)</span></a></li>
+                                    {% else %}
+                                        <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'board': current_thread.id, 'page': page_counter, 'show': pagination.item_limit}) }}">{{ page_counter }}</a></li>
+                                    {% endif %}
+                                    {% set page_counter = page_counter + 1 %}
+                                {% endfor %}
+
+                            {% endif %}
+                        {% endif %}
+
+                        {# Next page #}
+                        {% if pagination.current_page < pagination.last_page_m1 %}
+                            <li><a href="{{ path('blog_index', {'blog': current_blog.url, 'page': pagination.next_page, 'show': pagination.item_limit}) }}" aria-label="{{ 'service_index.pagination.next'|trans }}"><span aria-hidden="true">&raquo;</span></a></li>
+                        {% else %}
+                            <li class="disabled"><a aria-label="{{ 'service_index.pagination.next'|trans }}"><span aria-hidden="true">&raquo;</span> <span class="sr-only">(current)</span></a></li>
+                        {% endif %}
+
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p><b>{{ 'service_index.search.title'|trans }}</b></p>
+                        <form action="{{ path('blog_search', {'blog': current_blog.url}) }}">
+                            <div class="input-group">
+                                <input name="q" id="search" class="form-control" placeholder="{{ 'service_index.search.placeholder'|trans }}" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-default" type="button"><span class="fa fa-fw fa-search"></span></button>
+                                </div>
+                            </div>
+                        </form>
+                        <hr />
+                        <p><b>Categories</b></p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url, 'c': 'news'}) }}">{{ 'News' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

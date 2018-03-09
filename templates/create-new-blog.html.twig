@@ -1,0 +1,80 @@
+{% extends 'layout_clean.html.twig' %}
+
+{% block title %}{{ 'new_blog.title'|trans }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background: url(/img/background.jpg) fixed 50% 50%;
+            background-size: cover;
+        }
+        {# Alternative
+        body, html {
+                height: 100%;
+                background: linear-gradient(rgb(37, 37, 37), rgb(0, 3, 84)) no-repeat fixed;
+        }
+        #}
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section class="container g-py-30">
+        <div class="row justify-content-center">
+            <div class="col-sm-8 col-lg-5">
+                <div class="g-brd-around g-brd-gray-light-v4 rounded g-py-40 g-px-30 g-bg-white">
+                    <header class="text-center mb-4">
+                        <h2 class="h2 g-color-black g-font-weight-600">{{ 'new_blog.title'|trans }}</h2>
+                    </header>
+
+                    <!-- Form -->
+                    {{ form_start(create_blog_form, {'attr': {'class': 'g-py-15'}}) }}
+                        {{ form_errors(create_blog_form) }}
+
+                        <div class="form-group {% if create_blog_form.name.vars.errors|length %}u-has-error-v1{% endif %} row g-mb-25">
+                            {{ form_label(create_blog_form.name, null, {'label_attr': {'class': 'col-sm-3 col-form-label g-mb-10'}}) }}
+                            <div class="col-sm-9">
+                                <div class="input-group g-brd-primary--focus">
+                                    <div class="input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0">
+                                        <i class="icon-finance-067 u-line-icon-pro"></i>
+                                    </div>
+                                    {{ form_widget(create_blog_form.name, {'attr': {'class': 'form-control form-control-md rounded-0'}}) }}
+                                </div>
+                                <small class="form-text text-muted g-font-size-small g-mt-10">{{ 'new_blog.form.name.help'|trans }}</small>
+                                <small class="form-control-feedback">{{ form_errors(create_blog_form.name) }}</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group {% if create_blog_form.url.vars.errors|length %}u-has-error-v1{% endif %} row g-mb-25">
+                            {{ form_label(create_blog_form.url, null, {'label_attr': {'class': 'col-sm-3 col-form-label g-mb-10'}}) }}
+                            <div class="col-sm-9">
+                                <div class="input-group g-brd-primary--focus">
+                                    <div class="input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0">
+                                        <i class="icon-communication-001 u-line-icon-pro"></i>
+                                    </div>
+                                    {{ form_widget(create_blog_form.url, {'attr': {'class': 'form-control form-control-md rounded-0'}}) }}
+                                </div>
+                                <small class="form-text text-muted g-font-size-small g-mt-10">{{ 'new_blog.form.url.help'|trans }}</small>
+                                <small class="form-control-feedback">{{ form_errors(create_blog_form.url) }}</small>
+                            </div>
+                        </div>
+
+                        <hr />
+
+                        <div class="form-group {% if create_blog_form.recaptcha.vars.errors|length %}u-has-error-v1{% endif %} mb-4">
+                            {{ form_widget(create_blog_form.recaptcha) }}
+                            <small class="form-control-feedback">{{ form_errors(create_blog_form.recaptcha) }}</small>
+                        </div>
+
+                        <hr />
+
+                        {{ form_widget(create_blog_form.send, {'attr': {'class': 'btn btn-md btn-block u-btn-primary rounded-0 g-py-15'}}) }}
+                    {{ form_end(create_blog_form) }}
+                    <!-- End Form -->
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

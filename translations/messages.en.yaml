@@ -1,0 +1,79 @@
+general:
+    title: 'OrbitronDev Blog'
+    link:
+        list: 'All blogs'
+        support: 'Support'
+        faq: 'FAQ'
+        settings: 'Settings'
+        logout: 'Logout'
+        login: 'Login'
+    copyright: '© 2013-2018 OrbitronDev. All rights reserved.'
+new_blog:
+    title: 'Create new blog'
+    form:
+        name:
+            label: 'Blog name'
+            constraints:
+                not_blank: 'Please enter a name'
+            help: 'How should your blog be called?'
+        url:
+            label: 'Blog url'
+            constraints:
+                not_blank: 'Please enter a url'
+            help: 'This will be used to access your blog over "https://blog.orbitrondev.org/<url>/".'
+        send:
+            label: 'Create'
+list_blogs:
+    title: 'Discover all blogs'
+    breadcrumb:
+        blog: 'Blogs'
+    admin:
+        title: 'Administrate your blogs'
+        new: 'Create new blog'
+        panel: 'Admin panel'
+    list:
+        title: 'Blog list'
+        name: 'Name'
+        owner: 'Owner'
+        tools: 'Tools'
+
+service_general:
+    nav:
+        profile: 'Profile'
+        settings: 'Settings'
+        logout: 'Logout'
+        login: 'Login'
+        admin: 'Admin Panel'
+        toggle_nav: 'Toggle navigation'
+    footer:
+        disclaimer: 'This page has been created with services by OrbitronDev'
+service_index:
+    title: 'Index'
+    no_posts: "There aren't any posts"
+    by: 'by'
+    posted_on: 'Posted on'
+    at: 'at'
+    read_more: 'Read More'
+    pagination:
+        previous: 'Previous'
+        next: 'Next'
+    search:
+        title: 'Search'
+        placeholder: 'Search for...'
+service_post:
+    posted_on: 'Posted on'
+    at: 'at'
+    tagged: '· tagged with'
+    comment:
+        title: 'Leave a comment'
+        comment_on: 'Comment on'
+        name: 'Name'
+        email: 'Email'
+        website: 'Website'
+        add: 'Add your comment'
+        list_title: 'Comments'
+service_search:
+    title: 'Searching for ...'
+    search:
+        title: 'Search'
+        placeholder: 'Search for...'

@@ -1,0 +1,72 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ 'list_blogs.title'|trans }} | {{ parent() }}{% endblock %}
+
+{% block content %}
+    <!-- Breadcrumbs -->
+    <section class="g-bg-gray-light-v5 g-py-50" style="background-image: url(https://web-assets.orbitrondev.org/unify-2.5/img/bg/pattern2.png);">
+        <div class="container">
+            <div class="d-sm-flex text-center">
+                <div class="align-self-center"><h2 class="h3 g-font-weight-300 w-100 g-mb-10 g-mb-0--md">{{ 'list_blogs.title'|trans }}</h2></div>
+                <div class="align-self-center ml-auto">
+                    <ul class="u-list-inline">
+                        <li class="list-inline-item g-color-primary"><span>{{ 'list_blogs.breadcrumb.blog'|trans }}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Breadcrumbs -->
+
+    <div class="container g-pt-30 g-pb-40">
+        {% if app.user is not empty %}
+            <div class="card g-mb-40">
+                <div class="card-header">
+                    {{ 'list_blogs.admin.title'|trans }}
+                    <div class="pull-right">
+                        <a href="{{ path('new') }}" class="btn btn-success btn-xs" role="button">{{ 'list_blogs.admin.new'|trans }}</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <tbody>
+                            {% for blog in blog_list %}
+                                {% if app.user.id == blog.owner.id %}
+                                    <tr>
+                                        <td><a href="{{ path('blog_index', {'blog': blog.url}) }}">{{ blog.name }}</a></td>
+                                        <td><a href="{{ path('blog_admin', {'blog': blog.url, 'page': 'home'}) }}">{{ 'list_blogs.admin.panel'|trans }}</a></td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <section id="blog-list">
+            <h2 class="page-header">{{ 'list_blogs.list.title'|trans }}</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>{{ 'list_blogs.list.name'|trans }}</th>
+                            <th>{{ 'list_blogs.list.owner'|trans }}</th>
+                            <th>{{ 'list_blogs.list.tools'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for blog in blog_list %}
+                            <tr>
+                                <td><a href="{{ path('blog_index', {'blog': blog.url}) }}">{{ blog.name }}</a></td>
+                                <td>{{ blog.owner.username }}</td>
+                                <td>{% if app.user is not empty and app.user.id == blog.owner.id %}<a href="{{ path('blog_admin', {'blog': blog.url, 'page': 'home'}) }}">{{ 'list_blogs.admin.panel'|trans }}</a>{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table><!-- /.table -->
+            </div><!-- /.table-responsive -->
+        </section><!-- /#blog-list -->
+    </div>
+{% endblock %}

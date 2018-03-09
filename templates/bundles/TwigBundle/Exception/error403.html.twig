@@ -1,0 +1,18 @@
+{% extends 'bundles/TwigBundle/Exception/layout.html.twig' %}
+
+{% trans_default_domain 'error' %}
+
+{% block title %}403 {{ '403.title'|trans }} | {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="g-font-size-180 g-font-size-240--sm g-font-size-420--lg g-line-height-1 g-font-weight-200 g-color-gray-dark-v2">403</div>
+
+    <div class="g-absolute-centered">
+        <h1 class="g-font-weight-200 g-mb-20">{{ '403.title'|trans }}</h1>
+        <p class="g-color-white-opacity-0_6 g-font-size-18">{{ '403.message'|trans }}</p>
+        <p class="g-color-white-opacity-0_6 g-font-size-18">{{ 'general.contact'|trans({'%link%': '<a href="mailto:info@orbitrondev.org" class="g-color-white g-color-primary--hover g-text-no-underline--hover">', '%/link%': '</a>'})|raw }}</p>
+        <p class="g-color-white-opacity-0_6 g-font-size-18 mb-0">{{ 'general.link_home'|trans({'%link%': '<a href="' ~ path('index') ~ '" class="g-color-white g-color-primary--hover g-text-no-underline--hover">', '%/link%': '</a>'})|raw }}</p>
+        <p class="g-color-white-opacity-0_6 g-font-size-18">{{ 'general.link_back'|trans({'%link%': '<a href="javascript:window.history.back();" class="g-color-white g-color-primary--hover g-text-no-underline--hover">', '%/link%': '</a>'})|raw }}</p>
+        <p class="g-color-white-opacity-0_6 g-font-size-10 mb-0">{{ 'general.server_message'|trans({'%code%': status_code, '%text%': status_text}) }}</p>
+    </div>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'theme1/layout.html.twig' %}
+
+{% set service_page_links %}
+    {% for text,link in current_blog.links %}
+        <li class="nav-item"><a href="{{ link }}" class="nav-link">{{ text }}</a></li>
+    {% endfor %}
+{% endset %}
+{% set service = {
+    'page_name': current_blog.name,
+    'page_logo_link': '/' ~ current_blog.url,
+    'page_author': current_blog.owner.username,
+    'page_description': current_blog.description,
+    'page_keywords': current_blog.keywords|join(','),
+    'page_links': service_page_links,
+    'page_google_webdev': current_blog.googleWebDeveloper,
+    'page_ga_id': current_blog.googleAnalyticsId,
+    'page_logo_url': ''
+} %}
+
+{% block title %}{{ 'service_search.title'|trans }} | {{ service.page_name }}{% endblock %}
+
+{% block header %}
+    <div class="container">
+        <h1 class="mt-4 mb-4 pb-2 border-bottom">{{ 'service_search.title'|trans }}</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <!-- Blog Search Content Column -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p><b>{{ 'service_search.search.title'|trans }}</b></p>
+                        <form action="{{ path('blog_search', {'blog': current_blog.url}) }}">
+                            <div class="input-group">
+                                <input name="q" id="search" class="form-control" placeholder="{{ 'service_search.search.placeholder'|trans }}" />
+                                <div class="input-group-append">
+                                    <button class="btn btn-default" type="button"><span class="fa fa-fw fa-search"></span></button>
+                                </div>
+                            </div>
+                        </form>
+                        <hr />
+                        <p><b>Categories</b></p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url, 'c': 'news'}) }}">{{ 'News' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                </ul>
+                            </div><!-- /.col-md-6 -->
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                    <li><a href="{{ path('blog_search', {'blog': current_blog.url}) }}">{{ 'Category' }}</a></li>
+                                </ul>
+                            </div><!-- /.col-md-6 -->
+                        </div><!-- /.row -->
+                    </div><!-- /.panel-body -->
+                </div><!-- /.panel -->
+            </div><!-- /.col-md-4 -->
+
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2>Article Title</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+                            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
+                            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
+                            Aliquam in felis sit amet augue.
+                        </p>
+                        <div class="text-center">
+                            <a href="#"><span class="glyphicon glyphicon-plus"></span> Full Story</a>
+                            <a href="#"><span class="glyphicon glyphicon-comment"></span> 12 Comments</a>
+                            <a href="#"><span class="glyphicon glyphicon-share"></span> 11 Shares</a>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2>Article Title</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+                            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
+                            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
+                            Aliquam in felis sit amet augue.
+                        </p>
+                        <div class="text-center">
+                            <a href="#"><span class="glyphicon glyphicon-plus"></span> Full Story</a>
+                            <a href="#"><span class="glyphicon glyphicon-comment"></span> 2 Comments</a>
+                            <a href="#"><span class="glyphicon glyphicon-share"></span> 211 Shares</a>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2>Article Title</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+                            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
+                            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
+                            Aliquam in felis sit amet augue.
+                        </p>
+                        <div class="text-center">
+                            <a href="#"><span class="glyphicon glyphicon-plus"></span> Full Story</a>
+                            <a href="#"><span class="glyphicon glyphicon-comment"></span> 7 Comments</a>
+                            <a href="#"><span class="glyphicon glyphicon-share"></span> 67 Shares</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+{% endblock %}

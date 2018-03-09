@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.getLocale() }}">
+<head>
+    <!-- Title -->
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Meta -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="{{ service.page_description }}" />
+    <meta name="author" content="{{ service.page_author }}" />
+    <meta name="publisher" content="{{ service.page_author }}" />
+    <meta name="copyright" content="{{ service.page_author }} &copy; 2017" />
+    <meta name="keywords" content="{{ service.page_keywords }}" />
+    <meta name="audience" content="Alle" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <meta name="google-site-verification" content="{{ service.page_google_webdev }}" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ service.page_logo_url }}" />
+
+    <!-- Web Fonts -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin" />
+
+    <!-- CSS Global Compulsory -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+
+
+    <!-- CSS Customization -->
+    {% block stylesheets %}{% endblock %}
+
+    <!-- JS Global Compulsory -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="{{ service.page_logo_link }}">{{ service.page_name }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ 'service_general.nav.toggle_nav'|trans }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                {{ service.page_links }}
+
+                {% if app.user is not empty and app.user.id == current_blog.owner.id %}
+                    <li class="nav-item">
+                        <a href="{{ path('blog_admin', {'blog': current_blog.url, 'page': 'home'}) }}" class="nav-link bg-danger text-white mr-2">{{ 'service_general.nav.admin'|trans }}</a>
+                    </li>
+                {% endif %}
+                {% if app.user is not empty %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle p-0" href="{{ path('user', {'username': app.user.username}) }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="rounded-circle" src="http://account.localhost/api/get_img?user_id={{ app.user.id }}&height=36&width=36" />
+                            {{ app.user.username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('user', {'username': app.user.username}) }}">{{ 'service_general.nav.profile'|trans }}</a>
+                            <a class="dropdown-item" href="http://account.localhost">{{ 'service_general.nav.settings'|trans }}</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ path('logout') }}">{{ 'service_general.nav.logout'|trans }}</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('login', {'redir': app.request.uri}) }}">{{ 'service_general.nav.login'|trans }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% block header %}{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block footer %}
+    <footer>
+        <hr />
+        <div class="container pb-3">
+            <div class="row">
+                <div class="col-lg col-md d-none d-md-block"><div class="text-left">{{ 'general.copyright'|trans }}</div></div>
+                <div class="d-none d-sm-block d-md-none col-sm-12 col-xs-12"><div class="text-center">{{ 'general.copyright'|trans }}</div></div>
+                <div class="col-lg col-md d-none d-md-block"><div class="text-right">{{ 'service_general.footer.disclaimer'|trans }}</div></div>
+                <div class="d-none d-sm-block d-md-none col-sm-12 col-xs-12"><div class="text-center">{{ 'service_general.footer.disclaimer'|trans }}</div></div>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+
+<!-- JS Google Analytics -->
+<script>
+    var googleAnalytics = '{{ service.page_ga_id }}';
+    if(googleAnalytics) {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', '{{ service.page_ga_id }}', 'auto');
+        ga('require', 'displayfeatures');
+        ga('require', 'linkid', 'linkid.js');
+        ga('send', 'pageview');
+    }
+</script>
+
+<!-- JS Implementing Plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.6/SmoothScroll.min.js"></script>
+
+{% block javascripts %}{% endblock %}
+
+<!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+<![endif]-->
+</body>
+</html>

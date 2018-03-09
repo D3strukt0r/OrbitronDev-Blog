@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.getLocale() }}">
+<head>
+    <!-- Title -->
+    <title>{{ 'general.title'|trans }}</title>
+
+    <!-- Required Meta Tags Always Come First -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="{% block description %}{% endblock %}" />
+    <meta name="author" content="OrbitronDev" />
+    <meta name="publisher" content="OrbitronDev" />
+    <meta name="copyright" content="{{ 'general.copyright'|trans }}" />
+    <meta name="keywords" content="" />
+    <meta name="audience" content="Alle" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- Favicon -->
+    {% include '_favicon.html.twig' %}
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+
+    <!-- CSS Global Compulsory -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+
+    <!-- CSS Global Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/vendor/icon-hs/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/vendor/hamburgers/hamburgers.min.css" />
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/vendor/hs-megamenu/src/hs.megamenu.css" />
+
+    <!-- CSS Unify -->
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/css/unify-core.css" />
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/css/unify-components.css" />
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/css/unify-globals.css" />
+
+    <!-- CSS Customization -->
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" href="/css/custom.css?v={{ "now"|date("d-m-Y") }}">
+</head>
+
+<body class="u-body--header-side-static-left">
+<main>
+    <!-- Sidebar Navigation -->
+    <div id="js-header" class="u-header u-header--side" data-header-position="left" data-header-breakpoint="lg">
+        <div class="u-header__sections-container g-bg-white g-brd-right--lg g-brd-gray-light-v5 g-py-10 g-py-40--lg g-px-14--lg">
+            <div class="u-header__section u-header__section--light">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="js-mega-menu container">
+                        <!-- Responsive Toggle Button -->
+                        <button class="navbar-toggler navbar-toggler-right btn g-line-height-1 g-brd-none g-pa-0 g-pos-abs g-top-3 g-right-0" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
+                            <span class="hamburger hamburger--slider"><span class="hamburger-box"><span class="hamburger-inner"></span></span></span>
+                        </button>
+                        <!-- End Responsive Toggle Button -->
+
+                        <!-- Logo -->
+                        <a href="{{ path('index') }}" class="navbar-brand g-mb-40--lg">
+                            {{ 'general.title'|trans }}
+                        </a>
+                        <!-- End Logo -->
+
+                        <!-- Navigation -->
+                        <div class="collapse navbar-collapse align-items-center flex-sm-row w-100 g-mt-20 g-mt-0--lg g-mb-40" id="navBar">
+                            <ul class="navbar-nav ml-auto text-uppercase g-font-weight-600 u-sub-menu-v1">
+                                <li class="nav-item g-my-5"><a href="{{ path('index') }}" class="nav-link">{{ 'general.link.list'|trans }}</a></li>
+                                <li class="nav-item g-my-5"><a href="#!" class="nav-link">{{ 'general.link.support'|trans }}</a></li>
+                                <li class="nav-item g-my-5"><a href="#!" class="nav-link">{{ 'general.link.faq'|trans }}</a></li>
+                                {% if app.user is not empty %}
+                                    <li class="nav-item hs-has-sub-menu g-my-5">
+                                        <a href="https://account.orbitrondev.org" class="nav-link" id="nav-link-1" aria-haspopup="true" aria-expanded="false" aria-controls="nav-submenu-1">{{ app.user.username }}</a>
+                                        <!-- Submenu -->
+                                        <ul class="hs-sub-menu list-unstyled animated" id="nav-submenu-1" aria-labelledby="nav-link-1" style="display: none;">
+                                            <li><a href="https://account.orbitrondev.org">{{ 'general.link.settings'|trans }}</a></li>
+                                            <li><a href="{{ path('logout') }}">{{ 'general.link.logout'|trans }}</a></li>
+                                        </ul>
+                                        <!-- End Submenu -->
+                                    </li>
+                                {% else %}
+                                    <li class="nav-item g-my-5"><a href="{{ path('login') }}" class="nav-link">{{ 'general.link.login'|trans }}</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <!-- End Navigation -->
+
+                        <div class="text-center g-hidden-lg-down">
+                            <ul class="list-inline g-mb-10">
+                                <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook">
+                                    <a href="#!" class="g-color-main g-color-primary--hover">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="" data-original-title="Instagram">
+                                    <a href="#!" class="g-color-main g-color-primary--hover">
+                                        <i class="fa fa-google-plus"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter">
+                                    <a href="#!" class="g-color-main g-color-primary--hover">
+                                        <i class="fa fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item g-mx-10" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter">
+                                    <a href="#!" class="g-color-main g-color-primary--hover">
+                                        <i class="fa fa-github"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <p class="mb-0">{{ 'general.copyright'|trans }}</p>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- End Sidebar Navigation -->
+
+    {% block content %}{% endblock %}
+
+</main>
+
+<!-- JS Global Compulsory -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.6/SmoothScroll.min.js"></script>
+
+<!-- JS Implementing Plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+
+<!-- JS Unify -->
+<script src="https://web-assets.orbitrondev.org/unify-2.5/js/hs.core.js"></script>
+<script src="https://web-assets.orbitrondev.org/unify-2.5/vendor/hs-megamenu/src/hs.megamenu.js"></script>
+<script src="https://web-assets.orbitrondev.org/unify-2.5/js/components/hs.header-side.js"></script>
+<script src="https://web-assets.orbitrondev.org/unify-2.5/js/helpers/hs.hamburgers.js"></script>
+
+<!-- JS Custom -->
+<script src="/js/custom.js?v={{ "now"|date("d-m-Y") }}"></script>
+
+<!-- JS Plugins Init. -->
+<script>
+    $(window).on('load', function () {
+        // initialization of header
+        $.HSCore.components.HSHeaderSide.init($('#js-header'));
+        $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+        // initialization of HSMegaMenu component
+        $('.js-mega-menu').HSMegaMenu({
+            event: 'hover',
+            direction: 'vertical',
+            breakpoint: 991
+        });
+    });
+</script>
+{% include '_cookie_notice.html.twig' %}
+{% include '_analytics.html.twig' %}
+{% block javascripts %}{% endblock %}
+
+<!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+<![endif]-->
+</body>
+</html>

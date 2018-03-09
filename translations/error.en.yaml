@@ -1,0 +1,17 @@
+general:
+    contact: 'If you think this is a problem with us, please %link%tell us%/link%.'
+    link_home: 'Here is a link to the %link%home page%/link%.'
+    link_back: 'Here is a link to %link%go back%/link%.'
+    server_message: 'Server message: [Code: %code%] %text%'
+401:
+    title: 'Unauthorized'
+    message: "This server could not verify that you are authorized to access the URL \"%referer_url%\". You either supplied the wrong credentials (e.g., bad password), or your browser doesn't understand how to supply the credentials required. In case you are allowed to request the document, please check your user-id and password and try again."
+403:
+    title: 'Forbidden'
+    message: "You don't have permission to access the requested directory. There is either no index document or the directory is read-protected."
+404:
+    title: 'Page Not Found'
+    message: 'Oops! Looks like you followed a bad link.'
+500:
+    title: 'Internal Server Error'
+    message: 'The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there was an error in a CGI script.'

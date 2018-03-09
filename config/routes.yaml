@@ -1,0 +1,43 @@
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+new:
+    path: /new-blog
+    controller: App\Controller\DefaultController::newBlog
+
+login:
+    path: /login
+    controller: App\Controller\UserController::login
+login_check:
+    path: /login-check
+logout:
+    path: /logout
+user:
+    path: /user/{username}
+    controller: App\Controller\UserController::user
+
+setup:
+    path: /setup
+    controller: App\Controller\SetupController::setup
+
+blog_index:
+    path: /{blog}
+    controller: App\Controller\DefaultController::blogIndex
+blog_post:
+    path: /{blog}/p/{post}
+    controller: App\Controller\DefaultController::blogPost
+blog_writepost:
+    path: /{blog}/write-post
+    controller: App\Controller\DefaultController::blogWritePost
+blog_writecomment:
+    path: /{blog}/write-comment
+    controller: App\Controller\DefaultController::blogWriteComment
+blog_search:
+    path: /{blog}/search
+    controller: App\Controller\DefaultController::blogSearch
+blog_rss:
+    path: /{blog}/rss
+    controller: App\Controller\DefaultController::blogRss
+blog_admin:
+    path: /{blog}/admin/{page}
+    controller: App\Controller\DefaultController::blogAdmin

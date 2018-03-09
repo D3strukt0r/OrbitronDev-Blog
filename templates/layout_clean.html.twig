@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.getLocale() }}">
+<head>
+    <!-- Title -->
+    <title>{% block title %}{{ 'general.title'|trans }}{% endblock %}</title>
+
+    <!-- Required Meta Tags Always Come First -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="description" content="{% block description %}{% endblock %}" />
+    <meta name="author" content="OrbitronDev" />
+    <meta name="publisher" content="OrbitronDev" />
+    <meta name="copyright" content="{{ 'general.copyright'|trans }}" />
+    <meta name="keywords" content="" />
+    <meta name="audience" content="Alle" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- Favicon -->
+    {% include '_favicon.html.twig' %}
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700" />
+
+    <!-- CSS Global Compulsory -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/vendor/icon-line-pro/style.css" />
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/vendor/icon-hs/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.4/cookieconsent.min.css" />
+
+    <!-- CSS Unify -->
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/css/unify-core.css" />
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/css/unify-components.css" />
+    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5/css/unify-globals.css" />
+
+    <!-- CSS Customization -->
+    <link rel="stylesheet" href="/css/custom.css?v={{ "now"|date("d-m-Y") }}" />
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+<main>
+    {% block content %}
+        <!-- Content -->
+        <section class="g-py-50">
+            <div class="container">
+                <h1 class="g-mb-20">Blank Page!</h1>
+            </div>
+        </section>
+        <!-- End Content -->
+    {% endblock %}
+</main>
+
+<!-- JS Global Compulsory -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.0.1/jquery-migrate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!-- JS Implementing Plugins -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+
+<!-- JS Unify -->
+<script src="https://web-assets.orbitrondev.org/unify-2.5/js/hs.core.js"></script>
+
+<!-- JS Custom -->
+<script src="/js/custom.js?v={{ "now"|date("d-m-Y") }}"></script>
+
+<!-- JS Plugins Init. -->
+{% include '_cookie_notice.html.twig' %}
+{% include '_analytics.html.twig' %}
+{% block javascripts %}{% endblock %}
+<!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+<![endif]-->
+</body>
+</html>
