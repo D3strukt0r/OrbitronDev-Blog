@@ -28,7 +28,7 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8 order-md-1">
                 {% if posts|length == 0 %}
                     <hr />
                     <div class="alert alert-danger" role="alert">
@@ -142,7 +142,7 @@
                 {% endif %}
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-4 order-first order-md-2 mb-2">
                 <div class="card">
                     <div class="card-body">
                         <p><b>{{ 'service_index.search.title'|trans }}</b></p>
@@ -150,7 +150,7 @@
                             <div class="input-group">
                                 <input name="q" id="search" class="form-control" placeholder="{{ 'service_index.search.placeholder'|trans }}" />
                                 <div class="input-group-append">
-                                    <button class="btn btn-default" type="button"><span class="fa fa-fw fa-search"></span></button>
+                                    <button class="btn btn-default" type="submit"><span class="fa fa-fw fa-search"></span></button>
                                 </div>
                             </div>
                         </form>
