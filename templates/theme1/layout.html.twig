@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
 
-
     <!-- CSS Customization -->
     {% block stylesheets %}{% endblock %}
 
@@ -88,10 +87,10 @@
         <hr />
         <div class="container pb-3">
             <div class="row">
-                <div class="col-lg col-md d-none d-md-block"><div class="text-left">{{ 'general.copyright'|trans }}</div></div>
-                <div class="d-none d-sm-block d-md-none col-sm-12 col-xs-12"><div class="text-center">{{ 'general.copyright'|trans }}</div></div>
-                <div class="col-lg col-md d-none d-md-block"><div class="text-right">{{ 'service_general.footer.disclaimer'|trans }}</div></div>
-                <div class="d-none d-sm-block d-md-none col-sm-12 col-xs-12"><div class="text-center">{{ 'service_general.footer.disclaimer'|trans }}</div></div>
+                <div class="col d-none d-md-block"><div class="text-left">{{ 'general.copyright'|trans }}</div></div>
+                <div class="col-12 d-block d-md-none"><div class="text-center">{{ 'general.copyright'|trans }}</div></div>
+                <div class="col d-none d-md-block"><div class="text-right">{{ 'service_general.footer.disclaimer'|trans }}</div></div>
+                <div class="col-12 d-block d-md-none"><div class="text-center">{{ 'service_general.footer.disclaimer'|trans }}</div></div>
             </div>
         </div>
     </footer>

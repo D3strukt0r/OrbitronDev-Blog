@@ -37,8 +37,10 @@
                             {{ form_label(create_blog_form.name, null, {'label_attr': {'class': 'col-sm-3 col-form-label g-mb-10'}}) }}
                             <div class="col-sm-9">
                                 <div class="input-group g-brd-primary--focus">
-                                    <div class="input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0">
-                                        <i class="icon-finance-067 u-line-icon-pro"></i>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text rounded-0 g-bg-white g-color-gray-light-v1">
+                                            <i class="icon-finance-067 u-line-icon-pro"></i>
+                                        </span>
                                     </div>
                                     {{ form_widget(create_blog_form.name, {'attr': {'class': 'form-control form-control-md rounded-0'}}) }}
                                 </div>
@@ -51,8 +53,10 @@
                             {{ form_label(create_blog_form.url, null, {'label_attr': {'class': 'col-sm-3 col-form-label g-mb-10'}}) }}
                             <div class="col-sm-9">
                                 <div class="input-group g-brd-primary--focus">
-                                    <div class="input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0">
-                                        <i class="icon-communication-001 u-line-icon-pro"></i>
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text rounded-0 g-bg-white g-color-gray-light-v1">
+                                            <i class="icon-communication-001 u-line-icon-pro"></i>
+                                        </span>
                                     </div>
                                     {{ form_widget(create_blog_form.url, {'attr': {'class': 'form-control form-control-md rounded-0'}}) }}
                                 </div>
