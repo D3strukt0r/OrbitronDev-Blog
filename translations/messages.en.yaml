@@ -13,13 +13,9 @@ new_blog:
     form:
         name:
             label: 'Blog name'
-            constraints:
-                not_blank: 'Please enter a name'
             help: 'How should your blog be called?'
         url:
             label: 'Blog url'
-            constraints:
-                not_blank: 'Please enter a url'
             help: 'This will be used to access your blog over "https://blog.orbitrondev.org/<url>/".'
         send:
             label: 'Create'

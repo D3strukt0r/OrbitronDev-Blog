@@ -131,6 +131,11 @@ class OrbitronDevAuthenticator extends SocialAuthenticator
         // 1) have they logged in with Facebook before? Easy!
         $existingUser = $this->em->getRepository('App:User')->findOneBy(['remote_id' => $originUser->getId()]);
         if ($existingUser) {
+            if (empty($existingUser->getTokenData()) || unserialize($existingUser->getTokenData()) != $credentials) {
+                $existingUser->setTokenData(serialize($credentials));
+                $this->em->flush();
+            }
+
             return $existingUser;
         }
 

@@ -7,6 +7,17 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class BlogHelper
 {
+    public static $settings = [
+        'blog' => [
+            'name' => [
+                'min_length' => 4,
+            ],
+            'url' => [
+                'min_length' => 3,
+            ],
+        ],
+    ];
+
     /**
      * @var \Doctrine\Common\Persistence\ObjectManager $em
      */

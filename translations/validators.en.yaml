@@ -1,0 +1,9 @@
+new_blog:
+    name:
+        not_blank: 'Please give your blog a name'
+        min_length: 'Your blog must have minimally {{ limit }} characters'
+    url:
+        not_blank: 'Please give your blog an unique url to access it'
+        min_length: 'Your blog url must have minimally {{ limit }} characters'
+        regex: 'Only use a-z, A-Z, 0-9, _, -'
+        not_equal_to: "It's prohibited to use this url"

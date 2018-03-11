@@ -41,37 +41,19 @@ class DefaultController extends Controller
         $createBlogForm = $this->createForm(NewBlogType::class);
         $createBlogForm->handleRequest($request);
         if ($createBlogForm->isSubmitted() && $createBlogForm->isValid()) {
-            $errorMessages = [];
-            if (strlen($blogName = trim($createBlogForm->get('name')->getData())) == 0) {
-                $errorMessages[] = '';
-                $createBlogForm->get('name')->addError(new FormError('Please give your blog a name'));
-            } elseif (strlen($blogName) < 4) {
-                $errorMessages[] = '';
-                $createBlogForm->get('name')->addError(new FormError('Your blog must have minimally 4 characters'));
-            }
-            if (strlen($blogUrl = trim($createBlogForm->get('url')->getData())) == 0) {
-                $errorMessages[] = '';
-                $createBlogForm->get('url')->addError(new FormError('Please give your blog an unique url to access it'));
-            } elseif (strlen($blogUrl) < 3) {
-                $errorMessages[] = '';
-                $createBlogForm->get('url')->addError(new FormError('Your blog url must have minimally 3 characters'));
-            } elseif (preg_match('/[^a-z_\-0-9]/i', $blogUrl)) {
-                $errorMessages[] = '';
-                $createBlogForm->get('url')->addError(new FormError('Only use a-z, A-Z, 0-9, _, -'));
-            } elseif (in_array($blogUrl, ['new-forum', 'admin'])) {
-                $errorMessages[] = '';
-                $createBlogForm->get('url')->addError(new FormError('It\'s prohibited to use this url'));
-            } elseif ($helper->urlExists($blogUrl)) {
-                $errorMessages[] = '';
-                $createBlogForm->get('url')->addError(new FormError('This url is already in use'));
+            $formData = $createBlogForm->getData();
+            $error = false;
+            if ($helper->urlExists($formData['url'])) {
+                $error = true;
+                $createBlogForm->get('url')->addError(new FormError('This url is already in use')); // TODO: Missing translation
             }
 
-            if (!count($errorMessages)) {
+            if (!$error) {
                 try {
                     $newBlog = new Blog();
                     $newBlog
-                        ->setName($blogName)
-                        ->setUrl($blogUrl)
+                        ->setName($formData['name'])
+                        ->setUrl($formData['url'])
                         ->setOwner($user)
                         ->setCreated(new \DateTime())
                         ->setClosed(false);
@@ -80,7 +62,7 @@ class DefaultController extends Controller
 
                     return $this->redirectToRoute('blog_index', ['blog' => $newBlog->getUrl()]);
                 } catch (\Exception $e) {
-                    $createBlogForm->addError(new FormError('We could not create your blog. ('.$e->getMessage().')'));
+                    $createBlogForm->addError(new FormError('We could not create your blog. ('.$e->getMessage().')')); // TODO: Missing translation
                 }
             }
         }
@@ -102,8 +84,8 @@ class DefaultController extends Controller
 
         // Get all posts
         $pagination = [];
-        $pagination['item_limit'] = !is_null($request->query->get('show')) ? (int)$request->query->get('show') : 5;
-        $pagination['current_page'] = !is_null($request->query->get('page')) ? (int)$request->query->get('page') : 1;
+        $pagination['item_limit'] = $request->query->getInt('show', 5);
+        $pagination['current_page'] = $request->query->getInt('page', 1);
 
         /** @var \App\Entity\Post[] $posts */
         $posts = $em->getRepository(Post::class)->findBy(
