@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Blog;
 use App\Entity\Post;
 use App\Form\NewBlogType;
-use App\Service\BlogHelper;
 use Doctrine\Common\Persistence\ObjectManager;
 use Suin\RSSWriter\Channel;
 use Suin\RSSWriter\Feed;
@@ -28,7 +27,7 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function newBlog(ObjectManager $em, Request $request, BlogHelper $helper)
+    public function newBlog(ObjectManager $em, Request $request)
     {
         //////////// TEST IF USER IS LOGGED IN ////////////
         /** @var \App\Entity\User|null $user */
@@ -42,28 +41,21 @@ class DefaultController extends Controller
         $createBlogForm->handleRequest($request);
         if ($createBlogForm->isSubmitted() && $createBlogForm->isValid()) {
             $formData = $createBlogForm->getData();
-            $error = false;
-            if ($helper->urlExists($formData['url'])) {
-                $error = true;
-                $createBlogForm->get('url')->addError(new FormError('This url is already in use')); // TODO: Missing translation
-            }
 
-            if (!$error) {
-                try {
-                    $newBlog = new Blog();
-                    $newBlog
-                        ->setName($formData['name'])
-                        ->setUrl($formData['url'])
-                        ->setOwner($user)
-                        ->setCreated(new \DateTime())
-                        ->setClosed(false);
-                    $em->persist($newBlog);
-                    $em->flush();
+            try {
+                $newBlog = new Blog();
+                $newBlog
+                    ->setName($formData['name'])
+                    ->setUrl($formData['url'])
+                    ->setOwner($user)
+                    ->setCreated(new \DateTime())
+                    ->setClosed(false);
+                $em->persist($newBlog);
+                $em->flush();
 
-                    return $this->redirectToRoute('blog_index', ['blog' => $newBlog->getUrl()]);
-                } catch (\Exception $e) {
-                    $createBlogForm->addError(new FormError('We could not create your blog. ('.$e->getMessage().')')); // TODO: Missing translation
-                }
+                return $this->redirectToRoute('blog_index', ['blog' => $newBlog->getUrl()]);
+            } catch (\Exception $e) {
+                $createBlogForm->addError(new FormError('We could not create your blog. ('.$e->getMessage().')')); // TODO: Missing translation
             }
         }
 
