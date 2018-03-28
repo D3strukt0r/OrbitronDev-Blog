@@ -10,25 +10,8 @@ knpu_oauth2_client:
             # client_class: Some\Custom\Client
 
             # optional: if your provider has custom constructor options
-            # provider_options: {}
-
-            # now, all the normal options!
-            client_id: '%env(OAUTH_CLIENT_ID)%'
-            client_secret: '%env(OAUTH_CLIENT_SECRET)%'
-            redirect_route: login_check
-            redirect_params: {}
-        # will create service: "knpu.oauth2.client.orbitrondev_test"
-        # an instance of: KnpU\OAuth2ClientBundle\Client\OAuth2Client
-        orbitrondev_dev:
-            type: generic
-            provider_class: OrbitronDev\OAuth2\Client\Provider\OrbitronDevProvider
-
-            # optional: a class that extends OAuth2Client
-            # client_class: Some\Custom\Client
-
-            # optional: if your provider has custom constructor options
             provider_options:
-                host: 'http://account.localhost'
+                host: 'http://service-account.herokuapp.com'
 
             # now, all the normal options!
             client_id: '%env(OAUTH_CLIENT_ID)%'

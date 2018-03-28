@@ -202,7 +202,6 @@ class OrbitronDevAuthenticator extends SocialAuthenticator
      */
     private function getClient()
     {
-        $client = $this->kernel->getEnvironment() === 'prod' ? 'orbitrondev' : 'orbitrondev_dev';
-        return $this->clientRegistry->getClient($client);
+        return $this->clientRegistry->getClient('orbitrondev');
     }
 }

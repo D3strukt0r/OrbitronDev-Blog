@@ -15,9 +15,8 @@ class UserController extends Controller
             return $this->redirectToRoute('index');
         }
 
-        $client = $this->get('kernel')->getEnvironment() === 'prod' ? 'orbitrondev' : 'orbitrondev_dev';
         return $this->get('oauth2.registry')
-            ->getClient($client)
+            ->getClient('orbitrondev')
             ->redirect(['user:email', 'user:username', 'user:id']);
     }
 }
