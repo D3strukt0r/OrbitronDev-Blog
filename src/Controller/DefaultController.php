@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class DefaultController extends Controller
 {
@@ -27,7 +28,7 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function newBlog(ObjectManager $em, Request $request)
+    public function newBlog(ObjectManager $em, Request $request, TranslatorInterface $translator)
     {
         //////////// TEST IF USER IS LOGGED IN ////////////
         /** @var \App\Entity\User|null $user */
@@ -55,7 +56,7 @@ class DefaultController extends Controller
 
                 return $this->redirectToRoute('blog_index', ['blog' => $newBlog->getUrl()]);
             } catch (\Exception $e) {
-                $createBlogForm->addError(new FormError('We could not create your blog. ('.$e->getMessage().')')); // TODO: Missing translation
+                $createBlogForm->addError(new FormError($translator->trans('new_blog.not_created', ['%error_message%' => $e->getMessage()], 'validators')));
             }
         }
 

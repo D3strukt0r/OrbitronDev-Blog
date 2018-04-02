@@ -1,4 +1,5 @@
 new_blog:
+    not_created: 'We could not create your blog. (%error_message%)'
     name:
         not_blank: 'Please give your blog a name'
         min_length: 'Your blog must have minimally {{ limit }} characters'
