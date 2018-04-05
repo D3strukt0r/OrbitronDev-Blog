@@ -4,6 +4,8 @@ namespace Deployer;
 
 require 'recipe/symfony4.php';
 
+set('ssh_multiplexing', true);
+
 // Project name
 set('application', 'blog');
 
@@ -29,9 +31,9 @@ add('shared_dirs', []);
 set('writable_dirs', []);
 
 // Hosts
-host('orbitrondev')
-    ->set('deploy_path', '/home/u530305173/public_html/blog')
-    ->set('http_user', 'u530305173');
+host('local')
+    ->set('deploy_path', '/var/www/html/{{application}}')
+    ->set('http_user', 'www-data');
 
 // Tasks
 task('build', function () {
