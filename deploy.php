@@ -4,16 +4,13 @@ namespace Deployer;
 
 require 'recipe/symfony4.php';
 
-set('ssh_multiplexing', true);
-
 // Project name
 set('application', 'blog');
 
 // Environment vars
-set('env', [
+add('env', [
     'APP_ENV' => 'prod'
 ]);
-set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --no-dev --optimize-autoloader  --ignore-platform-reqs');
 
 // Project repository
 set('repository', 'https://github.com/OrbitronDev/service-blog.git');
@@ -24,16 +21,25 @@ set('git_tty', true);
 
 // Shared files/dirs between deploys 
 add('shared_files', ['.htaccess']);
-add('shared_dirs', []);
+add('shared_dirs', ['var/data']);
 
 // Writable dirs by web server 
-//add('writable_dirs', []);
 set('writable_dirs', []);
 
 // Hosts
 host('local')
+    ->hostname('local')
     ->set('deploy_path', '/var/www/html/{{application}}')
-    ->set('http_user', 'www-data');
+    ->set('http_user', 'www-data')
+    ->set('ssh_multiplexing', true);
+host('remote')
+    ->hostname('hostpoint')
+    ->set('deploy_path', '/home/manuelev/www/{{application}}')
+    ->set('http_user', 'manuelev')
+    ->set('keep_releases', 1)
+    ->set('bin/php', function () {
+        return locateBinaryPath('/usr/local/php72/bin/php');
+    });
 
 // Tasks
 task('build', function () {

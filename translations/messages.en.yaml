@@ -73,3 +73,19 @@ service_search:
     search:
         title: 'Search'
         placeholder: 'Search for...'
+
+admin:
+    nav:
+        title: 'Admin'
+        quick_links: 'Quick links'
+        back: 'Back to service'
+        logout: 'Logout'
+    close: 'Close'
+    page:
+        not_found:
+            title: '404 Error'
+            text: 'Page not found'
+        home:
+            title: 'Main dashboard'
+            breadcrumb:
+                home: 'Home'

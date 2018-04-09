@@ -1,0 +1,18 @@
+{% extends 'theme_admin1/layout_admin.html.twig' %}
+
+{% block breadcrumb %}
+    <div class="g-hidden-sm-down g-bg-gray-light-v8 g-pa-20">
+        <ul class="u-list-inline g-color-gray-dark-v6">
+
+            <li class="list-inline-item">
+                <span class="g-valign-middle">{{ 'admin.page.home.breadcrumb.home'|trans }}</span>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="g-pa-20">
+        <h1 class="g-font-weight-300 g-font-size-28 g-color-black g-mb-40">{{ 'admin.page.home.title'|trans }}</h1>
+    </div>
+{% endblock %}

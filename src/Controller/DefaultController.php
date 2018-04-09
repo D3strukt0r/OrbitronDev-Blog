@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Blog;
 use App\Entity\Post;
 use App\Form\NewBlogType;
+use App\Service\AdminControlPanel;
 use Doctrine\Common\Persistence\ObjectManager;
 use Suin\RSSWriter\Channel;
 use Suin\RSSWriter\Feed;
@@ -197,8 +198,54 @@ class DefaultController extends Controller
         return $feed->render();
     }
 
-    public function blogAdmin()
+    public function blogAdmin(ObjectManager $em, Request $request, $blog, $page)
     {
-        throw $this->createNotFoundException('Admin (Coming Soon)');
+        //////////// TEST IF USER IS LOGGED IN ////////////
+        /** @var \App\Entity\User|null $user */
+        $user = $this->getUser();
+        if (!$user instanceof UserInterface) {
+            throw $this->createAccessDeniedException();
+        }
+        //////////// END TEST IF USER IS LOGGED IN ////////////
+
+        //////////// TEST IF STORE EXISTS ////////////
+        /** @var \App\Entity\Blog|null $store */
+        $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
+        if (is_null($blog)) {
+            throw $this->createNotFoundException();
+        }
+        //////////// END TEST IF STORE EXISTS ////////////
+
+        if ($user->getId() != $blog->getOwner()->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        AdminControlPanel::loadLibs($this->get('kernel')->getProjectDir(), $this->container);
+
+        $navigationLinks = AdminControlPanel::getTree();
+
+        $view = 'DefaultController::notFound';
+
+        $list = AdminControlPanel::getFlatTree();
+
+        $key = null;
+        while ($item = current($list)) {
+            if (isset($item['href']) && $item['href'] === $page) {
+                $key = key($list);
+            }
+            next($list);
+        }
+
+        if (!is_null($key)) {
+            if (is_callable('\\App\\Controller\\Panel\\'.$list[$key]['view'])) {
+                $view = $list[$key]['view'];
+            }
+        }
+        $response = $this->forward('App\\Controller\\Panel\\'.$view, [
+            'navigation' => $navigationLinks,
+            'request'    => $request,
+            'blog'      => $blog,
+        ]);
+        return $response;
     }
 }
