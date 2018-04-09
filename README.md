@@ -11,7 +11,9 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 ```
-Working webserver (PHP is a must)
+Webserver (PHP 7.2+)
+Database (e. g. MySql)
+Mailserver
 ```
 
 ### Installing
@@ -33,22 +35,28 @@ $ composer install --no-dev --optimize-autoloader
 Next, rename `.env.dist` to `.env` and change following parameters:
 
 ```
-# Get keys from ReCaptcha for the coresponding website
-RECAPTCHA_PUBLIC_KEY=public_key
-RECAPTCHA_PRIVATE_KEY=private_key
+RECAPTCHA_PUBLIC_KEY=... (ReCaptcha)
+RECAPTCHA_PRIVATE_KEY=... (ReCaptcha)
 
-# Create a Dev App on orbitrondev.org and insert info here
-OAUTH_CLIENT_ID="app_id"
-OAUTH_CLIENT_SECRET=app_secret
+OAUTH_CLIENT_ID="..." (OAuth2 Client from orbitrondev.org)
+OAUTH_CLIENT_SECRET=... (OAuth2 Client from orbitrondev.org)
+
+APP_ENV=prod
+APP_SECRET=...
 
 DATABASE_URL=... (Accessing databse)
 ```
 
 ## Built With
 
-* [Composer](https://getcomposer.org/) - PHP Package manager
-* [Symfony](https://symfony.com/) - PHP Framework
-* [Bootstrap](https://getbootstrap.com/) - Template used in this service
+* [Composer](https://getcomposer.org) - PHP Package manager
+* [Symfony](https://symfony.com) - PHP Framework
+* [SwiftMailer](https://swiftmailer.symfony.com) - PHP Mailer
+* [Doctrine](https://www.doctrine-project.org) - PHP Database accessing
+* [Twig](https://twig.symfony.com) - PHP Templating service
+* [ReCaptcha](https://www.google.com/recaptcha) - Captcha service from Google
+* [Bootstrap](https://getbootstrap.com) - Theme used in this service
+* [Unify](https://wrapbootstrap.com/theme/unify-responsive-website-template-WB0412697) - Theme used in this service
 
 ## Contributing
 

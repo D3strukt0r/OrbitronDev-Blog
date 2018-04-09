@@ -1,19 +1,32 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        #in_memory: { memory: ~ }
-        user_db:
+        # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+        # In this example, users are stored via Doctrine in the database
+        # To see the users at src/App/DataFixtures/ORM/LoadFixtures.php
+        # To load users from somewhere else: https://symfony.com/doc/current/security/custom_provider.html
+        database_users:
             entity:
                 class: App\Entity\User
                 property: username
+
+    # https://symfony.com/doc/current/security.html#initial-security-yml-setup-authentication
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: ~
+            # this firewall applies to all URLs
+            pattern: ^/
+
+            # but the firewall does not require login on every page
+            # denying access is done in access_control or in your controllers
+            anonymous: true
+
             logout:
+                # The route name the user can go to in order to logout
                 path:   logout
+                # The name of the route to redirect to after logging out
                 target: index
 
             remember_me:
@@ -28,14 +41,6 @@ security:
 
             # if you want, disable storing the user in the session
             # stateless: true
-
-            # activate different ways to authenticate
-
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
