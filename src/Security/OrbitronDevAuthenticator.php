@@ -74,7 +74,7 @@ class OrbitronDevAuthenticator extends SocialAuthenticator
     public function supports(Request $request)
     {
         // continue ONLY if the URL matches the check URL
-        return '/login-check' == $request->getPathInfo();
+        return '/login-check' === $request->getPathInfo();
     }
 
     /**
@@ -96,9 +96,9 @@ class OrbitronDevAuthenticator extends SocialAuthenticator
      *
      * @param Request $request
      *
-     * @return mixed Any non-null value
-     *
      * @throws \UnexpectedValueException If null is returned
+     *
+     * @return mixed Any non-null value
      */
     public function getCredentials(Request $request)
     {
@@ -131,7 +131,7 @@ class OrbitronDevAuthenticator extends SocialAuthenticator
         // 1) have they logged in with Facebook before? Easy!
         $existingUser = $this->em->getRepository('App:User')->findOneBy(['remote_id' => $originUser->getId()]);
         if ($existingUser) {
-            if (empty($existingUser->getTokenData()) || unserialize($existingUser->getTokenData()) != $credentials) {
+            if (empty($existingUser->getTokenData()) || unserialize($existingUser->getTokenData()) !== $credentials) {
                 $existingUser->setTokenData(serialize($credentials));
                 $this->em->flush();
             }

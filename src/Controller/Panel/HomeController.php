@@ -9,13 +9,13 @@ class HomeController extends Controller
     public static function __setupNavigation()
     {
         return [
-            'type'   => 'link',
+            'type' => 'link',
             'parent' => 'root',
-            'id'     => 'home',
-            'title'  => 'Dashboard',
-            'href'   => 'home',
-            'icon'   => 'hs-admin-panel',
-            'view'   => 'HomeController::home',
+            'id' => 'home',
+            'title' => 'Dashboard',
+            'href' => 'home',
+            'icon' => 'hs-admin-panel',
+            'view' => 'HomeController::home',
         ];
     }
 
@@ -28,8 +28,7 @@ class HomeController extends Controller
     {
         return $this->render('theme_admin1/home.html.twig', [
             'navigation_links' => $navigation,
-            'current_blog'     => $blog,
+            'current_blog' => $blog,
         ]);
     }
-
 }

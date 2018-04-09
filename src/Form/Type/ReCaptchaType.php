@@ -11,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ReCaptchaType extends AbstractType
 {
     /**
-     * The reCAPTCHA server URL's
+     * The reCAPTCHA server URL's.
      */
     const RECAPTCHA_API_SERVER = 'https://www.google.com/recaptcha/api.js';
     const RECAPTCHA_API_JS_SERVER = '//www.google.com/recaptcha/api/js/recaptcha_ajax.js';
@@ -54,10 +54,10 @@ class ReCaptchaType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        $view->vars = array_replace($view->vars, array(
+        $view->vars = array_replace($view->vars, [
             'recaptcha_enabled' => $this->enabled,
-            'recaptcha_ajax'    => $this->ajax,
-        ));
+            'recaptcha_ajax' => $this->ajax,
+        ]);
         if (!$this->enabled) {
             return;
         }
@@ -67,15 +67,15 @@ class ReCaptchaType extends AbstractType
         }
 
         if (!$this->ajax) {
-            $view->vars = array_replace($view->vars, array(
+            $view->vars = array_replace($view->vars, [
                 'url_challenge' => sprintf('%s?hl=%s', self::RECAPTCHA_API_SERVER, $options['language']),
-                'public_key'    => $this->publicKey,
-            ));
-        } else {
-            $view->vars = array_replace($view->vars, array(
-                'url_api'    => self::RECAPTCHA_API_JS_SERVER,
                 'public_key' => $this->publicKey,
-            ));
+            ]);
+        } else {
+            $view->vars = array_replace($view->vars, [
+                'url_api' => self::RECAPTCHA_API_JS_SERVER,
+                'public_key' => $this->publicKey,
+            ]);
         }
     }
 
@@ -84,26 +84,26 @@ class ReCaptchaType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'compound'      => false,
-            'language'      => $this->resolveLocale(),
-            'public_key'    => null,
+        $resolver->setDefaults([
+            'compound' => false,
+            'language' => $this->resolveLocale(),
+            'public_key' => null,
             'url_challenge' => null,
-            'url_noscript'  => null,
-            'attr'          => array(
-                'options' => array(
-                    'theme'           => 'light',
-                    'type'            => 'image',
-                    'size'            => 'normal',
-                    'callback'        => null,
+            'url_noscript' => null,
+            'attr' => [
+                'options' => [
+                    'theme' => 'light',
+                    'type' => 'image',
+                    'size' => 'normal',
+                    'callback' => null,
                     'expiredCallback' => null,
-                    'bind'            => null,
-                    'defer'           => false,
-                    'async'           => false,
-                    'badge'           => null,
-                ),
-            ),
-        ));
+                    'bind' => null,
+                    'defer' => false,
+                    'async' => false,
+                    'badge' => null,
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -123,7 +123,7 @@ class ReCaptchaType extends AbstractType
     }
 
     /**
-     * Get the current locale
+     * Get the current locale.
      *
      * @return string
      */

@@ -11,27 +11,27 @@ class AdminControlPanel
     private static $tree = [];
 
     const DEFAULT_GROUP = [
-        'parent'   => 'root',
-        'id'       => '',
-        'title'    => '',
-        'icon'     => '',
-        'display'  => 'true',
+        'parent' => 'root',
+        'id' => '',
+        'title' => '',
+        'icon' => '',
+        'display' => 'true',
         'children' => [],
     ];
 
     const DEFAULT_MENU = [
         'parent' => '',
-        'id'     => '',
-        'title'  => '',
-        'href'   => '',
-        'icon'   => '',
-        'meta'   => [
+        'id' => '',
+        'title' => '',
+        'href' => '',
+        'icon' => '',
+        'meta' => [
             'tabindex' => -1,
         ],
     ];
 
     /**
-     * https://stackoverflow.com/a/27360654/4156752 (Thanks to Thunderstriker, arthur and basil)
+     * https://stackoverflow.com/a/27360654/4156752 (Thanks to Thunderstriker, arthur and basil).
      *
      * @param array       $flat
      * @param string      $pidKey
@@ -69,7 +69,7 @@ class AdminControlPanel
 
         $libsList = scandir($libraryDir);
         foreach ($libsList as $lib) {
-            if ($lib === '.' || $lib === '..') {
+            if ('.' === $lib || '..' === $lib) {
                 continue;
             }
             $file = pathinfo($libraryDir.'/'.$lib);
@@ -118,7 +118,7 @@ class AdminControlPanel
     }
 
     /**
-     * TODO: This is a new function, integrate it in HTML
+     * TODO: This is a new function, integrate it in HTML.
      *
      * @param string $page_name
      *
@@ -129,16 +129,16 @@ class AdminControlPanel
         // Choose between 'href', 'hash', 'url' or 'url_js'
         $page_changer = 'url_js';
 
-        if ($page_changer === 'js') {
+        if ('js' === $page_changer) {
             return 'href="javascript:ControlPanel.changePage(\''.$page_name.'\')" data-toggle="page"';
-        } elseif ($page_changer === 'url_js') {
+        } elseif ('url_js' === $page_changer) {
             return 'href="javascript:ControlPanel.changePage(\''.$page_name.'\', true)" data-toggle="page"';
-        } elseif ($page_changer === 'hash') {
+        } elseif ('hash' === $page_changer) {
             return 'href="#/'.$page_name.'"';
-        } elseif ($page_changer === 'url') {
+        } elseif ('url' === $page_changer) {
             return 'href="https://account.orbitrondev.org/panel/'.$page_name.'"';
-        } else {
-            return '';
         }
+
+        return '';
     }
 }

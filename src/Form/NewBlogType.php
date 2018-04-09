@@ -29,31 +29,31 @@ class NewBlogType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label'       => 'new_blog.form.name.label',
+                'label' => 'new_blog.form.name.label',
                 'constraints' => [
                     new NotBlank(['message' => 'new_blog.name.not_blank']),
                     new Length([
-                        'min'        => BlogHelper::$settings['blog']['name']['min_length'],
+                        'min' => BlogHelper::$settings['blog']['name']['min_length'],
                         'minMessage' => 'new_blog.name.min_length',
                     ]),
                 ],
             ])
             ->add('url', TextType::class, [
-                'label'       => 'new_blog.form.url.label',
+                'label' => 'new_blog.form.url.label',
                 'constraints' => [
                     new NotBlank(['message' => 'new_blog.url.not_blank']),
                     new Length([
-                        'min'        => BlogHelper::$settings['blog']['url']['min_length'],
+                        'min' => BlogHelper::$settings['blog']['url']['min_length'],
                         'minMessage' => 'new_blog.url.min_length',
                     ]),
                     new Regex([
                         'pattern' => '/[^a-zA-Z_\-0-9]/i',
                         'message' => 'new_blog.url.regex',
-                        'match'   => false,
+                        'match' => false,
                     ]),
                     new Expression([
                         'expression' => 'value not in ["new-blog", "admin", "login", "login-check", "logout", "user", "setup"]',
-                        'message'    => 'new_blog.url.not_equal_to',
+                        'message' => 'new_blog.url.not_equal_to',
                     ]),
                     new Callback(function ($object, ExecutionContextInterface $context, $payload) {
                         if ($this->helper->urlExists($object)) {
@@ -63,16 +63,16 @@ class NewBlogType extends AbstractType
                 ],
             ])
             ->add('recaptcha', ReCaptchaType::class, [
-                'attr'        => [
+                'attr' => [
                     'options' => [
                         'theme' => 'light',
-                        'type'  => 'image',
-                        'size'  => 'normal',
+                        'type' => 'image',
+                        'size' => 'normal',
                         'defer' => true,
                         'async' => true,
                     ],
                 ],
-                'mapped'      => false,
+                'mapped' => false,
                 'constraints' => [
                     new ReCaptchaTrue(),
                 ],

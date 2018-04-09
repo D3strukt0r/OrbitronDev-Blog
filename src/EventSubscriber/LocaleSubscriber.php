@@ -2,11 +2,11 @@
 
 namespace App\EventSubscriber;
 
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
@@ -28,15 +28,12 @@ class LocaleSubscriber implements EventSubscriberInterface
         if ($locale = $request->attributes->get('_locale')) {
             $request->setLocale($locale);
             $request->attributes->set('set_locale_cookie', $locale);
-
         } elseif ($locale = $request->query->get('_locale')) {
             $request->setLocale($locale);
             $request->attributes->set('set_locale_cookie', $locale);
-
         } elseif ($locale = $request->cookies->get('_locale')) {
             $request->setLocale($locale);
             $request->attributes->set('set_locale_cookie', $locale);
-
         } else {
             // if no explicit locale has been set on this request, use one from the cookie
             $request->setLocale($request->cookies->get('_locale', $this->defaultLocale));

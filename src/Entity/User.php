@@ -160,7 +160,7 @@ class User implements \Serializable, UserInterface
      */
     public function unserialize($serialized): void
     {
-        list (
+        list(
             $this->id,
             $this->username,
             $this->password,

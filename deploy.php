@@ -9,7 +9,7 @@ set('application', 'blog');
 
 // Environment vars
 add('env', [
-    'APP_ENV' => 'prod'
+    'APP_ENV' => 'prod',
 ]);
 
 // Project repository
@@ -17,13 +17,13 @@ set('repository', 'https://github.com/OrbitronDev/service-blog.git');
 set('branch', 'master');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true); 
+set('git_tty', true);
 
-// Shared files/dirs between deploys 
+// Shared files/dirs between deploys
 add('shared_files', ['.htaccess']);
 add('shared_dirs', ['var/data']);
 
-// Writable dirs by web server 
+// Writable dirs by web server
 set('writable_dirs', []);
 
 // Hosts

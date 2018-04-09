@@ -71,7 +71,7 @@ class DefaultController extends Controller
         //////////// TEST IF BLOG EXISTS ////////////
         /** @var \App\Entity\Blog $blog */
         $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
-        if (is_null($blog)) {
+        if (null === $blog) {
             throw $this->createNotFoundException();
         }
         //////////// END TEST IF BLOG EXISTS ////////////
@@ -103,8 +103,8 @@ class DefaultController extends Controller
 
         return $this->render('theme1/index.html.twig', [
             'current_blog' => $blog,
-            'posts'        => $posts,
-            'pagination'   => $pagination,
+            'posts' => $posts,
+            'pagination' => $pagination,
         ]);
     }
 
@@ -113,7 +113,7 @@ class DefaultController extends Controller
         //////////// TEST IF BLOG EXISTS ////////////
         /** @var \App\Entity\Blog $blog */
         $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
-        if (is_null($blog)) {
+        if (null === $blog) {
             throw $this->createNotFoundException();
         }
         //////////// END TEST IF BLOG EXISTS ////////////
@@ -121,7 +121,7 @@ class DefaultController extends Controller
         //////////// TEST IF POST EXISTS ////////////
         /** @var \App\Entity\Post $post */
         $post = $em->find(Post::class, $post);
-        if (is_null($post)) {
+        if (null === $post) {
             throw $this->createNotFoundException();
         }
         //////////// END TEST IF POST EXISTS ////////////
@@ -147,7 +147,7 @@ class DefaultController extends Controller
         //////////// TEST IF BLOG EXISTS ////////////
         /** @var \App\Entity\Blog $blog */
         $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
-        if (is_null($blog)) {
+        if (null === $blog) {
             throw $this->createNotFoundException();
         }
         //////////// END TEST IF BLOG EXISTS ////////////
@@ -162,7 +162,7 @@ class DefaultController extends Controller
         //////////// TEST IF BLOG EXISTS ////////////
         /** @var \App\Entity\Blog $blog */
         $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
-        if (is_null($blog)) {
+        if (null === $blog) {
             throw $this->createNotFoundException();
         }
         //////////// END TEST IF BLOG EXISTS ////////////
@@ -211,12 +211,12 @@ class DefaultController extends Controller
         //////////// TEST IF STORE EXISTS ////////////
         /** @var \App\Entity\Blog|null $store */
         $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
-        if (is_null($blog)) {
+        if (null === $blog) {
             throw $this->createNotFoundException();
         }
         //////////// END TEST IF STORE EXISTS ////////////
 
-        if ($user->getId() != $blog->getOwner()->getId()) {
+        if ($user->getId() !== $blog->getOwner()->getId()) {
             throw $this->createAccessDeniedException();
         }
 
@@ -236,16 +236,17 @@ class DefaultController extends Controller
             next($list);
         }
 
-        if (!is_null($key)) {
+        if (null !== $key) {
             if (is_callable('\\App\\Controller\\Panel\\'.$list[$key]['view'])) {
                 $view = $list[$key]['view'];
             }
         }
         $response = $this->forward('App\\Controller\\Panel\\'.$view, [
             'navigation' => $navigationLinks,
-            'request'    => $request,
-            'blog'      => $blog,
+            'request' => $request,
+            'blog' => $blog,
         ]);
+
         return $response;
     }
 }

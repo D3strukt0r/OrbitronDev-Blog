@@ -15,7 +15,7 @@ class SetupController extends Controller
 {
     public function setup(Request $request, KernelInterface $kernel, PdoSessionHandler $sessionHandlerService)
     {
-        if ($request->query->get('key') == $this->getParameter('kernel.secret')) {
+        if ($request->query->get('key') === $this->getParameter('kernel.secret')) {
             $output = '';
             try {
                 $application = new Application($kernel);
@@ -31,6 +31,7 @@ class SetupController extends Controller
             } catch (\Exception $exception) {
                 $output .= '[<span style="color:red">FAIL</span>] Session table added ('.$exception->getMessage().')<br />';
             }
+
             return new Response('<body style="background-color: black;color: white;"><pre>'.$output.'</pre></body>');
         }
         throw $this->createAccessDeniedException();

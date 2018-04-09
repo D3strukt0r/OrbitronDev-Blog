@@ -19,7 +19,7 @@ class BlogHelper
     ];
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectManager $em
+     * @var \Doctrine\Common\Persistence\ObjectManager
      */
     private $em;
 
@@ -29,7 +29,7 @@ class BlogHelper
     }
 
     /**
-     * Checks whether the given url exists, in other words, if the blog exists
+     * Checks whether the given url exists, in other words, if the blog exists.
      *
      * @param string $url
      *
@@ -40,11 +40,12 @@ class BlogHelper
         /** @var null|\App\Entity\Blog[] $find */
         $find = $this->em->getRepository(Blog::class)->findBy(['url' => $url]);
 
-        if (!is_null($find)) {
+        if (null !== $find) {
             if (count($find)) {
                 return true;
             }
         }
+
         return false;
     }
 }

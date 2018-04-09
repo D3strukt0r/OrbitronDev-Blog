@@ -144,7 +144,7 @@ class Comment
      *
      * @return $this
      */
-    public function addResponse(Comment $comment): self
+    public function addResponse(self $comment): self
     {
         $this->responses->add($comment);
         $comment->setPost($this->post);
@@ -158,7 +158,7 @@ class Comment
      *
      * @return $this
      */
-    public function removeResponse(Comment $comment): self
+    public function removeResponse(self $comment): self
     {
         if ($this->responses->contains($comment)) {
             $this->responses->removeElement($comment);
@@ -170,7 +170,7 @@ class Comment
     /**
      * @return null|\App\Entity\Comment
      */
-    public function getParent(): ?Comment
+    public function getParent(): ?self
     {
         return $this->parent;
     }
@@ -180,7 +180,7 @@ class Comment
      *
      * @return $this
      */
-    public function setParent(Comment $parent = null): self
+    public function setParent(self $parent = null): self
     {
         $this->parent = $parent;
 

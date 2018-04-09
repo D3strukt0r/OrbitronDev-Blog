@@ -9,10 +9,10 @@ class DefaultController extends Controller
     public static function __setupNavigation()
     {
         return [
-            'type'    => 'group',
-            'parent'  => 'root',
-            'id'      => 'null',
-            'title'   => null,
+            'type' => 'group',
+            'parent' => 'root',
+            'id' => 'null',
+            'title' => null,
             'display' => false,
         ];
     }
@@ -26,8 +26,7 @@ class DefaultController extends Controller
     {
         return $this->render('theme_admin1/not-found.html.twig', [
             'navigation_links' => $navigation,
-            'current_blog'     => $blog,
+            'current_blog' => $blog,
         ]);
     }
-
 }
