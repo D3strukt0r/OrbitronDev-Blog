@@ -13,7 +13,7 @@ add('env', [
 ]);
 
 // Project repository
-set('repository', 'https://github.com/OrbitronDev/service-blog.git');
+set('repository', 'https://github.com/D3strukt0r/service-blog.git');
 set('branch', 'master');
 
 // [Optional] Allocate tty for git clone. Default value is false.
