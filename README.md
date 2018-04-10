@@ -13,7 +13,6 @@ What things you need to install the software and how to install them
 ```
 Webserver (PHP 7.2+)
 Database (e. g. MySql)
-Mailserver
 ```
 
 ### Installing
@@ -51,7 +50,6 @@ DATABASE_URL=... (Accessing databse)
 
 * [Composer](https://getcomposer.org) - PHP Package manager
 * [Symfony](https://symfony.com) - PHP Framework
-* [SwiftMailer](https://swiftmailer.symfony.com) - PHP Mailer
 * [Doctrine](https://www.doctrine-project.org) - PHP Database accessing
 * [Twig](https://twig.symfony.com) - PHP Templating service
 * [ReCaptcha](https://www.google.com/recaptcha) - Captcha service from Google
