@@ -34,6 +34,6 @@ class SetupController extends Controller
 
             return new Response('<body style="background-color: black;color: white;"><pre>'.$output.'</pre></body>');
         }
-        throw $this->createAccessDeniedException();
+        throw $this->createNotFoundException('The given key is wrong');
     }
 }
