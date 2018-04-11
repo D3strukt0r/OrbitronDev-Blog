@@ -39,6 +39,7 @@ RECAPTCHA_PRIVATE_KEY=... (ReCaptcha)
 
 OAUTH_CLIENT_ID="..." (OAuth2 Client from orbitrondev.org)
 OAUTH_CLIENT_SECRET=... (OAuth2 Client from orbitrondev.org)
+OAUTH_URL=... (Only needed if the account service is somewhere else) -> (Optional)
 
 APP_ENV=prod
 APP_SECRET=...

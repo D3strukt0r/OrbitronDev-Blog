@@ -1,3 +1,7 @@
+parameters:
+    # Adds a fallback OAUTH2_URL if the env var is not set.
+    env(OAUTH_URL): 'http://service-account.herokuapp.com'
+
 knpu_oauth2_client:
     clients:
         # will create service: "knpu.oauth2.client.orbitrondev"
@@ -11,7 +15,7 @@ knpu_oauth2_client:
 
             # optional: if your provider has custom constructor options
             provider_options:
-                host: 'http://service-account.herokuapp.com'
+                host: '%env(OAUTH_URL)%'
 
             # now, all the normal options!
             client_id: '%env(OAUTH_CLIENT_ID)%'
