@@ -81,6 +81,9 @@ admin:
         back: 'Back to service'
         logout: 'Logout'
     close: 'Close'
+    faq: 'FAQ'
+    support: 'Support'
+    contact: 'Contact US'
     page:
         not_found:
             title: '404 Error'
