@@ -18,19 +18,20 @@
 
     <!-- Favicon -->
     {% include '_favicon.html.twig' %}
+    {% include '_analytics.html.twig' %}
 
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans%3A400%2C300%2C500%2C600%2C700" />
 
     <!-- CSS Global Compulsory -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
     <!-- CSS Implementing Plugins -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/vendor/icon-line-pro/style.css" />
     <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/vendor/icon-hs/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.4/cookieconsent.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3/animate.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
 
     <!-- CSS Unify -->
     <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/css/unify-core.css" />
@@ -56,13 +57,13 @@
 </main>
 
 <!-- JS Global Compulsory -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.0.1/jquery-migrate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/smoothscroll-for-websites@1/SmoothScroll.min.js"></script>
 
 <!-- JS Implementing Plugins -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
 
 <!-- JS Unify -->
 <script src="https://web-assets.orbitrondev.org/unify-2.5.1/js/hs.core.js"></script>
@@ -72,11 +73,10 @@
 
 <!-- JS Plugins Init. -->
 {% include '_cookie_notice.html.twig' %}
-{% include '_analytics.html.twig' %}
 {% block javascripts %}{% endblock %}
 <!--[if lt IE 9]>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/respond.js@1/dest/respond.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html5shiv@3/dist/html5shiv-printshiv.min.js"></script>
 <![endif]-->
 </body>
 </html>
