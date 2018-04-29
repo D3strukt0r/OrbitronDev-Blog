@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d76631857fc47761983d5281414528a0",
+    "content-hash": "9d3622c4937e5a291134f39be12281cb",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -61,6 +61,57 @@
                 "tls"
             ],
             "time": "2018-03-29T19:57:20+00:00"
+        },
+        {
+            "name": "d3strukt0r/oauth2-orbitrondev",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/D3strukt0r/oauth2-orbitrondev.git",
+                "reference": "aa5f9edd3f7c6c8b12fff3861f4a183e325c134f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/D3strukt0r/oauth2-orbitrondev/zipball/aa5f9edd3f7c6c8b12fff3861f4a183e325c134f",
+                "reference": "aa5f9edd3f7c6c8b12fff3861f4a183e325c134f",
+                "shasum": ""
+            },
+            "require": {
+                "league/oauth2-client": "^2.3"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpunit/phpunit": "^5.7",
+                "squizlabs/php_codesniffer": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OrbitronDev\\OAuth2\\Client\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Manuele Vaccari",
+                    "email": "manuele.vaccari@gmail.com",
+                    "homepage": "https://github.com/D3strukt0r"
+                }
+            ],
+            "description": "OrbitronDev OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
+            "keywords": [
+                "authorisation",
+                "authorization",
+                "client",
+                "oauth",
+                "oauth2",
+                "orbitrondev"
+            ],
+            "time": "2018-03-10T22:51:22+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -421,16 +472,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "1.8.1",
+            "version": "1.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "eb6e4fb904a459be28872765ab6e2d246aac7c87"
+                "reference": "703fad32e4c8cbe609caf45a71a1d4266c830f0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/eb6e4fb904a459be28872765ab6e2d246aac7c87",
-                "reference": "eb6e4fb904a459be28872765ab6e2d246aac7c87",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/703fad32e4c8cbe609caf45a71a1d4266c830f0f",
+                "reference": "703fad32e4c8cbe609caf45a71a1d4266c830f0f",
                 "shasum": ""
             },
             "require": {
@@ -441,13 +492,13 @@
                 "symfony/console": "~2.7|~3.0|~4.0",
                 "symfony/dependency-injection": "~2.7|~3.0|~4.0",
                 "symfony/doctrine-bridge": "~2.7|~3.0|~4.0",
-                "symfony/framework-bundle": "~2.7|~3.0|~4.0"
+                "symfony/framework-bundle": "^2.7.22|~3.0|~4.0"
             },
             "conflict": {
                 "symfony/http-foundation": "<2.6"
             },
             "require-dev": {
-                "doctrine/orm": "~2.3",
+                "doctrine/orm": "~2.4",
                 "phpunit/phpunit": "^4.8.36|^5.7|^6.4",
                 "satooshi/php-coveralls": "^1.0",
                 "symfony/phpunit-bridge": "~2.7|~3.0|~4.0",
@@ -502,7 +553,7 @@
                 "orm",
                 "persistence"
             ],
-            "time": "2017-11-24T13:09:19+00:00"
+            "time": "2018-04-19T14:07:39+00:00"
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -1029,16 +1080,16 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.3.2",
+            "version": "6.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "68d0ea14d5a3f42a20e87632a5f84931e2709c90"
+                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/68d0ea14d5a3f42a20e87632a5f84931e2709c90",
-                "reference": "68d0ea14d5a3f42a20e87632a5f84931e2709c90",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/407b0cb880ace85c9b63c5f9551db498cb2d50ba",
+                "reference": "407b0cb880ace85c9b63c5f9551db498cb2d50ba",
                 "shasum": ""
             },
             "require": {
@@ -1048,7 +1099,7 @@
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4",
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.4 || ^7.0",
                 "psr/log": "^1.0"
             },
             "suggest": {
@@ -1090,7 +1141,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2018-03-26T16:33:04+00:00"
+            "time": "2018-04-22T15:46:56+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -1260,16 +1311,16 @@
         },
         {
             "name": "knpuniversity/oauth2-client-bundle",
-            "version": "v1.18.0",
+            "version": "v1.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knpuniversity/oauth2-client-bundle.git",
-                "reference": "ee11f72af34352d5c42b34c4d36a16fb1dfd5422"
+                "reference": "626645048ee54d468af26415c8e14b11bf1bf4fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/knpuniversity/oauth2-client-bundle/zipball/ee11f72af34352d5c42b34c4d36a16fb1dfd5422",
-                "reference": "ee11f72af34352d5c42b34c4d36a16fb1dfd5422",
+                "url": "https://api.github.com/repos/knpuniversity/oauth2-client-bundle/zipball/626645048ee54d468af26415c8e14b11bf1bf4fa",
+                "reference": "626645048ee54d468af26415c8e14b11bf1bf4fa",
                 "shasum": ""
             },
             "require": {
@@ -1310,7 +1361,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2018-02-26T15:06:14+00:00"
+            "time": "2018-04-23T18:06:01+00:00"
         },
         {
             "name": "league/oauth2-client",
@@ -1575,57 +1626,6 @@
                 "service proxies"
             ],
             "time": "2017-11-16T23:22:31+00:00"
-        },
-        {
-            "name": "orbitrondev/oauth2-orbitrondev",
-            "version": "0.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/OrbitronDev/oauth2-orbitrondev.git",
-                "reference": "aa5f9edd3f7c6c8b12fff3861f4a183e325c134f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/OrbitronDev/oauth2-orbitrondev/zipball/aa5f9edd3f7c6c8b12fff3861f4a183e325c134f",
-                "reference": "aa5f9edd3f7c6c8b12fff3861f4a183e325c134f",
-                "shasum": ""
-            },
-            "require": {
-                "league/oauth2-client": "^2.3"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "php-coveralls/php-coveralls": "^2.0",
-                "phpunit/phpunit": "^5.7",
-                "squizlabs/php_codesniffer": "^3.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "OrbitronDev\\OAuth2\\Client\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Manuele Vaccari",
-                    "email": "manuele.vaccari@gmail.com",
-                    "homepage": "https://github.com/D3strukt0r"
-                }
-            ],
-            "description": "OrbitronDev OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
-            "keywords": [
-                "authorisation",
-                "authorization",
-                "client",
-                "oauth",
-                "oauth2",
-                "orbitrondev"
-            ],
-            "time": "2018-03-10T22:51:22+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2649,16 +2649,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.0.78",
+            "version": "v1.0.79",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "eead30b31db70691cd1fd1e7225190c818a1a5f6"
+                "reference": "399e72968d5baa698788e6116fe0f47f269724e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/eead30b31db70691cd1fd1e7225190c818a1a5f6",
-                "reference": "eead30b31db70691cd1fd1e7225190c818a1a5f6",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/399e72968d5baa698788e6116fe0f47f269724e0",
+                "reference": "399e72968d5baa698788e6116fe0f47f269724e0",
                 "shasum": ""
             },
             "require": {
@@ -2691,7 +2691,7 @@
                     "email": "fabien.potencier@gmail.com"
                 }
             ],
-            "time": "2018-03-27T10:04:58+00:00"
+            "time": "2018-04-27T05:19:26+00:00"
         },
         {
             "name": "symfony/form",
@@ -4375,16 +4375,16 @@
         },
         {
             "name": "zendframework/zend-eventmanager",
-            "version": "3.2.0",
+            "version": "3.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-eventmanager.git",
-                "reference": "9d72db10ceb6e42fb92350c0cb54460da61bd79c"
+                "reference": "a5e2583a211f73604691586b8406ff7296a946dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/9d72db10ceb6e42fb92350c0cb54460da61bd79c",
-                "reference": "9d72db10ceb6e42fb92350c0cb54460da61bd79c",
+                "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/a5e2583a211f73604691586b8406ff7296a946dd",
+                "reference": "a5e2583a211f73604691586b8406ff7296a946dd",
                 "shasum": ""
             },
             "require": {
@@ -4393,7 +4393,7 @@
             "require-dev": {
                 "athletic/athletic": "^0.1",
                 "container-interop/container-interop": "^1.1.0",
-                "phpunit/phpunit": "^6.0.7 || ^5.7.14",
+                "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.2",
                 "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-stdlib": "^2.7.3 || ^3.0"
             },
@@ -4425,7 +4425,7 @@
                 "events",
                 "zf2"
             ],
-            "time": "2017-07-11T19:17:22+00:00"
+            "time": "2018-04-25T15:33:34+00:00"
         }
     ],
     "packages-dev": [
@@ -4550,16 +4550,16 @@
         },
         {
             "name": "deployer/deployer",
-            "version": "v6.1.0",
+            "version": "v6.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/deployphp/deployer.git",
-                "reference": "cc5574f6fb0582e92ae42e4739a67dc3d36df123"
+                "reference": "00e0b27025ad228edb2e2e1103eb65378ab25a9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/deployphp/deployer/zipball/cc5574f6fb0582e92ae42e4739a67dc3d36df123",
-                "reference": "cc5574f6fb0582e92ae42e4739a67dc3d36df123",
+                "url": "https://api.github.com/repos/deployphp/deployer/zipball/00e0b27025ad228edb2e2e1103eb65378ab25a9c",
+                "reference": "00e0b27025ad228edb2e2e1103eb65378ab25a9c",
                 "shasum": ""
             },
             "require": {
@@ -4571,8 +4571,7 @@
                 "symfony/yaml": "~2.7|~3.0|~4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.4.3",
-                "symfony/finder": "~2.7|~3.0|~4.0"
+                "phpunit/phpunit": "^6.4.3"
             },
             "bin": [
                 "bin/dep"
@@ -4599,7 +4598,7 @@
             ],
             "description": "Deployment Tool",
             "homepage": "https://deployer.org",
-            "time": "2018-03-05T13:25:09+00:00"
+            "time": "2018-04-20T12:24:16+00:00"
         },
         {
             "name": "deployer/phar-update",
@@ -4962,22 +4961,22 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.3.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "c936864823ac60508e37d8fb1d9bc6a02d03ffa7"
+                "reference": "8713152f523b337177163a328485ea6a39fae7ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/c936864823ac60508e37d8fb1d9bc6a02d03ffa7",
-                "reference": "c936864823ac60508e37d8fb1d9bc6a02d03ffa7",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/8713152f523b337177163a328485ea6a39fae7ad",
+                "reference": "8713152f523b337177163a328485ea6a39fae7ad",
                 "shasum": ""
             },
             "require": {
                 "doctrine/inflector": "^1.2",
                 "nikic/php-parser": "^4.0",
-                "php": "^7.1.3",
+                "php": "^7.0.8",
                 "symfony/config": "^3.4|^4.0",
                 "symfony/console": "^3.4|^4.0",
                 "symfony/dependency-injection": "^3.4|^4.0",
@@ -4989,7 +4988,7 @@
             "require-dev": {
                 "allocine/twigcs": "^3.0",
                 "doctrine/doctrine-bundle": "^1.8",
-                "doctrine/orm": "^2.6",
+                "doctrine/orm": "^2.3",
                 "friendsofphp/php-cs-fixer": "^2.8",
                 "symfony/phpunit-bridge": "^3.4|^4.0",
                 "symfony/process": "^3.4|^4.0"
@@ -5023,7 +5022,7 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2018-03-21T13:40:46+00:00"
+            "time": "2018-04-19T17:28:47+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",

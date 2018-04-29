@@ -5,6 +5,9 @@
     "composer/semver": {
         "version": "1.4.2"
     },
+    "d3strukt0r/oauth2-orbitrondev": {
+        "version": "0.3.0"
+    },
     "dama/doctrine-test-bundle": {
         "version": "4.0",
         "recipe": {
@@ -118,9 +121,6 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
-    },
-    "orbitrondev/oauth2-orbitrondev": {
-        "version": "0.2.0"
     },
     "paragonie/random_compat": {
         "version": "v2.0.11"
