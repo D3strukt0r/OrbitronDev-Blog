@@ -61,13 +61,15 @@ service_post:
     at: 'at'
     tagged: '· tagged with'
     comment:
-        title: 'Leave a comment'
+        login: 'Sign in'
+        publish: 'to publish a comment'
+        title: 'Add a comment'
         comment_on: 'Comment on'
         name: 'Name'
         email: 'Email'
         website: 'Website'
-        add: 'Add your comment'
-        list_title: 'Comments'
+        add: 'Publish comment'
+        list_title: '%count% comment|%count% comments'
 service_search:
     title: 'Searching for ...'
     search:

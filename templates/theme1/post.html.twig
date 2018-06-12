@@ -25,68 +25,74 @@
             <header>
                 <h1 itemprop="headline" class="mt-4 mb-4 pb-2 border-bottom">{{ current_post.title }}</h1>
                 <p class="meta">
-                    <time datetime="2010-06-10" itemprop="datePublished">
+                    <time datetime="{{ current_post.publishedAt|date('Y-m-d') }}" itemprop="datePublished">
                         <span class="fa fa-clock-o"></span>
                         {{ 'service_post.posted_on'|trans }}
-                        <b>{{ current_post.publishedOn|date('F j, Y') }} {{ 'service_post.at'|trans }} {{ current_post.publishedOn|date('H:i') }}</b>
+                        <b>{{ current_post.publishedAt|date('F j, Y') }} {{ 'service_post.at'|trans }} {{ current_post.publishedAt|date('H:i') }}</b>
                     </time>
                     {{ 'service_post.tagged'|trans }} {{ current_post.categories|join(', ') }}
                 </p>
             </header>
             <div itemprop="articleBody">
-                {{ current_post.story|raw|nl2br }}
+                {{ current_post.content|raw|nl2br }}
             </div>
-            <section style="margin-top: 20px; border-top: 1px solid #e5e5e5;">
-                <h1>{{ 'service_post.comment.title'|trans }}</h1>
-                <form method="post" role="form">
-                    <fieldset>
-                        <legend>{{ 'service_post.comment.comment_on'|trans }} “{{ current_post.title }}”</legend>
-                        {% if app.user is empty %}
-                        <p>
-                            <label for="comment-name">{{ 'service_post.comment.name'|trans }} <em>*</em></label>
-                            <input name="comment-name" id="comment-name" required="">
-                        </p>
-                        <p>
-                            <label for="comment-mail">{{ 'service_post.comment.name'|trans }} <em>*</em></label>
-                            <input type="email" name="comment-mail" id="comment-mail" required="" autocapitalize="off" autocorrect="off">
-                        </p>
-                        <p>
-                            <label for="comment-site">{{ 'service_post.comment.website'|trans }}</label>
-                            <input type="url" name="comment-site" id="comment-site" autocapitalize="off" autocorrect="off">
-                        </p>
+            <p class="post-tags">
+                {% for tag in current_post.tags %}
+                    <span class="label label-default">
+                        <i class="fa fa-tag"></i> {{ tag.name }}
+                    </span>
+                {% endfor %}
+            </p>
+            <section class="mt-4 pt-2 pb-2" style="border-top: 1px solid #e5e5e5;">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            {{ render(controller('App\\Controller\\DefaultController:commentForm', {'blog': current_blog, 'post': current_post})) }}
+                        {% else %}
+                            <p class="m-0">
+                                <a class="btn btn-success" href="{{ path('login', {'redirect_to': app.request.pathInfo}) }}">
+                                    <i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'service_post.comment.login'|trans }}
+                                </a>
+                                {{ 'service_post.comment.publish'|trans }}
+                            </p>
                         {% endif %}
-                        <p><textarea rows="5" name="comment-text" class="form-control" required=""></textarea></p>
-                        <p class="submit">
-                            <input type="submit" name="submit" value="{{ 'service_post.comment.add'|trans }}" class="btn btn-primary" />
-                        </p>
-                    </fieldset>
-                </form>
-            </section>
-            <section id="comments" style="margin-top: 20px; border-top: 1px solid #e5e5e5;">
-                <h1>{{ 'service_post.comment.list_title'|trans }}</h1>
-                <article id="comment-1" class="media" data-id="73" itemprop="comment" itemscope="" itemtype="http://schema.org/UserComments">
-                    <header>
-                        <div class="avatar pull-left" style="padding-right: 10px;"><img src="//placehold.it/64x64"  class="media-object" alt="" width="64" height="64" srcset="//placehold.it/64x64"></div>
-                        <h4 class="meta media-heading">
-                            <span itemprop="creator" itemscope="" itemtype="http://schema.org/Person"><a href="//www.onderhond.com/" rel="author nofollow" itemprop="name">Niels Matthijs</a></span>
-                            <small>
-                                <time datetime="2010-06-10T14:08" itemprop="commentTime">
-                                    <a href="#comment-1" rel="bookmark" itemprop="url" title="Permanent link to comment 1 on “How to enable Safari Reader on your site?”">10th June 2010 at 14:08</a>
-                                </time>
-                                <span>&nbsp;</span>
-                            </small>
-                            <small><a href="#comment-text" title="Reply to this comment" class="comment-reply">(reply)</a></small>
-                        </h4>
-                    </header>
-                    <div itemprop="commentText" class="media-body">
-                        <p>One thing you seem to have missed is that the reader fails when it has multiple possible reader
-                           sections on one page. The reader works on my blog, unless the article has a somewhat populated
-                           comment section. At that time there are two areas competing for the reader’s attention, and  It
-                           appears to drop the functionality completely in such a case. </p>
-                        <p>Still, interesting stuff, comes very close to what I’d figured out myself (minus the math and
-                           points system that is :)).</p>
                     </div>
-                </article>
+                </div>
+            </section>
+            <section id="comments" class="pt-2" style="border-top: 1px solid #e5e5e5;">
+                <h2 class="mb-3">
+                    <i class="fa fa-comments" aria-hidden="true"></i>
+                    {{ 'service_post.comment.list_title'|transchoice(current_post.comments|length) }}
+                </h2>
+                {% for comment in current_post.comments %}
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <article id="comment-1" class="media row" data-id="73" itemprop="comment" itemscope="" itemtype="http://schema.org/UserComments">
+                                <header class="col-sm-3">
+                                    <div class="avatar pull-left" style="padding-right: 10px;"><img src="{{ getenv('OAUTH_URL') }}/api/get_img?user_id={{ comment.author.id }}&height=64&width=64"  class="media-object" alt="" width="64" height="64"></div>
+                                    <div class="meta media-heading">
+                                        <p class="m-0" itemprop="creator" itemscope="" itemtype="http://schema.org/Person"><a href="{{ path('user', {'username': comment.author.username}) }}" rel="author nofollow" itemprop="name"><b>{{ comment.author.username }}</b></a></p>
+                                        <p class="m-0">{{ 'commented on'|trans }}</p>
+                                        <p class="m-0"><small>
+                                                <time datetime="{{ comment.publishedAt|date('Y-m-d H:i') }}" itemprop="commentTime">
+                                                    <a href="#comment-1" rel="bookmark" itemprop="url" title=""><b>{{ comment.publishedAt|localizeddate('medium', 'short', null, 'UTC') }}</b></a>
+                                                </time>
+                                                <span>&nbsp;</span>
+                                            </small></p>
+                                        <p class="m-0"><small><a href="#comment-text" title="Reply to this comment" class="comment-reply">(reply)</a></small></p>
+                                    </div>
+                                </header>
+                                <div itemprop="commentText" class="media-body col-sm-9">
+                                    {{ comment.content }}
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="post-comment">
+                        <p>{{ 'No comments'|trans }}</p>
+                    </div>
+                {% endfor %}
             </section>
         </article>
     </div>

@@ -27,17 +27,23 @@ class Comment
     protected $post;
 
     /**
+     * @var string
+     * @ORM\Column(type="text")
+     */
+    protected $content;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    protected $publishedAt;
+
+    /**
      * @var \App\Entity\User
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
-    protected $user;
-
-    /**
-     * @var string
-     * @ORM\Column(type="text")
-     */
-    protected $comment;
+    protected $author;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -52,14 +58,9 @@ class Comment
      */
     protected $parent;
 
-    /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
-     */
-    protected $date;
-
     public function __construct()
     {
+        $this->publishedAt = new \DateTime();
         $this->responses = new ArrayCollection();
     }
 
@@ -92,41 +93,61 @@ class Comment
     }
 
     /**
-     * @return \App\Entity\User
+     * @return string
      */
-    public function getUser(): User
+    public function getContent(): string
     {
-        return $this->user;
+        return $this->content;
     }
 
     /**
-     * @param \App\Entity\User $user
+     * @param string $content
      *
      * @return $this
      */
-    public function setUser(User $user): self
+    public function setContent(string $content): self
     {
-        $this->user = $user;
+        $this->content = $content;
 
         return $this;
     }
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getComment(): string
+    public function getPublishedAt(): \DateTime
     {
-        return $this->comment;
+        return $this->publishedAt;
     }
 
     /**
-     * @param string $comment
+     * @param \DateTime $publishedAt
      *
      * @return $this
      */
-    public function setComment(string $comment): self
+    public function setPublishedAt(\DateTime $publishedAt): self
     {
-        $this->comment = $comment;
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return \App\Entity\User
+     */
+    public function getAuthor(): User
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param \App\Entity\User $author
+     *
+     * @return $this
+     */
+    public function setAuthor(User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
@@ -183,26 +204,6 @@ class Comment
     public function setParent(self $parent = null): self
     {
         $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getDate(): \DateTime
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param \DateTime $date
-     *
-     * @return $this
-     */
-    public function setDate(\DateTime $date): self
-    {
-        $this->date = $date;
 
         return $this;
     }

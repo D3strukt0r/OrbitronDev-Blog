@@ -17,6 +17,11 @@
     'page_logo_url': ''
 } %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="js/search.js"></script>
+{% endblock %}
+
 {% block title %}{{ 'service_search.title'|trans }} | {{ service.page_name }}{% endblock %}
 
 {% block header %}
@@ -33,12 +38,14 @@
                 <div class="card">
                     <div class="card-body">
                         <p><b>{{ 'service_search.search.title'|trans }}</b></p>
-                        <form action="{{ path('blog_search', {'blog': current_blog.url}) }}">
-                            <div class="input-group">
-                                <input name="q" id="search" class="form-control" placeholder="{{ 'service_search.search.placeholder'|trans }}" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-default" type="submit"><span class="fa fa-fw fa-search"></span></button>
-                                </div>
+                        <form action="{{ path('blog_search', {'blog': current_blog.url}) }}" method="get">
+                            <div class="form-group">
+                                <input name="q"
+                                       class="form-control search-field"
+                                       placeholder="{{ 'service_search.search.placeholder'|trans }}"
+                                       autocomplete="off"
+                                       autofocus
+                                       data-no-results-message="{{ 'post.search_no_results'|trans }}" />
                             </div>
                         </form>
                         <hr />

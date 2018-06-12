@@ -40,6 +40,13 @@ class User implements \Serializable, UserInterface
     protected $password = '';
 
     /**
+     * @var array
+     *
+     * @ORM\Column(type="array")
+     */
+    private $roles = [];
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -130,7 +137,22 @@ class User implements \Serializable, UserInterface
      */
     public function getRoles(): array
     {
-        return ['ROLE_USER', 'ROLE_OAUTH_USER'];
+        $roles = $this->roles;
+
+        // guarantees that a user always has at least one role for security
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+            $roles[] = 'ROLE_OAUTH_USER';
+        }
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     /**

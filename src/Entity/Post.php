@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  * @ORM\Table(name="blog_posts")
  */
 class Post
@@ -27,6 +27,36 @@ class Post
     protected $blog;
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $title;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $slug;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
+    protected $summary;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text")
+     */
+    protected $content;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    protected $publishedAt;
+
+    /**
      * @var \App\Entity\User
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
@@ -34,22 +64,15 @@ class Post
     protected $author;
 
     /**
-     * @var string
-     * @ORM\Column(type="string")
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\OneToMany(
+     *     targetEntity="Comment",
+     *     mappedBy="post",
+     *     orphanRemoval=true,
+     *     cascade={"persist", "remove"})
+     * @ORM\OrderBy({"publishedAt": "DESC"})
      */
-    protected $title;
-
-    /**
-     * @var null|string
-     * @ORM\Column(type="string", nullable=true)
-     */
-    protected $description;
-
-    /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
-     */
-    protected $published_on;
+    protected $comments;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -76,18 +99,6 @@ class Post
      * @ORM\Column(type="string", nullable=true)
      */
     protected $header_image;
-
-    /**
-     * @var null|string
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $story;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    protected $comments;
 
     public function __construct()
     {
@@ -125,26 +136,6 @@ class Post
     }
 
     /**
-     * @return \App\Entity\User
-     */
-    public function getAuthor(): User
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param \App\Entity\User $author
-     *
-     * @return $this
-     */
-    public function setAuthor(User $author): self
-    {
-        $this->author = $author;
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getTitle(): string
@@ -165,21 +156,41 @@ class Post
     }
 
     /**
-     * @return null|string
+     * @return string
      */
-    public function getDescription(): ?string
+    public function getSlug(): string
     {
-        return $this->description;
+        return $this->slug;
     }
 
     /**
-     * @param null|string $description
+     * @param string $slug
      *
      * @return $this
      */
-    public function setDescription(string $description = null): self
+    public function setSlug(string $slug): self
     {
-        $this->description = $description;
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function setContent(string $content): self
+    {
+        $this->content = $content;
 
         return $this;
     }
@@ -187,19 +198,95 @@ class Post
     /**
      * @return \DateTime
      */
-    public function getPublishedOn(): \DateTime
+    public function getPublishedAt(): \DateTime
     {
-        return $this->published_on;
+        return $this->publishedAt;
     }
 
     /**
-     * @param \DateTime $published_on
+     * @param \DateTime $publishedAt
      *
      * @return $this
      */
-    public function setPublishedOn(\DateTime $published_on): self
+    public function setPublishedAt(\DateTime $publishedAt): self
     {
-        $this->published_on = $published_on;
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return \App\Entity\User
+     */
+    public function getAuthor(): User
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param \App\Entity\User $author
+     *
+     * @return $this
+     */
+    public function setAuthor(User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return \App\Entity\Comment[]
+     */
+    public function getComments(): array
+    {
+        return $this->comments->toArray();
+    }
+
+    /**
+     * @param \App\Entity\Comment $comment
+     *
+     * @return $this
+     */
+    public function addComment(Comment $comment): self
+    {
+        $comment->setPost($this);
+        $this->comments->add($comment);
+
+        return $this;
+    }
+
+    /**
+     * @param \App\Entity\Comment $comment
+     *
+     * @return $this
+     */
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $comment->setPost(null);
+            $this->comments->removeElement($comment);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSummary(): string
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @param string $summary
+     *
+     * @return $this
+     */
+    public function setSummary(string $summary): self
+    {
+        $this->summary = $summary;
 
         return $this;
     }
@@ -234,6 +321,14 @@ class Post
         }
         $this->categories->removeElement($category);
         $category->removePost($this);
+    }
+
+    /**
+     * @return \App\Entity\Tag[]
+     */
+    public function getTags(): array
+    {
+        return $this->tags->toArray();
     }
 
     /**
@@ -276,61 +371,6 @@ class Post
     public function setHeaderImage(string $header_image = null): self
     {
         $this->header_image = $header_image;
-
-        return $this;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getStory(): ?string
-    {
-        return $this->story;
-    }
-
-    /**
-     * @param null|string $story
-     *
-     * @return $this
-     */
-    public function setStory(string $story = null): self
-    {
-        $this->story = $story;
-
-        return $this;
-    }
-
-    /**
-     * @return \App\Entity\Comment[]
-     */
-    public function getComments(): array
-    {
-        return $this->comments->toArray();
-    }
-
-    /**
-     * @param \App\Entity\Comment $comment
-     *
-     * @return $this
-     */
-    public function addComment(Comment $comment): self
-    {
-        $this->comments->add($comment);
-        $comment->setPost($this);
-
-        return $this;
-    }
-
-    /**
-     * @param \App\Entity\Comment $comment
-     *
-     * @return $this
-     */
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->contains($comment)) {
-            $this->comments->removeElement($comment);
-        }
 
         return $this;
     }

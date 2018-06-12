@@ -20,7 +20,7 @@ set('branch', 'master');
 set('git_tty', true);
 
 // Shared files/dirs between deploys
-add('shared_files', ['.htaccess']);
+add('shared_files', []);
 add('shared_dirs', ['var/data']);
 
 // Writable dirs by web server
@@ -29,7 +29,7 @@ set('writable_dirs', []);
 // Hosts
 host('local')
     ->hostname('local')
-    ->set('deploy_path', '/var/www/html/{{application}}')
+    ->set('deploy_path', '/var/www/{{application}}')
     ->set('http_user', 'www-data')
     ->set('ssh_multiplexing', true);
 host('remote')

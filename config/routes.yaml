@@ -30,7 +30,7 @@ blog_writepost:
     path: /{blog}/write-post
     controller: App\Controller\DefaultController::blogWritePost
 blog_writecomment:
-    path: /{blog}/write-comment
+    path: /{blog}/p/{post}/write-comment
     controller: App\Controller\DefaultController::blogWriteComment
 blog_search:
     path: /{blog}/search

@@ -1,0 +1,37 @@
+{#
+    By default, forms enable client-side validation. This means that you can't
+    test the server-side validation errors from the browser. To temporarily
+    disable this validation, add the 'novalidate' attribute:
+
+    {{ form_start(form, {method: ..., action: ..., attr: {novalidate: 'novalidate'}}) }}
+#}
+
+{{ form_start(form, {method: 'POST', action: path('blog_writecomment', {'blog': blog.url, 'post': post.id})}) }}
+    {#  instead of displaying form fields one by one, you can also display them
+        all with their default options and styles just by calling to this function:
+
+        {{ form_widget(form) }}
+    #}
+
+<fieldset>
+    <legend>
+        <i class="fa fa-comment" aria-hidden="true"></i> {{ 'service_post.comment.title'|trans }}
+    </legend>
+
+    {# Render any global form error (e.g. when a constraint on a public getter method failed) #}
+    {{ form_errors(form) }}
+
+    <div class="form-group {% if not form.content.vars.valid %}has-error{% endif %}">
+        {{ form_label(form.content, 'label.content', {label_attr: {style: 'display:none'}}) }}
+
+        {# Render any errors for the "content" field (e.g. when a class property constraint failed) #}
+        {{ form_errors(form.content) }}
+
+        {{ form_widget(form.content, {attr: {rows: 10, class: 'form-control'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_widget(form.send, {attr: {class: 'btn btn-primary pull-right'}}) }}
+    </div>
+</fieldset>
+{{ form_end(form) }}
