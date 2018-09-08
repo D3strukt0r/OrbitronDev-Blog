@@ -18,12 +18,16 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/", name="index")
+     */
     public function index(ObjectManager $em)
     {
         /** @var \App\Entity\Blog[] $blogList */
@@ -34,6 +38,9 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/new-blog", name="new")
+     */
     public function newBlog(ObjectManager $em, Request $request, TranslatorInterface $translator)
     {
         //////////// TEST IF USER IS LOGGED IN ////////////
@@ -71,6 +78,9 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/{blog}", name="blog_index")
+     */
     public function blogIndex(ObjectManager $em, Request $request, $blog)
     {
         //////////// TEST IF BLOG EXISTS ////////////
@@ -113,6 +123,9 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/{blog}/p/{post}", name="blog_post")
+     */
     public function blogPost(ObjectManager $em, $blog, $post)
     {
         //////////// TEST IF BLOG EXISTS ////////////
@@ -148,11 +161,17 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/{blog}/write-post", name="blog_writepost")
+     */
     public function blogWritePost()
     {
         throw $this->createNotFoundException('Write Post (Coming Soon)');
     }
 
+    /**
+     * @Route("/{blog}/p/{post}/write-comment", name="blog_writecomment")
+     */
     public function blogWriteComment(Request $request, $post, EventDispatcherInterface $eventDispatcher)
     {
         $em = $this->getDoctrine()->getManager();
@@ -194,6 +213,9 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/{blog}/search", name="blog_search")
+     */
     public function blogSearch(ObjectManager $em, Request $request, $blog)
     {
         //////////// TEST IF BLOG EXISTS ////////////
@@ -229,6 +251,9 @@ class DefaultController extends Controller
         return $this->json($results);
     }
 
+    /**
+     * @Route("/{blog}/rss", name="blog_rss")
+     */
     public function blogRss(ObjectManager $em, $blog)
     {
         //////////// TEST IF BLOG EXISTS ////////////
@@ -270,6 +295,9 @@ class DefaultController extends Controller
         return $feed->render();
     }
 
+    /**
+     * @Route("/{blog}/admin/{page}", name="blog_admin")
+     */
     public function blogAdmin(ObjectManager $em, Request $request, $blog, $page)
     {
         //////////// TEST IF USER IS LOGGED IN ////////////
