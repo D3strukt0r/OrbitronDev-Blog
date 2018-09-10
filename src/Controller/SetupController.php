@@ -14,9 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SetupController extends Controller
 {
-    /**
-     * @Route("/setup", name="setup")
-     */
     public function setup(Request $request, KernelInterface $kernel, PdoSessionHandler $sessionHandlerService)
     {
         if ($request->query->get('key') === $this->getParameter('kernel.secret')) {
