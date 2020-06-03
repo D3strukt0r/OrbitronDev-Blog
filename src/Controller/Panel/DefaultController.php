@@ -2,9 +2,9 @@
 
 namespace App\Controller\Panel;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
     public static function __setupNavigation()
     {
@@ -24,9 +24,12 @@ class DefaultController extends Controller
 
     public function notFound($navigation, $blog)
     {
-        return $this->render('theme_admin1/not-found.html.twig', [
-            'navigation_links' => $navigation,
-            'current_blog' => $blog,
-        ]);
+        return $this->render(
+            'theme_admin1/not-found.html.twig',
+            [
+                'navigation_links' => $navigation,
+                'current_blog' => $blog,
+            ]
+        );
     }
 }

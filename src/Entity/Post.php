@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,7 +22,7 @@ class Post
     protected $id;
 
     /**
-     * @var \App\Entity\Blog
+     * @var Blog
      * @ORM\ManyToOne(targetEntity="Blog", inversedBy="posts")
      * @ORM\JoinColumn(name="blog_id", referencedColumnName="id", nullable=false)
      */
@@ -51,20 +53,20 @@ class Post
     protected $content;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      * @ORM\Column(type="datetime")
      */
     protected $publishedAt;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
      */
     protected $author;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      * @ORM\OneToMany(
      *     targetEntity="Comment",
      *     mappedBy="post",
@@ -75,7 +77,7 @@ class Post
     protected $comments;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="posts")
      * @ORM\JoinTable(name="blog_m2m_post_categories",
      *     joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
@@ -85,7 +87,7 @@ class Post
     protected $categories;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts")
      * @ORM\JoinTable(name="blog_m2m_post_tags",
      *     joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
@@ -95,7 +97,7 @@ class Post
     protected $tags;
 
     /**
-     * @var null|string
+     * @var string|null
      * @ORM\Column(type="string", nullable=true)
      */
     protected $header_image;
@@ -116,7 +118,7 @@ class Post
     }
 
     /**
-     * @return \App\Entity\Blog
+     * @return Blog
      */
     public function getBlog(): Blog
     {
@@ -124,7 +126,7 @@ class Post
     }
 
     /**
-     * @param \App\Entity\Blog $blog
+     * @param Blog $blog
      *
      * @return $this
      */
@@ -196,19 +198,19 @@ class Post
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getPublishedAt(): \DateTime
+    public function getPublishedAt(): DateTime
     {
         return $this->publishedAt;
     }
 
     /**
-     * @param \DateTime $publishedAt
+     * @param DateTime $publishedAt
      *
      * @return $this
      */
-    public function setPublishedAt(\DateTime $publishedAt): self
+    public function setPublishedAt(DateTime $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
 
@@ -216,7 +218,7 @@ class Post
     }
 
     /**
-     * @return \App\Entity\User
+     * @return User
      */
     public function getAuthor(): User
     {
@@ -224,7 +226,7 @@ class Post
     }
 
     /**
-     * @param \App\Entity\User $author
+     * @param User $author
      *
      * @return $this
      */
@@ -236,7 +238,7 @@ class Post
     }
 
     /**
-     * @return \App\Entity\Comment[]
+     * @return Comment[]
      */
     public function getComments(): array
     {
@@ -244,7 +246,7 @@ class Post
     }
 
     /**
-     * @param \App\Entity\Comment $comment
+     * @param Comment $comment
      *
      * @return $this
      */
@@ -257,7 +259,7 @@ class Post
     }
 
     /**
-     * @param \App\Entity\Comment $comment
+     * @param Comment $comment
      *
      * @return $this
      */
@@ -292,7 +294,7 @@ class Post
     }
 
     /**
-     * @return \App\Entity\Category[]
+     * @return Category[]
      */
     public function getCategories(): array
     {
@@ -300,7 +302,7 @@ class Post
     }
 
     /**
-     * @param \App\Entity\Category $category
+     * @param Category $category
      */
     public function addCategory(Category $category): void
     {
@@ -312,7 +314,7 @@ class Post
     }
 
     /**
-     * @param \App\Entity\Category $category
+     * @param Category $category
      */
     public function removeCategory(Category $category): void
     {
@@ -324,7 +326,7 @@ class Post
     }
 
     /**
-     * @return \App\Entity\Tag[]
+     * @return Tag[]
      */
     public function getTags(): array
     {
@@ -332,7 +334,7 @@ class Post
     }
 
     /**
-     * @param \App\Entity\Tag $tag
+     * @param Tag $tag
      */
     public function addTag(Tag $tag): void
     {
@@ -344,7 +346,7 @@ class Post
     }
 
     /**
-     * @param \App\Entity\Tag $tag
+     * @param Tag $tag
      */
     public function removeTag(Tag $tag): void
     {
@@ -356,7 +358,7 @@ class Post
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getHeaderImage(): ?string
     {
@@ -364,7 +366,7 @@ class Post
     }
 
     /**
-     * @param null|string $header_image
+     * @param string|null $header_image
      *
      * @return $this
      */

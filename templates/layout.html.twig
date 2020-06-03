@@ -28,19 +28,19 @@
 
     <!-- CSS Global Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/vendor/icon-hs/style.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/icon-hs/style.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3/animate.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hamburgers@0.9.3/dist/hamburgers.min.css" />
-    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/vendor/hs-megamenu/src/hs.megamenu.css" />
+    <link rel="stylesheet" href="{{ asset('assets/vendor/hs-megamenu/src/hs.megamenu.css') }}" />
 
     <!-- CSS Unify -->
-    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/css/unify-core.css" />
-    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/css/unify-components.css" />
-    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/css/unify-globals.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/unify-core.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/unify-components.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/unify-globals.css') }}" />
 
     <!-- CSS Customization -->
     {% block stylesheets %}{% endblock %}
-    <link rel="stylesheet" href="/css/custom.css?v={{ 'now'|date('d-m-Y') }}">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ 'now'|date('d-m-Y') }}">
 </head>
 
 <body class="u-body--header-side-static-left">
@@ -132,13 +132,13 @@
 <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
 
 <!-- JS Unify -->
-<script src="https://web-assets.orbitrondev.org/unify-2.5.1/js/hs.core.js"></script>
-<script src="https://web-assets.orbitrondev.org/unify-2.5.1/vendor/hs-megamenu/src/hs.megamenu.js"></script>
-<script src="https://web-assets.orbitrondev.org/unify-2.5.1/js/components/hs.header-side.js"></script>
-<script src="https://web-assets.orbitrondev.org/unify-2.5.1/js/helpers/hs.hamburgers.js"></script>
+<script src="{{ asset('assets/js/hs.core.js') }}"></script>
+<script src="{{ asset('assets/vendor/hs-megamenu/src/hs.megamenu.js') }}"></script>
+<script src="{{ asset('assets/js/components/hs.header-side.js') }}"></script>
+<script src="{{ asset('assets/js/helpers/hs.hamburgers.js') }}"></script>
 
 <!-- JS Custom -->
-<script src="/js/custom.js?v={{ 'now'|date('d-m-Y') }}"></script>
+<script src="{{ asset('js/custom.js') }}?v={{ 'now'|date('d-m-Y') }}"></script>
 
 <!-- JS Plugins Init. -->
 <script>

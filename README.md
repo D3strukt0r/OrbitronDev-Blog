@@ -59,22 +59,28 @@ DATABASE_URL=... (Accessing databse)
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull
+requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/D3strukt0r/service-blog/tags).
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the
+[tags on this repository]https://github.com/D3strukt0r/generation-2-blog-api/tags). 
 
 ## Authors
 
-* **Manuele Vaccari** - *Initial work* - Copied work from previous project [OrbitronDev](https://github.com/D3strukt0r/OrbitronDev)
+* **Manuele Vaccari** - [D3strukt0r](https://github.com/D3strukt0r) - *Initial work*
 
-See also the list of [contributors](https://github.com/D3strukt0r/service-blog/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/D3strukt0r/generation-2-blog-api/contributors) who
+participated in this project.
 
 ## License
 
-This project is licensed under a copy of the MEGA Limited Code Review License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.txt](LICENSE.txt) file for
+details.
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used (Especially Stackoverflow)
+* Hat tip to anyone whose code was used
+* Inspiration
+* etc

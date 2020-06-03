@@ -10,7 +10,6 @@ security:
                 class: App\Entity\User
                 property: username
 
-    # https://symfony.com/doc/current/security.html#initial-security-yml-setup-authentication
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -25,7 +24,7 @@ security:
 
             logout:
                 # The route name the user can go to in order to logout
-                path:   logout
+                path: logout
                 # The name of the route to redirect to after logging out
                 target: index
 
@@ -37,10 +36,16 @@ security:
 
             guard:
                 authenticators:
-                    - App\Security\OrbitronDevAuthenticator
+                    - App\Security\Generation2Authenticator
 
             # if you want, disable storing the user in the session
             # stateless: true
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

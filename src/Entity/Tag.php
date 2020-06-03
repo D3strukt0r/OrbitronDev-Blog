@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,14 +21,14 @@ class Tag
     protected $id;
 
     /**
-     * @var \App\Entity\Blog
+     * @var Blog
      * @ORM\ManyToOne(targetEntity="Blog")
      * @ORM\JoinColumn(name="blog_id", referencedColumnName="id", nullable=false)
      */
     protected $blog;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
      */
     protected $posts;
@@ -58,7 +59,7 @@ class Tag
     }
 
     /**
-     * @return \App\Entity\Blog
+     * @return Blog
      */
     public function getBlog(): Blog
     {
@@ -66,7 +67,7 @@ class Tag
     }
 
     /**
-     * @param \App\Entity\Blog $blog
+     * @param Blog $blog
      *
      * @return $this
      */
@@ -78,7 +79,7 @@ class Tag
     }
 
     /**
-     * @param \App\Entity\Post $post
+     * @param Post $post
      */
     public function addPost(Post $post): void
     {
@@ -90,7 +91,7 @@ class Tag
     }
 
     /**
-     * @param \App\Entity\Post $post
+     * @param Post $post
      */
     public function removePost(Post $post): void
     {

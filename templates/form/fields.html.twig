@@ -1,12 +1,45 @@
 {% block recaptcha_widget %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% if form.vars.recaptcha_enabled %}
             {% if not form.vars.recaptcha_ajax %}
+                {% if attr.options.size == 'invisible' and attr.options.callback is not defined %}
+                    {% set options = attr.options|merge({'callback': 'onReCaptchaSuccess'}) %}
+                    {% set attr = attr|merge({'options': options}) %}
+
+                    <script type="text/javascript">
+                        var onReCaptchaSuccess = function() {
+                            var errorDivs = document.getElementsByClassName('recaptcha-error');
+                            if (errorDivs.length) {
+                                errorDivs[0].className = '';
+                            }
+                            var errorMsgs = document.getElementsByClassName('recaptcha-error-message');
+                            if (errorMsgs.length) {
+                                errorMsgs[0].parentNode.removeChild(errorMsgs[0]);
+                            }
+                            var forms = document.getElementsByClassName('recaptcha-form');
+                            if (forms.length) {
+                                var recaptchaSubmitEvent = document.createEvent('Event');
+                                recaptchaSubmitEvent.initEvent('submit', true, true);
+                                forms[0].addEventListener('submit', function (e) {
+                                    e.target.submit();
+                                }, false);
+                                forms[0].dispatchEvent(recaptchaSubmitEvent);
+                            }
+                        };
+                    </script>
+                {% endif %}
+
                 <script src="{{ form.vars.url_challenge }}"
-                        {% if attr.options.defer is defined and attr.options.defer %}defer{% endif %}
-                        {% if attr.options.async is defined and attr.options.async %}async{% endif %}
+                        {%- if attr.options.defer is defined and attr.options.defer %}defer{% endif -%}
+                    {%- if attr.options.async is defined and attr.options.async %}async{% endif -%}
                 ></script>
-                <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-size="{{ attr.options.size }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}" {% if attr.options.expiredCallback is defined %}data-expired-callback="{{ attr.options.expiredCallback }}"{% endif %}></div>
+                <div class="g-recaptcha" data-theme="{{ attr.options.theme }}" data-size="{{ attr.options.size }}" data-type="{{ attr.options.type }}" data-sitekey="{{ form.vars.public_key }}"
+                    {%- if attr.options.callback is defined %} data-callback="{{ attr.options.callback }}"{% endif -%}
+                    {%- if attr.options.errorCallback is defined %} data-error-callback="{{ attr.options.errorCallback }}"{% endif -%}
+                    {%- if attr.options.expiredCallback is defined %} data-expired-callback="{{ attr.options.expiredCallback }}"{% endif -%}
+                    {%- if attr.options.bind is defined %} data-bind="{{ attr.options.bind }}"{% endif -%}
+                    {%- if attr.options.badge is defined %} data-badge="{{ attr.options.badge }}"{% endif -%}
+                ></div>
                 <noscript>
                     <div style="width: 302px; height: 352px;">
                         <div style="width: 302px; height: 352px; position: relative;">
@@ -23,19 +56,19 @@
                 <div id="recaptcha_div"></div>
 
                 <script>
-                  (function() {
-                    var script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.onload = function() {
-                      Recaptcha.create('{{ form.vars.public_key }}', 'recaptcha_div', {{ attr.options|default({})|json_encode|raw }});
-                    };
-                    script.src = '{{ form.vars.url_api }}';
-                      {% if attr.options.defer is defined and attr.options.defer %}script.defer = true;{% endif %}
-                      {% if attr.options.async is defined and attr.options.async %}script.async = true;{% endif %}
-                    document.getElementsByTagName('head')[0].appendChild(script);
-                  })();
+                    (function() {
+                        var script = document.createElement('script');
+                        script.type = 'text/javascript';
+                        script.onload = function() {
+                            Recaptcha.create('{{ form.vars.public_key }}', 'recaptcha_div', {{ attr.options|default({})|json_encode|raw }});
+                        };
+                        script.src = '{{ form.vars.url_api }}';
+                        {% if attr.options.defer is defined and attr.options.defer %}script.defer = true;{% endif %}
+                        {% if attr.options.async is defined and attr.options.async %}script.async = true;{% endif %}
+                        document.getElementsByTagName('head')[0].appendChild(script);
+                    })();
                 </script>
             {% endif %}
         {% endif %}
-    {% endspaceless %}
+    {% endapply %}
 {% endblock recaptcha_widget %}

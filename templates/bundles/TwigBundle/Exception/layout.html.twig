@@ -26,12 +26,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
 
     <!-- CSS Unify -->
-    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/css/unify-core.css" />
-    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/css/unify-components.css" />
-    <link rel="stylesheet" href="https://web-assets.orbitrondev.org/unify-2.5.1/css/unify-globals.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/unify-core.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/unify-components.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/unify-globals.css') }}" />
 
     <!-- CSS Customization -->
-    <link rel="stylesheet" href="/css/custom.css?v={{ 'now'|date('d-m-Y') }}" />
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}?v={{ 'now'|date('d-m-Y') }}" />
 </head>
 
 <body class="g-bg-gray-dark-v1 g-color-white">
@@ -47,7 +47,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js"></script>
 
 <!-- JS Custom -->
-<script src="/js/custom.js?v={{ 'now'|date('d-m-Y') }}"></script>
+<script src="{{ asset('js/custom.js') }}?v={{ 'now'|date('d-m-Y') }}"></script>
 
 <!--[if lt IE 9]>
 <script src="https://cdn.jsdelivr.net/npm/respond.js@1/dest/respond.min.js"></script>

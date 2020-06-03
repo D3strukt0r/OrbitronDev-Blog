@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,7 +34,7 @@ class Blog
     protected $url;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", nullable=false)
      */
@@ -93,13 +95,13 @@ class Blog
     protected $copyright;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      * @ORM\Column(type="datetime")
      */
     protected $created;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      * @ORM\OneToMany(targetEntity="Post", mappedBy="blog", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $posts;
@@ -153,7 +155,7 @@ class Blog
     }
 
     /**
-     * @return \App\Entity\User
+     * @return User
      */
     public function getOwner(): User
     {
@@ -161,7 +163,7 @@ class Blog
     }
 
     /**
-     * @param \App\Entity\User $owner
+     * @param User $owner
      *
      * @return $this
      */
@@ -379,19 +381,19 @@ class Blog
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreated(): \DateTime
+    public function getCreated(): DateTime
     {
         return $this->created;
     }
 
     /**
-     * @param \DateTime $created
+     * @param DateTime $created
      *
      * @return $this
      */
-    public function setCreated(\DateTime $created): self
+    public function setCreated(DateTime $created): self
     {
         $this->created = $created;
 
@@ -399,7 +401,7 @@ class Blog
     }
 
     /**
-     * @return \App\Entity\Post[]
+     * @return Post[]
      */
     public function getPosts(): array
     {
@@ -407,7 +409,7 @@ class Blog
     }
 
     /**
-     * @param \App\Entity\Post $post
+     * @param Post $post
      *
      * @return $this
      */
@@ -420,7 +422,7 @@ class Blog
     }
 
     /**
-     * @param \App\Entity\Post $post
+     * @param Post $post
      *
      * @return $this
      */

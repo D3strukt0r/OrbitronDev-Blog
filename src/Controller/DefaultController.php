@@ -5,46 +5,66 @@ namespace App\Controller;
 use App\Entity\Blog;
 use App\Entity\Comment;
 use App\Entity\Post;
+use App\Entity\User;
 use App\Form\CommentType;
 use App\Form\NewBlogType;
 use App\Service\AdminControlPanel;
-use Doctrine\Common\Persistence\ObjectManager;
 use Suin\RSSWriter\Channel;
 use Suin\RSSWriter\Feed;
 use Suin\RSSWriter\Item;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
-    public function index(ObjectManager $em)
+    /**
+     * @Route("/", name="index")
+     *
+     * @return Response
+     */
+    public function index()
     {
-        /** @var \App\Entity\Blog[] $blogList */
+        $em = $this->getDoctrine()->getManager();
+        /** @var Blog[] $blogList */
         $blogList = $em->getRepository(Blog::class)->findAll();
 
-        return $this->render('list-blogs.html.twig', [
-            'blog_list' => $blogList,
-        ]);
+        return $this->render(
+            'list-blogs.html.twig',
+            [
+                'blog_list' => $blogList,
+            ]
+        );
     }
 
-    public function newBlog(ObjectManager $em, Request $request, TranslatorInterface $translator)
+    /**
+     * @Route("/new-blog", name="new")
+     *
+     * @param Request             $request
+     * @param TranslatorInterface $translator
+     *
+     * @return RedirectResponse|Response
+     */
+    public function newBlog(Request $request, TranslatorInterface $translator)
     {
         //////////// TEST IF USER IS LOGGED IN ////////////
-        /** @var \App\Entity\User|null $user */
+        /** @var User|null $user */
         $user = $this->getUser();
         if (!$user instanceof UserInterface) {
             throw $this->createAccessDeniedException();
         }
         //////////// END TEST IF USER IS LOGGED IN ////////////
-
         $createBlogForm = $this->createForm(NewBlogType::class);
         $createBlogForm->handleRequest($request);
         if ($createBlogForm->isSubmitted() && $createBlogForm->isValid()) {
@@ -57,25 +77,47 @@ class DefaultController extends Controller
                     ->setUrl($formData['url'])
                     ->setOwner($user)
                     ->setCreated(new \DateTime())
-                    ->setClosed(false);
+                    ->setClosed(false)
+                ;
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($newBlog);
                 $em->flush();
 
                 return $this->redirectToRoute('blog_index', ['blog' => $newBlog->getUrl()]);
             } catch (\Exception $e) {
-                $createBlogForm->addError(new FormError($translator->trans('new_blog.not_created', ['%error_message%' => $e->getMessage()], 'validators')));
+                $createBlogForm->addError(
+                    new FormError(
+                        $translator->trans(
+                            'new_blog.not_created',
+                            ['%error_message%' => $e->getMessage()],
+                            'validators'
+                        )
+                    )
+                );
             }
         }
 
-        return $this->render('create-new-blog.html.twig', [
-            'create_blog_form' => $createBlogForm->createView(),
-        ]);
+        return $this->render(
+            'create-new-blog.html.twig',
+            [
+                'create_blog_form' => $createBlogForm->createView(),
+            ]
+        );
     }
 
-    public function blogIndex(ObjectManager $em, Request $request, $blog)
+    /**
+     * @Route("/{blog}", name="blog_index")
+     *
+     * @param Request $request
+     * @param string  $blog
+     *
+     * @return Response
+     */
+    public function blogIndex(Request $request, string $blog)
     {
         //////////// TEST IF BLOG EXISTS ////////////
-        /** @var \App\Entity\Blog $blog */
+        $em = $this->getDoctrine()->getManager();
+        /** @var Blog $blog */
         $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
         if (null === $blog) {
             throw $this->createNotFoundException();
@@ -87,17 +129,18 @@ class DefaultController extends Controller
         $pagination['item_limit'] = $request->query->getInt('show', 5);
         $pagination['current_page'] = $request->query->getInt('page', 1);
 
-        /** @var \App\Entity\Post[] $posts */
+        /** @var Post[] $posts */
         $posts = $em->getRepository(Post::class)->findBy(
             ['blog' => $blog],
             ['publishedAt' => 'DESC'],
             $pagination['item_limit'],
             ($pagination['current_page'] - 1) * $pagination['item_limit']
-        );
+        )
+        ;
 
         // Pagination
         // Reference: http://www.strangerstudios.com/sandbox/pagination/diggstyle.php
-        /** @var \App\Entity\Post[] $getPostCount */
+        /** @var Post[] $getPostCount */
         $getPostCount = $em->getRepository(Post::class)->findBy(['blog' => $blog]);
         $pagination['total_items'] = count($getPostCount);
         $pagination['adjacents'] = 1;
@@ -107,17 +150,29 @@ class DefaultController extends Controller
         $pagination['pages_count'] = ceil($pagination['total_items'] / $pagination['item_limit']);
         $pagination['last_page_m1'] = $pagination['pages_count'] - 1;
 
-        return $this->render('theme1/index.html.twig', [
-            'current_blog' => $blog,
-            'posts' => $posts,
-            'pagination' => $pagination,
-        ]);
+        return $this->render(
+            'theme1/index.html.twig',
+            [
+                'current_blog' => $blog,
+                'posts' => $posts,
+                'pagination' => $pagination,
+            ]
+        );
     }
 
-    public function blogPost(ObjectManager $em, $blog, $post)
+    /**
+     * @Route("/{blog}/p/{post}", name="blog_post")
+     *
+     * @param string $blog
+     * @param string $post
+     *
+     * @return Response
+     */
+    public function blogPost(string $blog, string $post)
     {
         //////////// TEST IF BLOG EXISTS ////////////
-        /** @var \App\Entity\Blog $blog */
+        $em = $this->getDoctrine()->getManager();
+        /** @var Blog $blog */
         $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
         if (null === $blog) {
             throw $this->createNotFoundException();
@@ -125,36 +180,54 @@ class DefaultController extends Controller
         //////////// END TEST IF BLOG EXISTS ////////////
 
         //////////// TEST IF POST EXISTS ////////////
-        /** @var \App\Entity\Post $post */
+        /** @var Post $post */
         $post = $em->find(Post::class, $post);
         if (null === $post) {
             throw $this->createNotFoundException();
         }
         //////////// END TEST IF POST EXISTS ////////////
 
-        return $this->render('theme1/post.html.twig', [
-            'current_blog' => $blog,
-            'current_post' => $post,
-        ]);
+        return $this->render(
+            'theme1/post.html.twig',
+            [
+                'current_blog' => $blog,
+                'current_post' => $post,
+            ]
+        );
     }
 
     public function commentForm(Blog $blog, Post $post): Response
     {
         $form = $this->createForm(CommentType::class);
 
-        return $this->render('theme1/_comment_form.html.twig', [
-            'blog' => $blog,
-            'post' => $post,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'theme1/_comment_form.html.twig',
+            [
+                'blog' => $blog,
+                'post' => $post,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
+    /**
+     * @Route("/{blog}/write-post", name="blog_writepost")
+     */
     public function blogWritePost()
     {
         throw $this->createNotFoundException('Write Post (Coming Soon)');
     }
 
-    public function blogWriteComment(Request $request, $post, EventDispatcherInterface $eventDispatcher)
+    /**
+     * @Route("/{blog}/p/{post}/write-comment", name="blog_writecomment")
+     *
+     * @param EventDispatcherInterface $eventDispatcher
+     * @param Request                  $request
+     * @param string                   $post
+     *
+     * @return RedirectResponse|Response
+     */
+    public function blogWriteComment(EventDispatcherInterface $eventDispatcher, Request $request, string $post)
     {
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository(Post::class)->findOneBy(['id' => $post]);
@@ -167,7 +240,8 @@ class DefaultController extends Controller
             $comment
                 ->setPost($post)
                 ->setAuthor($this->getUser())
-                ->setContent($form->get('content')->getData());
+                ->setContent($form->get('content')->getData())
+            ;
             $post->addComment($comment);
             $em->persist($comment);
             $em->flush();
@@ -186,19 +260,34 @@ class DefaultController extends Controller
             // See https://symfony.com/doc/current/components/event_dispatcher.html
             $eventDispatcher->dispatch('comment.created', $event);
 
-            return $this->redirectToRoute('blog_post', ['blog' => $post->getBlog()->getUrl(), 'post' => $post->getId()]);
+            return $this->redirectToRoute(
+                'blog_post',
+                ['blog' => $post->getBlog()->getUrl(), 'post' => $post->getId()]
+            );
         }
 
-        return $this->render('theme1/comment_form_error.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'theme1/comment_form_error.html.twig',
+            [
+                'post' => $post,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
-    public function blogSearch(ObjectManager $em, Request $request, $blog)
+    /**
+     * @Route("/{blog}/search", name="blog_search")
+     *
+     * @param Request $request
+     * @param string  $blog
+     *
+     * @return JsonResponse|Response
+     */
+    public function blogSearch(Request $request, string $blog)
     {
         //////////// TEST IF BLOG EXISTS ////////////
-        /** @var \App\Entity\Blog $blog */
+        $em = $this->getDoctrine()->getManager();
+        /** @var Blog $blog */
         $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
         if (null === $blog) {
             throw $this->createNotFoundException();
@@ -206,9 +295,12 @@ class DefaultController extends Controller
         //////////// END TEST IF BLOG EXISTS ////////////
 
         if (!$request->isXmlHttpRequest()) {
-            return $this->render('theme1/search.html.twig', [
-                'current_blog' => $blog,
-            ]);
+            return $this->render(
+                'theme1/search.html.twig',
+                [
+                    'current_blog' => $blog,
+                ]
+            );
         }
 
         $posts = $this->getDoctrine()->getManager()->getRepository(Post::class);
@@ -230,10 +322,18 @@ class DefaultController extends Controller
         return $this->json($results);
     }
 
-    public function blogRss(ObjectManager $em, $blog)
+    /**
+     * @Route("/{blog}/rss", name="blog_rss")
+     *
+     * @param string $blog
+     *
+     * @return string
+     */
+    public function blogRss(string $blog)
     {
         //////////// TEST IF BLOG EXISTS ////////////
-        /** @var \App\Entity\Blog $blog */
+        $em = $this->getDoctrine()->getManager();
+        /** @var Blog $blog */
         $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
         if (null === $blog) {
             throw $this->createNotFoundException();
@@ -251,19 +351,34 @@ class DefaultController extends Controller
             ->pubDate($blog->getCreated()->getTimestamp())
             ->lastBuildDate($blog->getCreated()->getTimestamp())
             ->ttl(60)
-            ->appendTo($feed);
+            ->appendTo($feed)
+        ;
 
-        /** @var \App\Entity\Post[] $postList */
+        /** @var Post[] $postList */
         $postList = $em->getRepository(Post::class)->findBy(['blog' => $blog]);
         foreach ($postList as $post) {
             $item = new Item();
             $item
                 ->title($post->getTitle())
-                ->url($this->generateUrl('blog_post', ['blog' => $blog->getUrl(), 'post' => $post->getId()], UrlGeneratorInterface::ABSOLUTE_URL))
+                ->url(
+                    $this->generateUrl(
+                        'blog_post',
+                        ['blog' => $blog->getUrl(), 'post' => $post->getId()],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    )
+                )
                 ->description('<div>'.$post->getDescription().'</div>')
-                ->guid($this->generateUrl('blog_post', ['blog' => $blog->getUrl(), 'post' => $post->getId()], UrlGeneratorInterface::ABSOLUTE_URL), true)
+                ->guid(
+                    $this->generateUrl(
+                        'blog_post',
+                        ['blog' => $blog->getUrl(), 'post' => $post->getId()],
+                        UrlGeneratorInterface::ABSOLUTE_URL
+                    ),
+                    true
+                )
                 ->pubDate($blog->getCreated()->getTimestamp())
-                ->appendTo($channel);
+                ->appendTo($channel)
+            ;
         }
 
         header('Content-Type: application/rss+xml; charset=utf-8');
@@ -271,10 +386,21 @@ class DefaultController extends Controller
         return $feed->render();
     }
 
-    public function blogAdmin(ObjectManager $em, Request $request, $blog, $page)
+    /**
+     * @Route("/{blog}/admin/{page}", name="blog_admin")
+     *
+     * @param KernelInterface       $kernel
+     * @param TokenStorageInterface $tokenStorage
+     * @param Request               $request
+     * @param string                $blog
+     * @param string                $page
+     *
+     * @return Response
+     */
+    public function blogAdmin(KernelInterface $kernel, TokenStorageInterface $tokenStorage, Request $request, string $blog, string $page)
     {
         //////////// TEST IF USER IS LOGGED IN ////////////
-        /** @var \App\Entity\User|null $user */
+        /** @var User|null $user */
         $user = $this->getUser();
         if (!$user instanceof UserInterface) {
             throw $this->createAccessDeniedException();
@@ -282,7 +408,8 @@ class DefaultController extends Controller
         //////////// END TEST IF USER IS LOGGED IN ////////////
 
         //////////// TEST IF STORE EXISTS ////////////
-        /** @var \App\Entity\Blog|null $store */
+        $em = $this->getDoctrine()->getManager();
+        /** @var Blog|null $store */
         $blog = $em->getRepository(Blog::class)->findOneBy(['url' => $blog]);
         if (null === $blog) {
             throw $this->createNotFoundException();
@@ -293,7 +420,7 @@ class DefaultController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        AdminControlPanel::loadLibs($this->get('kernel')->getProjectDir(), $this->container);
+        AdminControlPanel::loadLibs($kernel->getProjectDir(), $tokenStorage);
 
         $navigationLinks = AdminControlPanel::getTree();
 
@@ -314,12 +441,13 @@ class DefaultController extends Controller
                 $view = $list[$key]['view'];
             }
         }
-        $response = $this->forward('App\\Controller\\Panel\\'.$view, [
-            'navigation' => $navigationLinks,
-            'request' => $request,
-            'blog' => $blog,
-        ]);
-
-        return $response;
+        return $this->forward(
+            'App\\Controller\\Panel\\'.$view,
+            [
+                'navigation' => $navigationLinks,
+                'request' => $request,
+                'blog' => $blog,
+            ]
+        );
     }
 }

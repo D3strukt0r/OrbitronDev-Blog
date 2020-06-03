@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Blog;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
 class BlogHelper
 {
@@ -19,11 +19,11 @@ class BlogHelper
     ];
 
     /**
-     * @var \Doctrine\Common\Persistence\ObjectManager
+     * @var ManagerRegistry
      */
     private $em;
 
-    public function __construct(ObjectManager $manager)
+    public function __construct(ManagerRegistry $manager)
     {
         $this->em = $manager;
     }
@@ -37,7 +37,7 @@ class BlogHelper
      */
     public function urlExists($url)
     {
-        /** @var null|\App\Entity\Blog[] $find */
+        /** @var Blog[]|null $find */
         $find = $this->em->getRepository(Blog::class)->findBy(['url' => $url]);
 
         if (null !== $find) {

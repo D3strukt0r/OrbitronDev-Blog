@@ -2,9 +2,9 @@
 
 namespace App\Controller\Panel;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class HomeController extends Controller
+class HomeController extends AbstractController
 {
     public static function __setupNavigation()
     {
@@ -26,9 +26,12 @@ class HomeController extends Controller
 
     public function home($navigation, $blog)
     {
-        return $this->render('theme_admin1/home.html.twig', [
-            'navigation_links' => $navigation,
-            'current_blog' => $blog,
-        ]);
+        return $this->render(
+            'theme_admin1/home.html.twig',
+            [
+                'navigation_links' => $navigation,
+                'current_blog' => $blog,
+            ]
+        );
     }
 }

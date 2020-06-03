@@ -23,6 +23,9 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param string $rawQuery
+     * @param int    $limit
+     *
      * @return Post[]
      */
     public function findBySearchQuery(string $rawQuery, int $limit = 20): array
@@ -52,6 +55,10 @@ class PostRepository extends ServiceEntityRepository
 
     /**
      * Removes all non-alphanumeric characters except whitespaces.
+     *
+     * @param string $query
+     *
+     * @return string
      */
     private function sanitizeSearchQuery(string $query): string
     {
@@ -60,6 +67,10 @@ class PostRepository extends ServiceEntityRepository
 
     /**
      * Splits the search query into terms and removes the ones which are irrelevant.
+     *
+     * @param string $searchQuery
+     *
+     * @return array
      */
     private function extractSearchTerms(string $searchQuery): array
     {

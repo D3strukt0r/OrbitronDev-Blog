@@ -69,7 +69,7 @@
                         <div class="card-body">
                             <article id="comment-1" class="media row" data-id="73" itemprop="comment" itemscope="" itemtype="http://schema.org/UserComments">
                                 <header class="col-sm-3">
-                                    <div class="avatar pull-left" style="padding-right: 10px;"><img src="{{ getenv('OAUTH_URL') }}/api/get_img?user_id={{ comment.author.id }}&height=64&width=64"  class="media-object" alt="" width="64" height="64"></div>
+                                    <div class="avatar pull-left" style="padding-right: 10px;"><img src="{{ oauth_url }}/api/get_img?user_id={{ comment.author.id }}&height=64&width=64"  class="media-object" alt="" width="64" height="64"></div>
                                     <div class="meta media-heading">
                                         <p class="m-0" itemprop="creator" itemscope="" itemtype="http://schema.org/Person"><a href="{{ path('user', {'username': comment.author.username}) }}" rel="author nofollow" itemprop="name"><b>{{ comment.author.username }}</b></a></p>
                                         <p class="m-0">{{ 'commented on'|trans }}</p>

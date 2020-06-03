@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,7 +22,7 @@ class Comment
     protected $id;
 
     /**
-     * @var \App\Entity\Post
+     * @var Post
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id", nullable=false)
      */
@@ -33,26 +35,26 @@ class Comment
     protected $content;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      * @ORM\Column(type="datetime")
      */
     protected $publishedAt;
 
     /**
-     * @var \App\Entity\User
+     * @var User
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      */
     protected $author;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     protected $responses;
 
     /**
-     * @var null|\App\Entity\Comment
+     * @var Comment|null
      * @ORM\ManyToOne(targetEntity="Comment", inversedBy="responses")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      */
@@ -60,7 +62,7 @@ class Comment
 
     public function __construct()
     {
-        $this->publishedAt = new \DateTime();
+        $this->publishedAt = new DateTime();
         $this->responses = new ArrayCollection();
     }
 
@@ -73,7 +75,7 @@ class Comment
     }
 
     /**
-     * @return \App\Entity\Post
+     * @return Post
      */
     public function getPost(): Post
     {
@@ -81,7 +83,7 @@ class Comment
     }
 
     /**
-     * @param \App\Entity\Post $post
+     * @param Post $post
      *
      * @return $this
      */
@@ -113,19 +115,19 @@ class Comment
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getPublishedAt(): \DateTime
+    public function getPublishedAt(): DateTime
     {
         return $this->publishedAt;
     }
 
     /**
-     * @param \DateTime $publishedAt
+     * @param DateTime $publishedAt
      *
      * @return $this
      */
-    public function setPublishedAt(\DateTime $publishedAt): self
+    public function setPublishedAt(DateTime $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
 
@@ -133,7 +135,7 @@ class Comment
     }
 
     /**
-     * @return \App\Entity\User
+     * @return User
      */
     public function getAuthor(): User
     {
@@ -141,7 +143,7 @@ class Comment
     }
 
     /**
-     * @param \App\Entity\User $author
+     * @param User $author
      *
      * @return $this
      */
@@ -153,7 +155,7 @@ class Comment
     }
 
     /**
-     * @return \App\Entity\Comment[]
+     * @return Comment[]
      */
     public function getResponses(): array
     {
@@ -161,7 +163,7 @@ class Comment
     }
 
     /**
-     * @param \App\Entity\Comment $comment
+     * @param Comment $comment
      *
      * @return $this
      */
@@ -175,7 +177,7 @@ class Comment
     }
 
     /**
-     * @param \App\Entity\Comment $comment
+     * @param Comment $comment
      *
      * @return $this
      */
@@ -189,7 +191,7 @@ class Comment
     }
 
     /**
-     * @return null|\App\Entity\Comment
+     * @return Comment|null
      */
     public function getParent(): ?self
     {
@@ -197,7 +199,7 @@ class Comment
     }
 
     /**
-     * @param null|\App\Entity\Comment $parent
+     * @param Comment|null $parent
      *
      * @return $this
      */

@@ -4,11 +4,11 @@ namespace App\Controller\Panel;
 
 use App\Entity\Post;
 use App\Repository\PostRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class PostsController extends Controller
+class PostsController extends AbstractController
 {
     public static function __setupNavigation()
     {
@@ -82,7 +82,8 @@ class PostsController extends Controller
 
         // See https://symfony.com/doc/current/book/forms.html#submitting-forms-with-multiple-buttons
         $form = $this->createForm(PostType::class, $post)
-            ->add('saveAndCreateNew', SubmitType::class);
+            ->add('saveAndCreateNew', SubmitType::class)
+        ;
 
         $form->handleRequest($request);
 
@@ -110,10 +111,13 @@ class PostsController extends Controller
             return $this->redirectToRoute('blog_admin', ['page' => 'posts-overview']);
         }
 
-        return $this->render('admin/blog/new.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'admin/blog/new.html.twig',
+            [
+                'post' => $post,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     public function show(Post $post): Response
@@ -122,9 +126,12 @@ class PostsController extends Controller
         // using an annotation: @Security("is_granted('show', post)")
         $this->denyAccessUnlessGranted('show', $post, 'Posts can only be shown to their authors.');
 
-        return $this->render('admin/blog/show.html.twig', [
-            'post' => $post,
-        ]);
+        return $this->render(
+            'admin/blog/show.html.twig',
+            [
+                'post' => $post,
+            ]
+        );
     }
 
     public function edit(Request $request, Post $post): Response
@@ -143,10 +150,13 @@ class PostsController extends Controller
             return $this->redirectToRoute('admin_post_edit', ['id' => $post->getId()]);
         }
 
-        return $this->render('admin/blog/edit.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'admin/blog/edit.html.twig',
+            [
+                'post' => $post,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     public function delete(Request $request, Post $post): Response

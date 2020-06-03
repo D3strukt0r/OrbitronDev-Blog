@@ -56,12 +56,12 @@
                 {% if app.user is not empty %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle p-0" href="{{ path('user', {'username': app.user.username}) }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="rounded-circle" src="{{ getenv('OAUTH_URL') }}/api/get_img?user_id={{ app.user.id }}&height=36&width=36" />
+                            <img class="rounded-circle" src="{{ oauth_url }}/api/get_img?user_id={{ app.user.id }}&height=36&width=36" />
                             {{ app.user.username }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ path('user', {'username': app.user.username}) }}">{{ 'service_general.nav.profile'|trans }}</a>
-                            <a class="dropdown-item" href="{{ getenv('OAUTH_URL') }}">{{ 'service_general.nav.settings'|trans }}</a>
+                            <a class="dropdown-item" href="{{ oauth_url }}">{{ 'service_general.nav.settings'|trans }}</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ path('logout') }}">{{ 'service_general.nav.logout'|trans }}</a>
                         </div>

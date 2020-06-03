@@ -10,7 +10,11 @@ class EnvExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('getenv', 'getenv'),
+            new TwigFunction('getenv', [$this, 'getEnvVariable']),
         ];
+    }
+
+    public function getEnvVariable(string $variable) {
+        return $_SERVER[$variable];
     }
 }

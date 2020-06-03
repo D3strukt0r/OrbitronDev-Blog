@@ -2,10 +2,11 @@
 
 namespace App\EventSubscriber;
 
+use DateTime;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class LocaleSubscriber implements EventSubscriberInterface
@@ -17,7 +18,7 @@ class LocaleSubscriber implements EventSubscriberInterface
         $this->defaultLocale = $defaultLocale;
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(RequestEvent $event)
     {
         $request = $event->getRequest();
         if (!$request->hasPreviousSession()) {
@@ -41,13 +42,13 @@ class LocaleSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         $response = $event->getResponse();
         $request = $event->getRequest();
 
         if ($locale = $request->attributes->get('set_locale_cookie')) {
-            $response->headers->setCookie(new Cookie('_locale', $locale, (new \DateTime())->modify('+1 year')));
+            $response->headers->setCookie(new Cookie('_locale', $locale, (new DateTime())->modify('+1 year')));
         }
     }
 

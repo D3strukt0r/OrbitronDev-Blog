@@ -1,14 +1,19 @@
 parameters:
     # Adds a fallback OAUTH2_URL if the env var is not set.
-    env(OAUTH_URL): 'http://service-account.herokuapp.com'
+    env(OAUTH_URL): 'https://account.generation-2.org'
+
+twig:
+    globals:
+        oauth_url: '%env(OAUTH_URL)%'
 
 knpu_oauth2_client:
     clients:
+        # configure your clients as described here: https://github.com/knpuniversity/oauth2-client-bundle#configuration
         # will create service: "knpu.oauth2.client.orbitrondev"
         # an instance of: KnpU\OAuth2ClientBundle\Client\OAuth2Client
-        orbitrondev:
+        generation2:
             type: generic
-            provider_class: OrbitronDev\OAuth2\Client\Provider\OrbitronDevProvider
+            provider_class: D3strukt0r\OAuth2\Client\Provider\Generation2Provider
 
             # optional: a class that extends OAuth2Client
             # client_class: Some\Custom\Client
