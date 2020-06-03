@@ -31,6 +31,8 @@ script:
   - ./bin/phpunit
   # this checks that the source code follows the Symfony Code Syntax rules
   - ./vendor/bin/php-cs-fixer fix --diff --dry-run -v
+  # Ensures that arguments injected into services match type declarations
+  - ./bin/console lint:container
   # this checks that the YAML config files contain no syntax errors
   - ./bin/console lint:yaml config --parse-tags
   # this checks that the Twig template files contain no syntax errors
