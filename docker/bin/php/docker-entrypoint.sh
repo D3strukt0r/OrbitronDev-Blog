@@ -40,4 +40,9 @@ if [[ ! -d /data ]]; then
 fi
 ln -sf /data ./var/data
 
+# Fix permission
+chown -R www-data:www-data /data
+find /data -type d -exec chmod 755 {} \;
+find /data -type f -exec chmod 644 {} \;
+
 exec "$@"
