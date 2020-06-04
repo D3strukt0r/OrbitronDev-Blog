@@ -69,4 +69,7 @@ services:
             # If you're using Doctrine & want to re-use that connection, then:
             # comment-out the above 2 lines and uncomment the line below
             #- !service { class: PDO, factory: 'database_connection:getWrappedConnection' }
+
+            # https://stackoverflow.com/questions/48452223/symfony-4-registration-form-second-submit-there-is-already-an-active-transactio
+            # Solves problem of OrbitronDevAuthenticator->getUser() when using $this->em->flush();
             #- { lock_mode: 1 }
