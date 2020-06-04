@@ -69,7 +69,11 @@ service_post:
         email: 'Email'
         website: 'Website'
         add: 'Publish comment'
-        list_title: '%count% comment|%count% comments'
+        list_title: '{count, plural,
+            =0 {No comments. Be the first one.}
+            one {One comment}
+            other {# comments}
+        }'
 service_search:
     title: 'Searching for ...'
     search:

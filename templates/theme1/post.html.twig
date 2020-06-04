@@ -62,7 +62,7 @@
             <section id="comments" class="pt-2" style="border-top: 1px solid #e5e5e5;">
                 <h2 class="mb-3">
                     <i class="fa fa-comments" aria-hidden="true"></i>
-                    {{ 'service_post.comment.list_title'|transchoice(current_post.comments|length) }}
+                    {{ 'service_post.comment.list_title'|trans({'count': current_post.comments|length}) }}
                 </h2>
                 {% for comment in current_post.comments %}
                     <div class="card mb-2">
@@ -75,7 +75,7 @@
                                         <p class="m-0">{{ 'commented on'|trans }}</p>
                                         <p class="m-0"><small>
                                                 <time datetime="{{ comment.publishedAt|date('Y-m-d H:i') }}" itemprop="commentTime">
-                                                    <a href="#comment-1" rel="bookmark" itemprop="url" title=""><b>{{ comment.publishedAt|localizeddate('medium', 'short', null, 'UTC') }}</b></a>
+                                                    <a href="#comment-1" rel="bookmark" itemprop="url" title=""><b>{{ comment.publishedAt|format_datetime('medium', 'short', null, 'UTC') }}</b></a>
                                                 </time>
                                                 <span>&nbsp;</span>
                                             </small></p>
