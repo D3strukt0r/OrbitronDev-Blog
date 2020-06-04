@@ -67,7 +67,7 @@ class Comment
     }
 
     /**
-     * @return int
+     * @return int The ID
      */
     public function getId(): int
     {
@@ -75,7 +75,7 @@ class Comment
     }
 
     /**
-     * @return Post
+     * @return Post The post
      */
     public function getPost(): Post
     {
@@ -83,7 +83,7 @@ class Comment
     }
 
     /**
-     * @param Post $post
+     * @param Post $post The post
      *
      * @return $this
      */
@@ -95,7 +95,7 @@ class Comment
     }
 
     /**
-     * @return string
+     * @return string The content
      */
     public function getContent(): string
     {
@@ -103,7 +103,7 @@ class Comment
     }
 
     /**
-     * @param string $content
+     * @param string $content The content
      *
      * @return $this
      */
@@ -115,7 +115,7 @@ class Comment
     }
 
     /**
-     * @return DateTime
+     * @return DateTime The publishing time
      */
     public function getPublishedAt(): DateTime
     {
@@ -123,7 +123,7 @@ class Comment
     }
 
     /**
-     * @param DateTime $publishedAt
+     * @param DateTime $publishedAt The publishing time
      *
      * @return $this
      */
@@ -135,7 +135,7 @@ class Comment
     }
 
     /**
-     * @return User
+     * @return User The user
      */
     public function getAuthor(): User
     {
@@ -143,7 +143,7 @@ class Comment
     }
 
     /**
-     * @param User $author
+     * @param User $author The user
      *
      * @return $this
      */
@@ -155,7 +155,7 @@ class Comment
     }
 
     /**
-     * @return Comment[]
+     * @return Comment[] The comments
      */
     public function getResponses(): array
     {
@@ -163,7 +163,7 @@ class Comment
     }
 
     /**
-     * @param Comment $comment
+     * @param Comment $comment The comment
      *
      * @return $this
      */
@@ -177,7 +177,7 @@ class Comment
     }
 
     /**
-     * @param Comment $comment
+     * @param Comment $comment The comment
      *
      * @return $this
      */
@@ -191,7 +191,7 @@ class Comment
     }
 
     /**
-     * @return Comment|null
+     * @return Comment|null The parent comment, or null if it's the top most comment
      */
     public function getParent(): ?self
     {
@@ -199,7 +199,7 @@ class Comment
     }
 
     /**
-     * @param Comment|null $parent
+     * @param Comment|null $parent The parent comment, or null if it's the top most comment
      *
      * @return $this
      */

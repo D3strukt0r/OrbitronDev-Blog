@@ -14,7 +14,8 @@ class EnvExtension extends AbstractExtension
         ];
     }
 
-    public function getEnvVariable(string $variable) {
+    public function getEnvVariable(string $variable)
+    {
         return $_SERVER[$variable];
     }
 }

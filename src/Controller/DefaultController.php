@@ -51,8 +51,8 @@ class DefaultController extends AbstractController
     /**
      * @Route("/new-blog", name="new")
      *
-     * @param Request             $request
-     * @param TranslatorInterface $translator
+     * @param Request             $request    The request
+     * @param TranslatorInterface $translator The translator
      *
      * @return RedirectResponse|Response
      */
@@ -108,8 +108,8 @@ class DefaultController extends AbstractController
     /**
      * @Route("/{blog}", name="blog_index")
      *
-     * @param Request $request
-     * @param string  $blog
+     * @param Request $request The request
+     * @param string  $blog    The blog
      *
      * @return Response
      */
@@ -163,8 +163,8 @@ class DefaultController extends AbstractController
     /**
      * @Route("/{blog}/p/{post}", name="blog_post")
      *
-     * @param string $blog
-     * @param string $post
+     * @param string $blog The blog
+     * @param string $post The post
      *
      * @return Response
      */
@@ -221,9 +221,9 @@ class DefaultController extends AbstractController
     /**
      * @Route("/{blog}/p/{post}/write-comment", name="blog_writecomment")
      *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Request                  $request
-     * @param string                   $post
+     * @param EventDispatcherInterface $eventDispatcher The event dispatcher
+     * @param Request                  $request         The request
+     * @param string                   $post            The post
      *
      * @return RedirectResponse|Response
      */
@@ -278,8 +278,8 @@ class DefaultController extends AbstractController
     /**
      * @Route("/{blog}/search", name="blog_search")
      *
-     * @param Request $request
-     * @param string  $blog
+     * @param Request $request The request
+     * @param string  $blog    The blog
      *
      * @return JsonResponse|Response
      */
@@ -325,7 +325,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/{blog}/rss", name="blog_rss")
      *
-     * @param string $blog
+     * @param string $blog The blog
      *
      * @return string
      */
@@ -389,16 +389,21 @@ class DefaultController extends AbstractController
     /**
      * @Route("/{blog}/admin/{page}", name="blog_admin")
      *
-     * @param KernelInterface       $kernel
-     * @param TokenStorageInterface $tokenStorage
-     * @param Request               $request
-     * @param string                $blog
-     * @param string                $page
+     * @param KernelInterface       $kernel       The kernel
+     * @param TokenStorageInterface $tokenStorage The token storage
+     * @param Request               $request      The request
+     * @param string                $blog         The blog
+     * @param string                $page         The page
      *
      * @return Response
      */
-    public function blogAdmin(KernelInterface $kernel, TokenStorageInterface $tokenStorage, Request $request, string $blog, string $page)
-    {
+    public function blogAdmin(
+        KernelInterface $kernel,
+        TokenStorageInterface $tokenStorage,
+        Request $request,
+        string $blog,
+        string $page
+    ) {
         //////////// TEST IF USER IS LOGGED IN ////////////
         /** @var User|null $user */
         $user = $this->getUser();
@@ -441,6 +446,7 @@ class DefaultController extends AbstractController
                 $view = $list[$key]['view'];
             }
         }
+
         return $this->forward(
             'App\\Controller\\Panel\\'.$view,
             [

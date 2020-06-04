@@ -23,8 +23,8 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $rawQuery
-     * @param int    $limit
+     * @param string $rawQuery The query
+     * @param int    $limit    Limit for the result
      *
      * @return Post[]
      */
@@ -50,15 +50,16 @@ class PostRepository extends ServiceEntityRepository
             ->orderBy('p.publishedAt', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
-            ->getResult();
+            ->getResult()
+            ;
     }
 
     /**
      * Removes all non-alphanumeric characters except whitespaces.
      *
-     * @param string $query
+     * @param string $query The query
      *
-     * @return string
+     * @return string The clean query
      */
     private function sanitizeSearchQuery(string $query): string
     {
@@ -68,16 +69,19 @@ class PostRepository extends ServiceEntityRepository
     /**
      * Splits the search query into terms and removes the ones which are irrelevant.
      *
-     * @param string $searchQuery
+     * @param string $searchQuery The query
      *
-     * @return array
+     * @return array The found terms
      */
     private function extractSearchTerms(string $searchQuery): array
     {
         $terms = array_unique(explode(' ', $searchQuery));
 
-        return array_filter($terms, function ($term) {
-            return 2 <= mb_strlen($term);
-        });
+        return array_filter(
+            $terms,
+            function ($term) {
+                return 2 <= mb_strlen($term);
+            }
+        );
     }
 }

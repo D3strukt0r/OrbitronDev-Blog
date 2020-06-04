@@ -17,9 +17,9 @@ class SetupController extends AbstractController
     /**
      * @Route("/setup", name="setup")
      *
-     * @param Request           $request
-     * @param KernelInterface   $kernel
-     * @param PdoSessionHandler $sessionHandlerService
+     * @param Request           $request               The request
+     * @param KernelInterface   $kernel                The kernel
+     * @param PdoSessionHandler $sessionHandlerService The session handler
      *
      * @return Response
      */

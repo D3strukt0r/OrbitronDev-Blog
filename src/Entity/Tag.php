@@ -51,7 +51,7 @@ class Tag
     }
 
     /**
-     * @return int
+     * @return int The ID
      */
     public function getId(): int
     {
@@ -59,7 +59,7 @@ class Tag
     }
 
     /**
-     * @return Blog
+     * @return Blog The blog
      */
     public function getBlog(): Blog
     {
@@ -67,7 +67,7 @@ class Tag
     }
 
     /**
-     * @param Blog $blog
+     * @param Blog $blog The blog
      *
      * @return $this
      */
@@ -79,7 +79,7 @@ class Tag
     }
 
     /**
-     * @param Post $post
+     * @param Post $post The post
      */
     public function addPost(Post $post): void
     {
@@ -91,7 +91,7 @@ class Tag
     }
 
     /**
-     * @param Post $post
+     * @param Post $post The post
      */
     public function removePost(Post $post): void
     {
@@ -103,7 +103,7 @@ class Tag
     }
 
     /**
-     * @return string
+     * @return string The name
      */
     public function getName(): string
     {
@@ -111,7 +111,7 @@ class Tag
     }
 
     /**
-     * @param string $name
+     * @param string $name The name
      *
      * @return $this
      */
@@ -123,7 +123,7 @@ class Tag
     }
 
     /**
-     * @return string
+     * @return string The url
      */
     public function getUrl(): string
     {
@@ -131,7 +131,7 @@ class Tag
     }
 
     /**
-     * @param string $url
+     * @param string $url The url
      *
      * @return $this
      */

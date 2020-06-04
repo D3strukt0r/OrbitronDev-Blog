@@ -71,7 +71,8 @@ class Post
      *     targetEntity="Comment",
      *     mappedBy="post",
      *     orphanRemoval=true,
-     *     cascade={"persist", "remove"})
+     *     cascade={"persist", "remove"}
+     * )
      * @ORM\OrderBy({"publishedAt": "DESC"})
      */
     protected $comments;
@@ -110,7 +111,7 @@ class Post
     }
 
     /**
-     * @return int
+     * @return int The ID
      */
     public function getId(): int
     {
@@ -118,7 +119,7 @@ class Post
     }
 
     /**
-     * @return Blog
+     * @return Blog The blog
      */
     public function getBlog(): Blog
     {
@@ -126,7 +127,7 @@ class Post
     }
 
     /**
-     * @param Blog $blog
+     * @param Blog $blog The blog
      *
      * @return $this
      */
@@ -138,7 +139,7 @@ class Post
     }
 
     /**
-     * @return string
+     * @return string The title
      */
     public function getTitle(): string
     {
@@ -146,7 +147,7 @@ class Post
     }
 
     /**
-     * @param string $title
+     * @param string $title The title
      *
      * @return $this
      */
@@ -158,7 +159,7 @@ class Post
     }
 
     /**
-     * @return string
+     * @return string The slug
      */
     public function getSlug(): string
     {
@@ -166,7 +167,7 @@ class Post
     }
 
     /**
-     * @param string $slug
+     * @param string $slug The slug
      *
      * @return $this
      */
@@ -178,7 +179,7 @@ class Post
     }
 
     /**
-     * @return string
+     * @return string The content
      */
     public function getContent(): string
     {
@@ -186,7 +187,7 @@ class Post
     }
 
     /**
-     * @param string $content
+     * @param string $content The content
      *
      * @return $this
      */
@@ -198,7 +199,7 @@ class Post
     }
 
     /**
-     * @return DateTime
+     * @return DateTime The publishing time
      */
     public function getPublishedAt(): DateTime
     {
@@ -206,7 +207,7 @@ class Post
     }
 
     /**
-     * @param DateTime $publishedAt
+     * @param DateTime $publishedAt The publishing time
      *
      * @return $this
      */
@@ -218,7 +219,7 @@ class Post
     }
 
     /**
-     * @return User
+     * @return User The author
      */
     public function getAuthor(): User
     {
@@ -226,7 +227,7 @@ class Post
     }
 
     /**
-     * @param User $author
+     * @param User $author The author
      *
      * @return $this
      */
@@ -238,7 +239,7 @@ class Post
     }
 
     /**
-     * @return Comment[]
+     * @return Comment[] The comments
      */
     public function getComments(): array
     {
@@ -246,7 +247,7 @@ class Post
     }
 
     /**
-     * @param Comment $comment
+     * @param Comment $comment The comment
      *
      * @return $this
      */
@@ -259,7 +260,7 @@ class Post
     }
 
     /**
-     * @param Comment $comment
+     * @param Comment $comment The comment
      *
      * @return $this
      */
@@ -274,7 +275,7 @@ class Post
     }
 
     /**
-     * @return string
+     * @return string The summary
      */
     public function getSummary(): string
     {
@@ -282,7 +283,7 @@ class Post
     }
 
     /**
-     * @param string $summary
+     * @param string $summary The summary
      *
      * @return $this
      */
@@ -294,7 +295,7 @@ class Post
     }
 
     /**
-     * @return Category[]
+     * @return Category[] The categories
      */
     public function getCategories(): array
     {
@@ -302,7 +303,7 @@ class Post
     }
 
     /**
-     * @param Category $category
+     * @param Category $category The category
      */
     public function addCategory(Category $category): void
     {
@@ -314,7 +315,7 @@ class Post
     }
 
     /**
-     * @param Category $category
+     * @param Category $category The category
      */
     public function removeCategory(Category $category): void
     {
@@ -326,7 +327,7 @@ class Post
     }
 
     /**
-     * @return Tag[]
+     * @return Tag[] The tags
      */
     public function getTags(): array
     {
@@ -334,7 +335,7 @@ class Post
     }
 
     /**
-     * @param Tag $tag
+     * @param Tag $tag The tag
      */
     public function addTag(Tag $tag): void
     {
@@ -346,7 +347,7 @@ class Post
     }
 
     /**
-     * @param Tag $tag
+     * @param Tag $tag The tag
      */
     public function removeTag(Tag $tag): void
     {
@@ -358,7 +359,7 @@ class Post
     }
 
     /**
-     * @return string|null
+     * @return string|null The url of the header image, or null if not set
      */
     public function getHeaderImage(): ?string
     {
@@ -366,7 +367,7 @@ class Post
     }
 
     /**
-     * @param string|null $header_image
+     * @param string|null $header_image The url of the header image, or null if not set
      *
      * @return $this
      */

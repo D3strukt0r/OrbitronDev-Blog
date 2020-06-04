@@ -14,7 +14,7 @@ class UserController extends AbstractController
     /**
      * @Route("/login", name="login")
      *
-     * @param ClientRegistry $clientRegistry
+     * @param ClientRegistry $clientRegistry The OAuth2 client registry
      *
      * @return RedirectResponse
      */

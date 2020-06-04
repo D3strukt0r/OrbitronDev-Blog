@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AdminControlPanel
@@ -59,9 +58,7 @@ class AdminControlPanel
             return $siblings;
         };
 
-        $tree = $fnBuilder($grouped['root']);
-
-        return $tree;
+        return $fnBuilder($grouped['root']);
     }
 
     public static function loadLibs(string $rootDir, TokenStorageInterface $tokenStorage = null)

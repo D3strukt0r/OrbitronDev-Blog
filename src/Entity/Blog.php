@@ -53,7 +53,7 @@ class Blog
     protected $closed_message;
 
     /**
-     * @var null|array
+     * @var array|null
      * @ORM\Column(type="array", nullable=true)
      */
     protected $keywords;
@@ -107,7 +107,7 @@ class Blog
     protected $posts;
 
     /**
-     * @return int
+     * @return int The ID
      */
     public function getId(): int
     {
@@ -115,7 +115,7 @@ class Blog
     }
 
     /**
-     * @return string
+     * @return string The name
      */
     public function getName(): string
     {
@@ -123,7 +123,7 @@ class Blog
     }
 
     /**
-     * @param string $name
+     * @param string $name The name
      *
      * @return $this
      */
@@ -135,7 +135,7 @@ class Blog
     }
 
     /**
-     * @return string
+     * @return string The url
      */
     public function getUrl(): string
     {
@@ -143,7 +143,7 @@ class Blog
     }
 
     /**
-     * @param string $url
+     * @param string $url The url
      *
      * @return $this
      */
@@ -155,7 +155,7 @@ class Blog
     }
 
     /**
-     * @return User
+     * @return User The owner
      */
     public function getOwner(): User
     {
@@ -163,7 +163,7 @@ class Blog
     }
 
     /**
-     * @param User $owner
+     * @param User $owner The owner
      *
      * @return $this
      */
@@ -175,7 +175,7 @@ class Blog
     }
 
     /**
-     * @return bool
+     * @return bool Whether the blog has been closed
      */
     public function isClosed(): bool
     {
@@ -183,7 +183,7 @@ class Blog
     }
 
     /**
-     * @param bool $closed
+     * @param bool $closed Whether the blog has been closed
      *
      * @return $this
      */
@@ -195,7 +195,7 @@ class Blog
     }
 
     /**
-     * @return string|null
+     * @return string|null The message why the blog was closed
      */
     public function getClosedMessage(): ?string
     {
@@ -203,7 +203,7 @@ class Blog
     }
 
     /**
-     * @param string|null $closed_message
+     * @param string|null $closed_message The message why the blog was closed
      *
      * @return $this
      */
@@ -215,7 +215,7 @@ class Blog
     }
 
     /**
-     * @return null|array
+     * @return array|null The keywords
      */
     public function getKeywords(): ?array
     {
@@ -223,7 +223,7 @@ class Blog
     }
 
     /**
-     * @param string $keyword
+     * @param string $keyword The keyword
      *
      * @return $this
      */
@@ -241,7 +241,7 @@ class Blog
     }
 
     /**
-     * @param string $keyword
+     * @param string $keyword The keyword
      *
      * @return $this
      */
@@ -261,7 +261,7 @@ class Blog
     }
 
     /**
-     * @return string|null
+     * @return string|null The description
      */
     public function getDescription(): ?string
     {
@@ -269,7 +269,7 @@ class Blog
     }
 
     /**
-     * @param string|null $description
+     * @param string|null $description The description
      *
      * @return $this
      */
@@ -281,7 +281,7 @@ class Blog
     }
 
     /**
-     * @return string|null
+     * @return string|null The Google Analytics ID
      */
     public function getGoogleAnalyticsId(): ?string
     {
@@ -289,7 +289,7 @@ class Blog
     }
 
     /**
-     * @param string|null $id
+     * @param string|null $id The Google Analytics ID
      *
      * @return $this
      */
@@ -301,7 +301,7 @@ class Blog
     }
 
     /**
-     * @return string|null
+     * @return string|null The Google Web Developer ID
      */
     public function getGoogleWebDeveloper(): ?string
     {
@@ -309,7 +309,7 @@ class Blog
     }
 
     /**
-     * @param string|null $google_web_dev
+     * @param string|null $google_web_dev The Google Web Developer ID
      *
      * @return $this
      */
@@ -321,7 +321,7 @@ class Blog
     }
 
     /**
-     * @return array|null
+     * @return array|null The links
      */
     public function getLinks(): ?array
     {
@@ -329,7 +329,7 @@ class Blog
     }
 
     /**
-     * @param array|null $links
+     * @param array|null $links The link
      *
      * @return $this
      */
@@ -341,7 +341,7 @@ class Blog
     }
 
     /**
-     * @return string|null
+     * @return string|null The language
      */
     public function getLanguage(): ?string
     {
@@ -349,7 +349,7 @@ class Blog
     }
 
     /**
-     * @param string|null $language
+     * @param string|null $language The language
      *
      * @return $this
      */
@@ -361,7 +361,7 @@ class Blog
     }
 
     /**
-     * @return string|null
+     * @return string|null The copyright notice
      */
     public function getCopyright(): ?string
     {
@@ -369,7 +369,7 @@ class Blog
     }
 
     /**
-     * @param string|null $copyright
+     * @param string|null $copyright The copyright notice
      *
      * @return $this
      */
@@ -381,7 +381,7 @@ class Blog
     }
 
     /**
-     * @return DateTime
+     * @return DateTime The date of creation
      */
     public function getCreated(): DateTime
     {
@@ -389,7 +389,7 @@ class Blog
     }
 
     /**
-     * @param DateTime $created
+     * @param DateTime $created The date of creation
      *
      * @return $this
      */
@@ -401,7 +401,7 @@ class Blog
     }
 
     /**
-     * @return Post[]
+     * @return Post[] The posts
      */
     public function getPosts(): array
     {
@@ -409,7 +409,7 @@ class Blog
     }
 
     /**
-     * @param Post $post
+     * @param Post $post The post
      *
      * @return $this
      */
@@ -422,7 +422,7 @@ class Blog
     }
 
     /**
-     * @param Post $post
+     * @param Post $post The post
      *
      * @return $this
      */
@@ -436,7 +436,7 @@ class Blog
     }
 
     /**
-     * @return array
+     * @return array An array containing all the information of the object
      */
     public function toArray(): array
     {

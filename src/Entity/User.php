@@ -47,7 +47,7 @@ class User implements \Serializable, UserInterface
     private $roles = [];
 
     /**
-     * @return int
+     * @return int The ID
      */
     public function getId(): int
     {
@@ -55,7 +55,7 @@ class User implements \Serializable, UserInterface
     }
 
     /**
-     * @return int
+     * @return int The ID on the OAuth site
      */
     public function getRemoteId(): int
     {
@@ -63,7 +63,7 @@ class User implements \Serializable, UserInterface
     }
 
     /**
-     * @param int $remote_id
+     * @param int $remote_id The ID on the OAuth site
      *
      * @return $this
      */
@@ -83,7 +83,7 @@ class User implements \Serializable, UserInterface
     }
 
     /**
-     * @param string $username
+     * @param string $username The username
      *
      * @return $this
      */
@@ -95,7 +95,7 @@ class User implements \Serializable, UserInterface
     }
 
     /**
-     * @return string
+     * @return string The token
      */
     public function getTokenData(): string
     {
@@ -103,7 +103,7 @@ class User implements \Serializable, UserInterface
     }
 
     /**
-     * @param string $token_data
+     * @param string $token_data The token
      *
      * @return $this
      */
@@ -168,13 +168,15 @@ class User implements \Serializable, UserInterface
      */
     public function serialize(): string
     {
-        return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-            // see section on salt below
-            // $this->salt,
-        ]);
+        return serialize(
+            [
+                $this->id,
+                $this->username,
+                $this->password,
+                // see section on salt below
+                // $this->salt,
+            ]
+        );
     }
 
     /**
@@ -182,12 +184,12 @@ class User implements \Serializable, UserInterface
      */
     public function unserialize($serialized): void
     {
-        list(
+        [
             $this->id,
             $this->username,
             $this->password,
             // see section on salt below
             // $this->salt
-            ) = unserialize($serialized);
+        ] = unserialize($serialized);
     }
 }

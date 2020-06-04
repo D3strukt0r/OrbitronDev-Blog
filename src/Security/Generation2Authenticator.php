@@ -71,7 +71,7 @@ class Generation2Authenticator extends SocialAuthenticator
      *
      * If this returns false, the authenticator will be skipped.
      *
-     * @param Request $request
+     * @param Request $request The request
      *
      * @return bool
      */
@@ -98,7 +98,7 @@ class Generation2Authenticator extends SocialAuthenticator
      *
      *      return array('api_key' => $request->headers->get('X-API-TOKEN'));
      *
-     * @param Request $request
+     * @param Request $request The request
      *
      * @throws UnexpectedValueException If null is returned
      *
@@ -118,8 +118,8 @@ class Generation2Authenticator extends SocialAuthenticator
      * You may throw an AuthenticationException if you wish. If you return
      * null, then a UsernameNotFoundException is thrown for you.
      *
-     * @param mixed                 $credentials
-     * @param UserProviderInterface $userProvider
+     * @param mixed                 $credentials  The credentials
+     * @param UserProviderInterface $userProvider The user provider
      *
      * @throws AuthenticationException
      *
@@ -148,7 +148,8 @@ class Generation2Authenticator extends SocialAuthenticator
         $user = (new User())
             ->setRemoteId($originUser->getId())
             ->setUsername($originUser->getUsername())
-            ->setTokenData(serialize($credentials));
+            ->setTokenData(serialize($credentials))
+        ;
         $this->em->persist($user);
         $this->em->flush();
 
@@ -164,8 +165,8 @@ class Generation2Authenticator extends SocialAuthenticator
      * If you return null, the request will continue, but the user will
      * not be authenticated. This is probably not what you want to do.
      *
-     * @param Request                 $request
-     * @param AuthenticationException $exception
+     * @param Request                 $request   The request
+     * @param AuthenticationException $exception The exception
      *
      * @return Response|null
      */
@@ -186,8 +187,8 @@ class Generation2Authenticator extends SocialAuthenticator
      * If you return null, the current request will continue, and the user
      * will be authenticated. This makes sense, for example, with an API.
      *
-     * @param Request        $request
-     * @param TokenInterface $token
+     * @param Request        $request     The request
+     * @param TokenInterface $token       The token
      * @param string         $providerKey The provider (i.e. firewall) key
      *
      * @return Response|null
