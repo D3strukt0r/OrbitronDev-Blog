@@ -1,6 +1,6 @@
 parameters:
     # Adds a fallback OAUTH2_URL if the env var is not set.
-    env(OAUTH_URL): 'https://account.generation-2.org'
+    env(OAUTH_URL): 'https://openid.manuele-vaccari.ch'
 
 twig:
     globals:
@@ -13,7 +13,7 @@ knpu_oauth2_client:
         # an instance of: KnpU\OAuth2ClientBundle\Client\OAuth2Client
         generation2:
             type: generic
-            provider_class: D3strukt0r\OAuth2\Client\Provider\Generation2Provider
+            provider_class: D3strukt0r\OAuth2\Client\Provider\OpenIDProvider
 
             # optional: a class that extends OAuth2Client
             # client_class: Some\Custom\Client
@@ -26,4 +26,4 @@ knpu_oauth2_client:
             client_id: '%env(OAUTH_CLIENT_ID)%'
             client_secret: '%env(OAUTH_CLIENT_SECRET)%'
             redirect_route: login_check
-            redirect_params: {}
+            redirect_params: { }
