@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/linux,macos,dotenv,windows,composer,phpstorm
-# Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,dotenv,windows,composer,phpstorm
+# Created by https://www.toptal.com/developers/gitignore/api/linux,macos,windows,composer,phpstorm,git
+# Edit at https://www.toptal.com/developers/gitignore?templates=linux,macos,windows,composer,phpstorm,git
 
 ### Composer ###
 composer.phar
@@ -9,8 +9,20 @@ composer.phar
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
 # composer.lock
 
-### dotenv ###
-.env
+### Git ###
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
 
 ### Linux ###
 *~
@@ -184,7 +196,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/linux,macos,dotenv,windows,composer,phpstorm
+# End of https://www.toptal.com/developers/gitignore/api/linux,macos,windows,composer,phpstorm,git
 
 ###> symfony/framework-bundle ###
 /.env.local
