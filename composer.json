@@ -1,6 +1,6 @@
 {
-    "name": "generation-2/blog",
-    "description": "Blog service of the Generation 2 bundle",
+    "name": "d3strukt0r/openblog-api",
+    "description": "Hosting service for blogs",
     "type": "project",
     "license": "GPL-3.0-or-later",
     "authors": [
@@ -13,9 +13,9 @@
     ],
     "support": {
         "email": "manuele.vaccari@gmail.com",
-        "source": "https://github.com/D3strukt0r/generation-2-blog-api",
-        "issues": "https://github.com/D3strukt0r/generation-2-blog-api/issues",
-        "wiki": "https://github.com/D3strukt0r/generation-2-blog-api/wiki"
+        "source": "https://github.com/D3strukt0r/openblog",
+        "issues": "https://github.com/D3strukt0r/openblog/issues",
+        "wiki": "https://github.com/D3strukt0r/openblog/wiki"
     },
     "require": {
         "php": "^7.2.5",
@@ -24,11 +24,12 @@
         "ext-intl": "*",
         "ext-mbstring": "*",
         "ext-pcre": "*",
-        "d3strukt0r/oauth2-generation-2": "dev-master",
+        "d3strukt0r/oauth2-openid": "dev-master",
         "google/recaptcha": "^1.2",
         "knpuniversity/oauth2-client-bundle": "^2.1",
         "sensio/framework-extra-bundle": "^5.1",
         "sensiolabs/security-checker": "^6.0",
+        "symfony/apache-pack": "^1.0",
         "suin/php-rss-writer": "^1.6",
         "symfony/asset": "5.1.*",
         "symfony/console": "5.1.*",
@@ -58,13 +59,14 @@
     "require-dev": {
         "dama/doctrine-test-bundle": "^6.3",
         "friendsofphp/php-cs-fixer": "^2.16",
+        "squizlabs/php_codesniffer": "^3.5",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*"
     },
     "repositories": [
-        { "type": "vcs", "url": "https://github.com/D3strukt0r/oauth2-generation-2" }
+        { "type": "vcs", "url": "https://github.com/D3strukt0r/oauth2-openid" }
     ],
     "config": {
         "optimize-autoloader": true,
