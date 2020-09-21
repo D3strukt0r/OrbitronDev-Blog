@@ -1,0 +1,169 @@
+name: CI/CD
+
+env:
+  IMAGE_NAME_PHP: openblog-api-php
+  IMAGE_NAME_NGINX: openblog-api-nginx
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+    paths:
+      - .github/workflows/ci-cd.yml
+      - 'bin/**'
+      - 'config/**'
+      - 'docker/**'
+      - 'public/**'
+      - 'src/**'
+      - 'templates/**'
+      - 'tests/**'
+      - 'translations/**'
+      - '**/.dockerignore'
+      - .php_cs.dist
+      - composer.json
+      - composer.lock
+      - '**/Dockerfile'
+      - phpunit.xml.dist
+      - symfony.lock
+
+  pull_request:
+
+  workflow_dispatch:
+
+jobs:
+  # Run tests.
+  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ 7.2, 7.3, 7.4 ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "${{ matrix.php }}"
+
+      - name: Setup problem matchers for PHP
+        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+      # https://github.com/actions/cache/blob/main/examples.md#php---composer
+      - name: Get Composer Cache Directory
+        id: composer-cache-dir-path
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - uses: actions/cache@v2
+        id: composer-cache # use this to check for `cache-hit` (`steps.composer-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: |
+            ${{ steps.composer-cache-dir-path.outputs.dir }}
+            ~/symfony-bridge/.phpunit
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      # To run on older php version
+      - name: Remove composer.lock
+        run: rm composer.lock
+
+      # https://stackoverflow.com/questions/51341463/unable-to-change-travis-ci-php-memory-limit/51381888#comment89735616_51381888
+      - name: Install dependencies
+        run: COMPOSER_MEMORY_LIMIT=-1 composer install --prefer-dist --no-interaction --no-plugins --no-scripts --no-progress --no-suggest
+
+      - name: Set PhpUnit path
+        run: echo "::set-env name=SYMFONY_PHPUNIT_DIR::$HOME/symfony-bridge/.phpunit"
+
+      - name: Install PhpUnit
+        run: ./vendor/bin/simple-phpunit install
+
+      - name: Run tests
+        run: ./bin/phpunit
+
+      - name: Check if source code follows the PSR-12 Syntax rules
+        run: ./vendor/bin/phpcs
+
+      - name: Check if source code follows the Symfony Code Syntax rules
+        run: ./vendor/bin/php-cs-fixer fix --diff --dry-run -v
+
+      - name: Ensure that arguments injected into services match type declarations
+        run: ./bin/console lint:container
+
+      - name: Check that the YAML config files contain no syntax errors
+        run: ./bin/console lint:yaml config --parse-tags
+
+      - name: Check that the Twig template files contain no syntax errors
+        run: ./bin/console lint:twig templates
+
+      - name: Check that the YAML translations contain no syntax errors
+        run: ./bin/console lint:yaml translations
+
+      - name: Check that the application doesn't use dependencies with known security vulnerabilities
+        run: ./bin/console security:check
+
+      - name: Check that the composer.json and composer.lock files are valid
+        continue-on-error: true
+        run: composer validate --strict
+
+      - name: Check that Doctrine's mapping configurations are valid
+        run: ./bin/console doctrine:schema:validate --skip-sync -vvv --no-interaction
+
+      - name: Run test build
+        run: |
+          if [ -f docker-compose.test.yml ]; then
+              docker-compose --file docker-compose.test.yml build
+              docker-compose --file docker-compose.test.yml run sut
+          else
+              docker build . --file Dockerfile
+          fi
+
+  # Push image to GitHub Packages.
+  # See also https://docs.docker.com/docker-hub/builds/
+  push:
+    # Ensure test job passes before pushing image.
+    needs: test
+
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup environment variables
+        run: |
+          # Change all uppercase to lowercase
+          echo "::set-env name=IMAGE_ID_PHP::$(echo "${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME_PHP" | tr '[A-Z]' '[a-z]')"
+          echo "::set-env name=IMAGE_ID_NGINX::$(echo "${{ secrets.DOCKER_USERNAME }}/$IMAGE_NAME_NGINX" | tr '[A-Z]' '[a-z]')"
+
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          [ "$VERSION" = 'master' ] && VERSION=latest
+          [ "$VERSION" = 'develop' ] && VERSION=nightly
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          echo "::set-env name=VERSION::$VERSION"
+
+      - name: Build PHP image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME_PHP --target php
+
+      - name: Build Nginx image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME_NGINX --target nginx
+
+      - name: Log into registry
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Push PHP image to Docker Hub
+        run: |
+          docker tag $IMAGE_NAME_PHP $IMAGE_ID_PHP:$VERSION
+          docker push $IMAGE_ID_PHP:$VERSION
+
+      - name: Push Nginx image to Docker Hub
+        run: |
+          docker tag $IMAGE_NAME_NGINX $IMAGE_ID_NGINX:$VERSION
+          docker push $IMAGE_ID_NGINX:$VERSION
