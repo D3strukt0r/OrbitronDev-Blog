@@ -6,7 +6,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class AdminControlPanel
 {
-    const DEFAULT_GROUP = [
+    public const DEFAULT_GROUP = [
         'parent' => 'root',
         'id' => '',
         'title' => '',
@@ -15,7 +15,7 @@ class AdminControlPanel
         'children' => [],
     ];
 
-    const DEFAULT_MENU = [
+    public const DEFAULT_MENU = [
         'parent' => '',
         'id' => '',
         'title' => '',
@@ -63,22 +63,22 @@ class AdminControlPanel
 
     public static function loadLibs(string $rootDir, TokenStorageInterface $tokenStorage = null)
     {
-        $libraryDir = $rootDir.'/src/Controller/Panel';
+        $libraryDir = $rootDir . '/src/Controller/Panel';
 
         $libsList = scandir($libraryDir);
         foreach ($libsList as $lib) {
             if ('.' === $lib || '..' === $lib) {
                 continue;
             }
-            $file = pathinfo($libraryDir.'/'.$lib);
-            $class = '\\App\\Controller\\Panel\\'.$file['filename'];
+            $file = pathinfo($libraryDir . '/' . $lib);
+            $class = '\\App\\Controller\\Panel\\' . $file['filename'];
 
-            self::$list[call_user_func($class.'::__callNumber')] = $class;
+            self::$list[call_user_func($class . '::__callNumber')] = $class;
         }
         ksort(self::$list);
 
         foreach (self::$list as $class) {
-            $subTree = call_user_func($class.'::__setupNavigation', $tokenStorage);
+            $subTree = call_user_func($class . '::__setupNavigation', $tokenStorage);
 
             $isMulti = function ($arr) {
                 foreach ($arr as $v) {
@@ -128,13 +128,13 @@ class AdminControlPanel
         $page_changer = 'url_js';
 
         if ('js' === $page_changer) {
-            return 'href="javascript:ControlPanel.changePage(\''.$page_name.'\')" data-toggle="page"';
+            return 'href="javascript:ControlPanel.changePage(\'' . $page_name . '\')" data-toggle="page"';
         } elseif ('url_js' === $page_changer) {
-            return 'href="javascript:ControlPanel.changePage(\''.$page_name.'\', true)" data-toggle="page"';
+            return 'href="javascript:ControlPanel.changePage(\'' . $page_name . '\', true)" data-toggle="page"';
         } elseif ('hash' === $page_changer) {
-            return 'href="#/'.$page_name.'"';
+            return 'href="#/' . $page_name . '"';
         } elseif ('url' === $page_changer) {
-            return 'href="https://account.orbitrondev.org/panel/'.$page_name.'"';
+            return 'href="https://account.orbitrondev.org/panel/' . $page_name . '"';
         }
 
         return '';

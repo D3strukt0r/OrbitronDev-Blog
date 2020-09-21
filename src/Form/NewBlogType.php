@@ -66,7 +66,8 @@ class NewBlogType extends AbstractType
                         ),
                         new Expression(
                             [
-                                'expression' => 'value not in ["new-blog", "admin", "login", "login-check", "logout", "user", "setup"]',
+                                'expression' => 'value not in ["new-blog", "admin", "login", "login-check", ' .
+                                    '"logout", "user", "setup"]',
                                 'message' => 'new_blog.url.not_equal_to',
                             ]
                         ),

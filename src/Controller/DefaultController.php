@@ -367,7 +367,7 @@ class DefaultController extends AbstractController
                         UrlGeneratorInterface::ABSOLUTE_URL
                     )
                 )
-                ->description('<div>'.$post->getDescription().'</div>')
+                ->description('<div>' . $post->getDescription() . '</div>')
                 ->guid(
                     $this->generateUrl(
                         'blog_post',
@@ -442,13 +442,13 @@ class DefaultController extends AbstractController
         }
 
         if (null !== $key) {
-            if (is_callable('\\App\\Controller\\Panel\\'.$list[$key]['view'])) {
+            if (is_callable('\\App\\Controller\\Panel\\' . $list[$key]['view'])) {
                 $view = $list[$key]['view'];
             }
         }
 
         return $this->forward(
-            'App\\Controller\\Panel\\'.$view,
+            'App\\Controller\\Panel\\' . $view,
             [
                 'navigation' => $navigationLinks,
                 'request' => $request,

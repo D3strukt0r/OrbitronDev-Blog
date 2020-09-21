@@ -79,8 +79,8 @@ class ReCaptchaTrueValidator extends ConstraintValidator
 
         if (!$response->isSuccess()) {
             $this->context->addViolation($constraint->message);
-        } // Perform server side hostname check
-        elseif ($this->verifyHost && $response['hostname'] !== $masterRequest->getHost()) {
+        } elseif ($this->verifyHost && $response['hostname'] !== $masterRequest->getHost()) {
+            // Perform server side hostname check
             $this->context->addViolation($constraint->invalidHostMessage);
         }
     }
