@@ -23,6 +23,9 @@ services:
     build:
       context: .
       target: php
+      cache_from:
+        - ${PHP_IMAGE_CACHE:-d3strukt0r/openblog-api-php}
+    image: ${PHP_IMAGE:-d3strukt0r/openblog-api-php}
     depends_on:
       - db
     networks:
@@ -41,10 +44,14 @@ services:
       GOOGLE_RECAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
       GOOGLE_RECAPTCHA_SECRET: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
 
-  web:
+  nginx:
     build:
       context: .
       target: nginx
+      cache_from:
+        - ${PHP_IMAGE_CACHE:-d3strukt0r/openblog-api-php}
+        - ${NGINX_IMAGE_CACHE:-d3strukt0r/openblog-api-nginx}
+    image: ${NGINX_IMAGE:-d3strukt0r/openblog-api-nginx}
     depends_on:
       - php
     networks:
