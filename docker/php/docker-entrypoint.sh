@@ -169,7 +169,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ]; then
 
     # ----------------------------------------
 
-    if [ "$ENVIRONMENT" != 'prod' ] && [ -f /certs/localCA.crt ]; then
+    if [ "$APP_ENV" != 'prod' ] && [ -f /certs/localCA.crt ]; then
         entrypoint_note 'Update CA certificates.'
         ln -sf /certs/localCA.crt /usr/local/share/ca-certificates/localCA.crt
         update-ca-certificates
@@ -177,7 +177,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ]; then
 
     # ----------------------------------------
 
-    if [ "$ENVIRONMENT" != 'prod' ]; then
+    if [ "$APP_ENV" != 'prod' ]; then
         entrypoint_note 'Installing libraries according to non-production environment ...'
         composer install --prefer-dist --no-interaction --no-plugins --no-scripts --no-progress --no-suggest
     fi
