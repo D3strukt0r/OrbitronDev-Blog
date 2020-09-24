@@ -26,6 +26,7 @@
 **/Procfile
 .github/
 .idea/
+bin/.phpunit
 tests/
 public/.htaccess
 vendor/
