@@ -75,6 +75,9 @@ RUN set -eux; \
 
 RUN set -eux; \
     \
+    # Set default php configuration
+    ln -s "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"; \
+    \
     # Install composer
     curl -fsSL -o composer-setup.php https://getcomposer.org/installer; \
     EXPECTED_CHECKSUM="$(curl -fsSL https://composer.github.io/installer.sig)"; \
@@ -101,9 +104,6 @@ COPY . .
 RUN set -eux; \
     rm -r docker; \
     \
-    # Set default php configuration
-    ln -s "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"; \
-    \
     # Prevent the reinstallation of vendors at every changes in the source code
     composer install --prefer-dist --no-dev --no-interaction --no-plugins --no-scripts --no-progress --no-suggest --optimize-autoloader; \
     composer clear-cache; \
@@ -112,16 +112,16 @@ RUN set -eux; \
     chown www-data:www-data -R .; \
     find . -type d -exec chmod 755 {} \;; \
     find . -type f -exec chmod 644 {} \;; \
-    chmod 755 bin/*; \
+    chmod +x bin/*; \
 	\
     # Prepare Symfony
-    ./bin/console cache:warmup --env="prod"
+    ./bin/console cache:warmup --env=prod
 
 # https://github.com/renatomefi/php-fpm-healthcheck
 RUN curl -fsSL -o /usr/local/bin/php-fpm-healthcheck https://raw.githubusercontent.com/renatomefi/php-fpm-healthcheck/master/php-fpm-healthcheck; \
     chmod +x /usr/local/bin/php-fpm-healthcheck; \
     echo 'pm.status_path = /status' >> /usr/local/etc/php-fpm.d/zz-docker.conf
-HEALTHCHECK --interval=10s --timeout=3s --retries=3 CMD ["php-fpm-healthcheck"]
+HEALTHCHECK --interval=10s --timeout=3s --start-period=30s --retries=3 CMD php-fpm-healthcheck || exit 1
 
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 ENTRYPOINT ["docker-entrypoint"]
@@ -170,7 +170,7 @@ RUN set -eux; \
     # Fix permission
     adduser -u 82 -D -S -G www-data www-data
 
-HEALTHCHECK --interval=10s --timeout=3s --retries=3 CMD ["test", "-e", "/var/run/nginx.pid", "||", "exit", "1"]
+HEALTHCHECK --interval=10s --timeout=3s --start-period=30s --retries=3 CMD curl -f http://localhost/ || exit 1
 
 COPY docker/nginx/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 ENTRYPOINT ["docker-entrypoint"]
