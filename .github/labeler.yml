@@ -1,0 +1,34 @@
+# Add 'repo' label to any root file changes
+repo:
+  - ./*
+
+# Add 'source' label to any change to files within the source dir
+source:
+  - bin/**/*
+  - migrations/**/*
+  - public/**/*
+  - src/**/*
+
+# Add 'config' label to any change to files within the config dir
+config:
+  - config/**/*
+
+# Add 'docker' label to any change to files within the docker dir and docker relevant files
+docker:
+  - docker/**/*
+  - .dockerignore
+  - docker-compose.yml
+  - Dockerfile
+
+# Add 'template' label to any change to files within the templates dir
+template:
+  - templates/**/*
+
+# Add 'test' label to any change to files within the test dir
+test:
+  - tests/**/*
+  - phpunit.xml.dist
+
+# Add 'translation' label to any change to files within the translations dir
+translation:
+  - translations/**/*
