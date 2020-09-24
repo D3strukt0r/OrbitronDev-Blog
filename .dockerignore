@@ -22,11 +22,13 @@
 **/.php_cs.cache
 **/.php_cs.dist
 **/.scrutinizer.yml
+**/phpcs.xml.dist
 **/phpunit.xml.dist
 **/Procfile
 .github/
 .idea/
 bin/.phpunit
+bin/phpunit
 tests/
 public/.htaccess
 vendor/

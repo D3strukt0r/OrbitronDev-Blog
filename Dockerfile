@@ -13,6 +13,7 @@ FROM php:${PHP_VERSION}-fpm-alpine AS php
 
 WORKDIR /app
 
+# Setup Alpine
 # hadolint ignore=DL3018
 RUN set -eux; \
 	\
@@ -36,6 +37,7 @@ RUN set -eux; \
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Build PHP
 # hadolint ignore=DL3018,SC2086
 RUN set -eux; \
     \
@@ -73,6 +75,7 @@ RUN set -eux; \
     # Remove building tools for smaller container size
     apk del .build-deps
 
+# Setup PHP
 RUN set -eux; \
     \
     # Set default php configuration
@@ -99,14 +102,26 @@ RUN set -eux; \
     ./symfony-setup.sh --install-dir /usr/local/bin; \
     rm symfony-setup.sh
 
-COPY . .
-
+# Prevent the reinstallation of vendors at every changes in the source code
+COPY composer.json composer.lock symfony.lock ./
 RUN set -eux; \
-    rm -r docker; \
-    \
-    # Prevent the reinstallation of vendors at every changes in the source code
-    composer install --prefer-dist --no-dev --no-interaction --no-plugins --no-scripts --no-progress --no-suggest --optimize-autoloader; \
-    composer clear-cache; \
+	composer install --prefer-dist --no-dev --no-interaction --no-plugins --no-scripts --no-progress --no-suggest --optimize-autoloader; \
+    composer clear-cache
+
+# Do not use .env files in production
+COPY .env ./
+RUN composer dump-env prod; \
+	rm .env
+
+# Setup application
+COPY bin ./bin
+COPY config ./config
+COPY migrations ./migrations
+COPY public ./public
+COPY src ./src
+COPY templates ./templates
+COPY translations ./translations
+RUN set -eux; \
 	\
     # Fix permission
     chown www-data:www-data -R .; \
@@ -135,6 +150,7 @@ FROM nginx:${NGINX_VERSION}-alpine AS nginx
 
 WORKDIR /app/public
 
+# Setup Alpine
 # hadolint ignore=DL3018
 RUN set -eux; \
     \
@@ -153,6 +169,7 @@ RUN set -eux; \
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Setup Nginx
 COPY --from=php /app/public/ ./
 
 COPY docker/nginx/nginx.conf       /etc/nginx/nginx.template
