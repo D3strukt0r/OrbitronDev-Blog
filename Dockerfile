@@ -11,6 +11,10 @@ ARG NGINX_VERSION=1.19
 # ---------
 FROM php:${PHP_VERSION}-fpm-alpine AS php
 
+# https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
+ENV COMPOSER_ALLOW_SUPERUSER=1 \
+    PATH="${PATH}:/root/.composer/vendor/bin"
+
 WORKDIR /app
 
 # Setup Alpine
